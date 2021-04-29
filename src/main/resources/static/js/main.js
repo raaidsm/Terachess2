@@ -1,5 +1,4 @@
 const handleRestControllerResponse = (response, status, xhr) => {
-    console.log("handleRestControllerResponse() runs");
     $("#num").val(response.num);
 };
 
@@ -20,6 +19,4 @@ const sendToRestController = () => {
 
 $(function() {
     $("#submitButton").on("click", sendToRestController);
-    //DEBUGGING
-    console.log("Javascript runs at least!");
 });
