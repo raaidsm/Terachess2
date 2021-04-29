@@ -15,6 +15,7 @@ public class TestRestController {
     @PostMapping(value="/ApplyMove", produces="application/json")
     public NumForm applyMove(@ModelAttribute NumForm form) {
         logger.trace("applyMove() runs");
+        logger.trace("form.getNum() = " + form.getNum());
 
         //Take the form from Index as input, double the num, and return the value
         int id = form.getNum();

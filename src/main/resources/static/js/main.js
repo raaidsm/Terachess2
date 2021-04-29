@@ -4,14 +4,16 @@ const handleRestControllerResponse = (response, status, xhr) => {
 };
 
 const sendToRestController = () => {
-    alert("sentToRestController() runs");
+    let num = $("#num").val();
     $.ajax({
         url: "/th-spring-integration/spring/ApplyMove",
         contentType: "application/x-www-form-urlencoded",
         dataType: "json",
+        type: "post",
+        data: { num: num },
         success: handleRestControllerResponse,
         error: function(xhr, status, error) {
-            alert("Bruh why does the rest controller request not work");
+            console.log("Rest controller request does not work");
         }
     });
 };
