@@ -14,6 +14,10 @@
 <body>
 <main class="container">
     <h1>Welcome to the testing grounds for the future implementation of Terachess!</h1>
+    <form method="post" action="Index.html" th:action="@{ApplyMove}">
+        <label for="numInsert">Insert a number to double it (hopefully)</label><br>
+        <input id="numInsert" type="text" name="numInsert" />
+    </form>
 </main>
 </body>
 </html>
