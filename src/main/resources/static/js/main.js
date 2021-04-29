@@ -1,15 +1,15 @@
 const handleRestControllerResponse = (response, status, xhr) => {
     console.log("handleRestControllerResponse() runs");
-    $("#num").text(response.num);
+    $("#num").val(response.num);
 };
 
 const sendToRestController = () => {
     let num = $("#num").val();
     $.ajax({
-        url: "/th-spring-integration/spring/ApplyMove",
+        url: "/ApplyMove",
         contentType: "application/x-www-form-urlencoded",
         dataType: "json",
-        type: "post",
+        type: "POST",
         data: { num: num },
         success: handleRestControllerResponse,
         error: function(xhr, status, error) {
