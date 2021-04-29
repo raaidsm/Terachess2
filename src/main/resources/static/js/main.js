@@ -6,7 +6,7 @@ const handleRestControllerResponse = (response, status, xhr) => {
 const sendToRestController = () => {
     let num = $("#num").val();
     $.ajax({
-        url: "/ApplyMove",
+        url: "/AffectNum",
         contentType: "application/x-www-form-urlencoded",
         dataType: "json",
         type: "POST",
