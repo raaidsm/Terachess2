@@ -17,14 +17,4 @@ public class TestController {
         logger.trace("index() runs");
         return "Index";
     }
-
-    @PostMapping(value="/ApplyMove")
-    public String applyMove(@ModelAttribute NumForm form) {
-        logger.trace("applyMove() runs");
-
-        //Take the form from Index as input, double the num, and return the value
-        int id = form.getNum();
-        id = id * 2;
-        return "Index";
-    }
 }
