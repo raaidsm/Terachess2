@@ -1,8 +1,8 @@
-const handleRestControllerResponse = (response, status, xhr) => {
+const handleResponse = (response, status, xhr) => {
     $("#num").val(response.num);
 };
 
-const sendToRestController = () => {
+const sendRequest = () => {
     let num = $("#num").val();
     $.ajax({
         url: "/AffectNum",
@@ -10,7 +10,7 @@ const sendToRestController = () => {
         dataType: "json",
         type: "POST",
         data: { num: num },
-        success: handleRestControllerResponse,
+        success: handleResponse,
         error: function(xhr, status, error) {
             console.log("Rest controller request does not work");
         }
@@ -18,5 +18,5 @@ const sendToRestController = () => {
 };
 
 $(function() {
-    $("#submitButton").on("click", sendToRestController);
+    $("#submitButton").on("click", sendRequest);
 });
