@@ -18,5 +18,9 @@ const sendRequest = () => {
 };
 
 $(function() {
+    //Initialize Localbase database and initialize default entry
+    let db = new Localbase("db");
+    db.collection("games").add({ id: 0 });
+
     $("#submitButton").on("click", sendRequest);
 });
