@@ -3,14 +3,14 @@ package raaidsm.spring.test.models;
 import java.io.Serializable;
 
 public class NumForm implements Serializable {
-    private int id = 0;
+    private int num = 0;
 
     public NumForm() {}
 
-    public int getId() {
-        return id;
+    public int getNum() {
+        return num;
     }
-    public void setId(int id) {
-        this.id = id;
+    public void setNum(int num) {
+        this.num = num;
     }
 }
