@@ -1,7 +1,8 @@
-$color-primary: #2EC4A6;
-$fs-large: 100px;
+$niceColour: #2EC4A6;
+$fsTitle: 50px;
 
 h1 {
-  font-size: $fs-large;
-  background-color: $color-primary;
+  font-size: $fsTitle;
+  background-color: $niceColour;
+  text-align: center;
 }
