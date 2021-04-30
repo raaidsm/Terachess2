@@ -1,5 +1,6 @@
 const handleResponse = (response, status, xhr) => {
     $("#num").val(response.num);
+    localStorage.setItem("num", response.num);
 };
 
 const sendRequest = () => {
@@ -23,4 +24,8 @@ $(function() {
     db.collection("games").add({ id: 0 });
 
     $("#submitButton").on("click", sendRequest);
+    const savedNum = localStorage.getItem("num");
+    if (savedNum !== null) {
+        $("#num").val(savedNum);
+    }
 });
