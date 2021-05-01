@@ -1,7 +1,9 @@
 //Global constants
-const gridItemTemplate = "<div class='border border-3 border-dark m-1 bg-success'></div>";
+const gridItemTemplate = "<div class='gridItem border border-3 border-dark m-1'></div>";
 const gridLength = 8;
 const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];   //Please make this array automatic this is horrendous
+let lightSquareColour = "#EEEED2";
+let darkSquareColour = "#769656";
 
 const sendRequest = () => {
     let num = $("#num").val();
@@ -36,10 +38,18 @@ $(function() {
     }
 
     //Dynamically insert elements
+    let doLightSquare = false;
     for (let i = gridLength; 0 < i; i--) {
+        //Flips the colour
+        doLightSquare = doLightSquare === false;
         for (let j = 0; j < gridLength; j++) {
             let $gridItem = $(gridItemTemplate);
-            $gridItem.text(letters[j] + i);
+            $gridItem.prop("id", letters[j] + i);
+            $gridItem.css("background-color", doLightSquare ? lightSquareColour : darkSquareColour);
+            //Flips the colour
+            doLightSquare = doLightSquare === false;
+            //Test text to make it not empty
+            $gridItem.text("Test");
             $("#mainGrid").append($gridItem);
         }
     }
