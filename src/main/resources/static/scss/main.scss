@@ -16,12 +16,15 @@ h1 {
     display: grid;
     //grid-template-columns: 25% 75%;
     //grid-template-columns: 1fr 1fr;
-    grid-template-columns: repeat(3, 1fr);
+    //grid-template-columns: repeat(8, 1fr);
     //grid-template-rows: 200px 500px;
     //grid-template-rows: 200px auto;
     //grid-auto-rows: 200px 500px;                 //Does cascading like grid-template-columns
     //grid-template-rows: minmax(200px, auto);     //Does minmax for one row
     //grid-auto-rows: minmax(200px, auto);         //Does minmax for all rows
+}
+#mainGrid {
+    grid-template-columns: repeat(8, 1fr);
 }
 //.gridItem {
     //grid-column-start: 1;

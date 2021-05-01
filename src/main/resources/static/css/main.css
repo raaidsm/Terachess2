@@ -10,7 +10,10 @@ h1 {
 
 .gridContainer {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+}
+
+#mainGrid {
+  grid-template-columns: repeat(8, 1fr);
 }
 
 /*# sourceMappingURL=main.css.map */
