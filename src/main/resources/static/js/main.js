@@ -2,8 +2,12 @@
 const gridItemTemplate = "<div class='gridItem'></div>";
 const gridLength = 8;
 const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];   //Please make this array automatic this is horrendous
-let lightSquareColour = "#EEEED2";
-let darkSquareColour = "#769656";
+const lightSquareColour = "#EEEED2";
+const darkSquareColour = "#769656";
+//region Ranks of Pieces
+const blackFirstRank = ["rook", "knight", "bishop", "queen", "king", "bishop", "knight", "rook"];
+const blackSecondRank = ["pawn", "pawn", "pawn", "pawn", "pawn", "pawn", "pawn", "pawn"];
+//endregion
 //endregion
 
 //region Event Handlers
@@ -63,6 +67,14 @@ $(function() {
             doLightSquare = doLightSquare === false;
             //Assign click handler onClickBoardSquare to grid items
             $gridItem.on("click", onClickBoardSquare);
+            //Add pieces according to rows
+            if (i === gridLength) {
+                let $pieceImage = $("<img class='img-fluid' src='' alt=''>");
+                $pieceImage.prop("src", `../images/${blackFirstRank[j]}.png`);
+                $pieceImage.prop("alt", blackFirstRank[j]);
+                $gridItem.append($pieceImage);
+            }
+            if (i === gridLength - 1) {}
             //Test text to make it not empty
             $("#mainGrid").append($gridItem);
         }
