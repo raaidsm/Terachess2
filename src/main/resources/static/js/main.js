@@ -6,8 +6,26 @@ let lightSquareColour = "#EEEED2";
 let darkSquareColour = "#769656";
 //endregion
 
+//region Click handler functions
+const onClickBoardSquare = (event) => {
+    $.ajax({
+        url: "/ReadSquare",
+        contentType: "application/x-www-form-urlencoded",
+        dataType: "json",
+        type: "POST",
+        data: { squareName: event.target.id },
+        success: function(response, status, xhr) {
+            $("#squareNameDisplay").val(response.squareName);
+        },
+        error: function(xhr, status, error) {
+            console.log("Rest controller request does not work");
+        }
+    });
+}
+//endregion
+
 //region AJAX functions
-const sendRequest = () => {
+const sendNumRequest = () => {
     let num = $("#num").val();
     $.ajax({
         url: "/AffectNum",
@@ -15,13 +33,13 @@ const sendRequest = () => {
         dataType: "json",
         type: "POST",
         data: { num: num },
-        success: handleResponse,
+        success: handleNumResponse,
         error: function(xhr, status, error) {
             console.log("Rest controller request does not work");
         }
     });
 };
-const handleResponse = (response, status, xhr) => {
+const handleNumResponse = (response, status, xhr) => {
     $("#num").val(response.num);
     localStorage.setItem("num", response.num);
 };
@@ -29,7 +47,7 @@ const handleResponse = (response, status, xhr) => {
 
 $(function() {
     //region Initialize page properties
-    $("#submitButton").on("click", sendRequest);
+    $("#submitButton").on("click", sendNumRequest);
     $("#mainGrid").css("grid-template-columns", `repeat(${gridLength}, 1fr)`);
     //endregion
 
@@ -53,6 +71,8 @@ $(function() {
             $gridItem.css("background-color", doLightSquare ? lightSquareColour : darkSquareColour);
             //Flips the colour
             doLightSquare = doLightSquare === false;
+            //Assign click handler onClickBoardSquare to grid items
+            $gridItem.on("click", onClickBoardSquare);
             //Test text to make it not empty
             $("#mainGrid").append($gridItem);
         }
