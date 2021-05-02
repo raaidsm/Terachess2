@@ -5,8 +5,14 @@ const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];   //Please make this a
 const lightSquareColour = "#EEEED2";
 const darkSquareColour = "#769656";
 //region Ranks of Pieces
-const blackFirstRank = ["rook", "knight", "bishop", "queen", "king", "bishop", "knight", "rook"];
-const blackSecondRank = ["pawn", "pawn", "pawn", "pawn", "pawn", "pawn", "pawn", "pawn"];
+const blackFirstRank = ["black_rook", "black_knight", "black_bishop", "black_queen", "black_king",
+    "black_bishop", "black_knight", "black_rook"];
+const blackSecondRank = ["black_pawn", "black_pawn", "black_pawn", "black_pawn", "black_pawn",
+    "black_pawn", "black_pawn", "black_pawn"];
+const whiteSecondRank = ["white_pawn", "white_pawn", "white_pawn", "white_pawn", "white_pawn",
+    "white_pawn", "white_pawn", "white_pawn"];
+const whiteFirstRank = ["white_rook", "white_knight", "white_bishop", "white_queen", "white_king",
+    "white_bishop", "white_knight", "white_rook"];
 //endregion
 //endregion
 
@@ -36,6 +42,36 @@ const onClickSubmitNum = () => {
             localStorage.setItem("num", response.num);
         }
     });
+};
+//endregion
+//region Other Functions
+const fillRows = (gridItem, iRow, iColumn) => {
+    if (iRow === gridLength) {
+        gridItem.css("background-image", `url(../images/${blackFirstRank[iColumn]}.png)`);
+        gridItem.css("background-size", "cover");
+        gridItem.css("background-position", "center");
+        gridItem.css("background-repeat", "no-repeat");
+    }
+    if (iRow === gridLength - 1) {
+        gridItem.css("background-image", `url(../images/${blackSecondRank[iColumn]}.png)`);
+        gridItem.css("background-size", "cover");
+        gridItem.css("background-position", "center");
+        gridItem.css("background-repeat", "no-repeat");
+    }
+    if (iRow === 2) {
+        //`../images/${blackFirstRank[j]}.png`
+        gridItem.css("background-image", `url(../images/${whiteSecondRank[iColumn]}.png)`);
+        gridItem.css("background-size", "cover");
+        gridItem.css("background-position", "center");
+        gridItem.css("background-repeat", "no-repeat");
+    }
+    if (iRow === 1) {
+        //`../images/${blackFirstRank[j]}.png`
+        gridItem.css("background-image", `url(../images/${whiteFirstRank[iColumn]}.png)`);
+        gridItem.css("background-size", "cover");
+        gridItem.css("background-position", "center");
+        gridItem.css("background-repeat", "no-repeat");
+    }
 };
 //endregion
 
@@ -68,14 +104,7 @@ $(function() {
             //Assign click handler onClickBoardSquare to grid items
             $gridItem.on("click", onClickBoardSquare);
             //Add pieces according to rows
-            if (i === gridLength) {
-                //`../images/${blackFirstRank[j]}.png`
-                $gridItem.css("background-image", `url(../images/${blackFirstRank[j]}.png)`);
-                $gridItem.css("background-size", "cover");
-                $gridItem.css("background-position", "center");
-                $gridItem.css("background-repeat", "no-repeat");
-            }
-            if (i === gridLength - 1) {}
+            fillRows($gridItem, i, j);
             //Test text to make it not empty
             $("#mainGrid").append($gridItem);
         }
