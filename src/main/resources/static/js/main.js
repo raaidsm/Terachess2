@@ -1,4 +1,4 @@
-//region Global constants
+//region Global Constants
 const gridItemTemplate = "<div class='gridItem'></div>";
 const gridLength = 8;
 const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];   //Please make this array automatic this is horrendous
@@ -6,7 +6,7 @@ let lightSquareColour = "#EEEED2";
 let darkSquareColour = "#769656";
 //endregion
 
-//region Click handler functions
+//region Event Handlers
 const onClickBoardSquare = (event) => {
     $.ajax({
         url: "/ReadSquare",
@@ -14,18 +14,12 @@ const onClickBoardSquare = (event) => {
         dataType: "json",
         type: "POST",
         data: { squareName: event.target.id },
-        success: function(response, status, xhr) {
+        success: function(response) {
             $("#squareNameDisplay").val(response.squareName);
-        },
-        error: function(xhr, status, error) {
-            console.log("Rest controller request does not work");
         }
     });
 }
-//endregion
-
-//region AJAX functions
-const sendNumRequest = () => {
+const onClickSubmitNum = () => {
     let num = $("#num").val();
     $.ajax({
         url: "/AffectNum",
@@ -33,21 +27,17 @@ const sendNumRequest = () => {
         dataType: "json",
         type: "POST",
         data: { num: num },
-        success: handleNumResponse,
-        error: function(xhr, status, error) {
-            console.log("Rest controller request does not work");
+        success: function(response) {
+            $("#num").val(response.num);
+            localStorage.setItem("num", response.num);
         }
     });
-};
-const handleNumResponse = (response, status, xhr) => {
-    $("#num").val(response.num);
-    localStorage.setItem("num", response.num);
 };
 //endregion
 
 $(function() {
     //region Initialize page properties
-    $("#submitButton").on("click", sendNumRequest);
+    $("#submitButton").on("click", onClickSubmitNum);
     $("#mainGrid").css("grid-template-columns", `repeat(${gridLength}, 1fr)`);
     //endregion
 
@@ -60,7 +50,7 @@ $(function() {
     }
     //endregion
 
-    //Dynamically insert elements
+    //region Dynamically insert elements
     let doLightSquare = false;
     for (let i = gridLength; 0 < i; i--) {
         //Flips the colour
@@ -77,4 +67,5 @@ $(function() {
             $("#mainGrid").append($gridItem);
         }
     }
+    //endregion
 });
