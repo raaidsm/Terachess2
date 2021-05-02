@@ -25,32 +25,9 @@ h1 {
   color: #DBD9D7;
 }
 
-.flexContainer {
-  display: flex;
-  /*flex-direction: column;
-  justify-content: flex-start;
-  justify-content: space-around;*/
-}
-
-.gridContainer {
-  display: grid;
-  /*grid-template-columns: 25% 75%;
-  grid-template-columns: 1fr 1fr;
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: 200px 500px;
-  grid-template-rows: 200px auto;
-  grid-auto-rows: 200px 500px;                 //Does cascading like grid-template-columns
-  grid-template-rows: minmax(200px, auto);     //Does minmax for one row
-  grid-auto-rows: minmax(200px, auto);         //Does minmax for all rows*/
-}
-
-/*.gridItem {
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 1;
-    grid-row-end: 2;
-}*/
 #mainGrid {
+  margin-bottom: 20px;
+  display: grid;
   width: 50%;
   grid-template-columns: repeat(8, 1fr);
 }
@@ -59,6 +36,24 @@ h1 {
   content: "";
   padding-bottom: 100%;
   display: block;
+}
+
+.flexContainer {
+  /*display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  justify-content: space-around;*/
+}
+
+.gridContainer {
+  /*grid-template-columns: 25% 75%;
+  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: 200px 500px;
+  grid-template-rows: 200px auto;
+  grid-auto-rows: 200px 500px;                 //Does cascading like grid-template-columns
+  grid-template-rows: minmax(200px, auto);     //Does minmax for one row
+  grid-auto-rows: minmax(200px, auto);         //Does minmax for all rows*/
 }
 
 /*# sourceMappingURL=main.css.map */
