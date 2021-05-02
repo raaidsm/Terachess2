@@ -1,12 +1,35 @@
 $niceColour: #2EC4A6;
+$backgroundColour: #312E2B;
+$navBarColour: #272522;
+$standardTextColour: #DBD9D7;
 $lightSquareColour: #EEEED2;
 $darkSquareColour: #769656;
-$fsTitle: 50px;
+$titleFont: "Press Start 2P";
+$standardFont: "PT Mono";
+$titleFontSize: 35px;
 
+body {
+    background-color: $backgroundColour;
+    font-family: $standardFont, serif;
+    color: $standardTextColour;
+    font-weight: bolder;
+}
 h1 {
-    font-size: $fsTitle;
-    background-color: $niceColour;
+    margin: 20px 0;
+    border-bottom: 2px solid lightgrey;
+    padding: 20px 5px;
+    background-color: $navBarColour;
+    font-family: $titleFont, serif;
+    font-size: $titleFontSize;
+    color: white;
     text-align: center;
+}
+#mainInputOutput {
+    margin-bottom: 20px;
+}
+.textInput {
+    background-color: $navBarColour;
+    color: $standardTextColour;
 }
 .flexContainer {
     display: flex;
@@ -34,8 +57,6 @@ h1 {
 #mainGrid {
     width: 50%;
     grid-template-columns: repeat(8, 1fr);
-}
-.gridItem {
 }
 #mainGrid > div::before {
     content: "";

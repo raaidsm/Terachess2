@@ -2,6 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Press+Start+2P">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Mono">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
@@ -17,11 +20,13 @@
 <body>
 <main class="container">
     <h1>Welcome to the testing grounds for the future implementation of Terachess!</h1>
-    <label for="num">Insert a number to double it (hopefully)</label><br>
-    <input id="num" type="text" name="numInsert">
-    <input id="submitButton" type="submit" value="Submit"><br>
-    <label for="squareNameDisplay">Last square you've just clicked on:</label><br>
-    <input id="squareNameDisplay" type="text" name="squareNameDisplay">
+    <section id="mainInputOutput">
+        <label for="num">Insert a number to double it (hopefully)</label><br>
+        <input id="num" class="textInput" type="text" name="numInsert">
+        <input id="submitButton" type="submit" value="Submit"><br>
+        <label for="squareNameDisplay">Last square you've just clicked on:</label><br>
+        <input id="squareNameDisplay" class="textInput" type="text" name="squareNameDisplay">
+    </section>
     <section id="mainGrid" class="gridContainer"></section>
 </main>
 </body>

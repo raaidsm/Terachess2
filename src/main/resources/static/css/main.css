@@ -1,7 +1,28 @@
+body {
+  background-color: #312E2B;
+  font-family: "PT Mono", serif;
+  color: #DBD9D7;
+  font-weight: bolder;
+}
+
 h1 {
-  font-size: 50px;
-  background-color: #2EC4A6;
+  margin: 20px 0;
+  border-bottom: 2px solid lightgrey;
+  padding: 20px 5px;
+  background-color: #272522;
+  font-family: "Press Start 2P", serif;
+  font-size: 35px;
+  color: white;
   text-align: center;
+}
+
+#mainInputOutput {
+  margin-bottom: 20px;
+}
+
+.textInput {
+  background-color: #272522;
+  color: #DBD9D7;
 }
 
 .flexContainer {
