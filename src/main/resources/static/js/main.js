@@ -69,10 +69,11 @@ $(function() {
             $gridItem.on("click", onClickBoardSquare);
             //Add pieces according to rows
             if (i === gridLength) {
-                let $pieceImage = $("<img class='img-fluid' src='' alt=''>");
-                $pieceImage.prop("src", `../images/${blackFirstRank[j]}.png`);
-                $pieceImage.prop("alt", blackFirstRank[j]);
-                $gridItem.append($pieceImage);
+                //`../images/${blackFirstRank[j]}.png`
+                $gridItem.css("background-image", `url(../images/${blackFirstRank[j]}.png)`);
+                $gridItem.css("background-size", "cover");
+                $gridItem.css("background-position", "center");
+                $gridItem.css("background-repeat", "no-repeat");
             }
             if (i === gridLength - 1) {}
             //Test text to make it not empty
