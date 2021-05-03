@@ -6,6 +6,8 @@ const lightSquareColour = "#EEEED2";
 const darkSquareColour = "#769656";
 const lightSquareRedColour = "#F43E42";
 const darkSquareRedColour = "#E83536";
+const lightSquareSelectedColour = "#0073FF";
+const darkSquareSelectedColour = "#005FD4";
 //region Ranks of Pieces
 const blackFirstRank = ["black_rook", "black_knight", "black_bishop", "black_queen", "black_king",
     "black_bishop", "black_knight", "black_rook"];
@@ -16,9 +18,34 @@ const whiteSecondRank = ["white_pawn", "white_pawn", "white_pawn", "white_pawn",
 const whiteFirstRank = ["white_rook", "white_knight", "white_bishop", "white_queen", "white_king",
     "white_bishop", "white_knight", "white_rook"];
 //endregion
+//region Game-Tracking Variables
+let isFirstSquareClicked = false;
+let $clickedSquare = null;
+let clickedSquareColour = null;
+//endregion
 //endregion
 
 //region Event Handlers
+const onClickBoardSquare = (event) => {
+    let $target = $(event.target);
+    let targetColour = rgbToHex($target.css("background-color")).toUpperCase();
+    if (isFirstSquareClicked === false) {
+        clickedSquareColour = targetColour;
+        if (clickedSquareColour === lightSquareColour) $target.css("background-color", lightSquareSelectedColour);
+        if (clickedSquareColour === darkSquareColour) $target.css("background-color", darkSquareSelectedColour);
+        $clickedSquare = $target;
+        isFirstSquareClicked = true;
+    }
+    else if (isFirstSquareClicked === true) {
+        targetColour = rgbToHex($clickedSquare.css("background-color")).toUpperCase();
+        let clickedSquareName = $clickedSquare.prop("id");
+        let secondClickedSquareName = $target.prop("id");
+        if (targetColour === lightSquareSelectedColour) $clickedSquare.css("background-color", lightSquareColour);
+        if (targetColour === darkSquareSelectedColour) $clickedSquare.css("background-color", darkSquareColour);
+        $("#squareNameDisplay").val(`${clickedSquareName} to ${secondClickedSquareName}`);
+        isFirstSquareClicked = false;
+    }
+};
 const onDoubleClickBoardSquare = (event) => {
     let $target = $(event.target);
     let targetColour = rgbToHex($target.css("background-color")).toUpperCase();
@@ -39,7 +66,7 @@ const onDoubleClickBoardSquare = (event) => {
             $("#squareNameDisplay").val(response.squareName);
         }
     });
-}
+};
 const onClickSubmitNum = () => {
     let num = $("#num").val();
     $.ajax({
@@ -125,7 +152,8 @@ $(function() {
             $gridItem.css("background-color", doLightSquare ? lightSquareColour : darkSquareColour);
             //Flips the colour
             doLightSquare = doLightSquare === false;
-            //Assign click handler onDoubleClickBoardSquare to grid items
+            //Assign click handlers to grid items
+            $gridItem.on("click", onClickBoardSquare);
             $gridItem.on("dblclick", onDoubleClickBoardSquare);
             //Add pieces according to rows
             fillRows($gridItem, i, j);
