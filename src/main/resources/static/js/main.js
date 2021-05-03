@@ -4,6 +4,8 @@ const gridLength = 8;
 const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];   //Please make this array automatic this is horrendous
 const lightSquareColour = "#EEEED2";
 const darkSquareColour = "#769656";
+const lightSquareRedColour = "#F43E42";
+const darkSquareRedColour = "#E83536";
 //region Ranks of Pieces
 const blackFirstRank = ["black_rook", "black_knight", "black_bishop", "black_queen", "black_king",
     "black_bishop", "black_knight", "black_rook"];
@@ -18,6 +20,15 @@ const whiteFirstRank = ["white_rook", "white_knight", "white_bishop", "white_que
 
 //region Event Handlers
 const onClickBoardSquare = (event) => {
+    let $target = $(event.target);
+    let targetColour = rgbToHex($target.css("background-color")).toUpperCase();
+    console.log(targetColour);
+    //Redden
+    if (targetColour === lightSquareColour) $target.css("background-color", lightSquareRedColour);
+    if (targetColour === darkSquareColour) $target.css("background-color", darkSquareRedColour);
+    //Un-Redden
+    if (targetColour === lightSquareRedColour) $target.css("background-color", lightSquareColour);
+    if (targetColour === darkSquareRedColour) $target.css("background-color", darkSquareColour);
     $.ajax({
         url: "/ReadSquare",
         contentType: "application/x-www-form-urlencoded",
@@ -73,6 +84,19 @@ const fillRows = (gridItem, iRow, iColumn) => {
         gridItem.css("background-repeat", "no-repeat");
     }
 };
+const rgbToHex = (col) => {
+    if (col.charAt(0) === 'r')
+    {
+        col = col.replace('rgb(','').replace(')','').split(',');
+        let r = parseInt(col[0], 10).toString(16);
+        let g = parseInt(col[1], 10).toString(16);
+        let b = parseInt(col[2], 10).toString(16);
+        r = r.length === 1 ? '0' + r : r;
+        g = g.length === 1 ? '0' + g : g;
+        b = b.length === 1 ? '0' + b : b;
+        return '#' + r + g + b;
+    }
+}
 //endregion
 
 $(function() {
