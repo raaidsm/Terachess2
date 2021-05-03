@@ -19,7 +19,7 @@ const whiteFirstRank = ["white_rook", "white_knight", "white_bishop", "white_que
 //endregion
 
 //region Event Handlers
-const onClickBoardSquare = (event) => {
+const onDoubleClickBoardSquare = (event) => {
     let $target = $(event.target);
     let targetColour = rgbToHex($target.css("background-color")).toUpperCase();
     console.log(targetColour);
@@ -125,8 +125,8 @@ $(function() {
             $gridItem.css("background-color", doLightSquare ? lightSquareColour : darkSquareColour);
             //Flips the colour
             doLightSquare = doLightSquare === false;
-            //Assign click handler onClickBoardSquare to grid items
-            $gridItem.on("click", onClickBoardSquare);
+            //Assign click handler onDoubleClickBoardSquare to grid items
+            $gridItem.on("dblclick", onDoubleClickBoardSquare);
             //Add pieces according to rows
             fillRows($gridItem, i, j);
             //Test text to make it not empty
