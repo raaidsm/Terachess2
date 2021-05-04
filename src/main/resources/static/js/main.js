@@ -56,7 +56,6 @@ const onClickBoardSquare = (event) => {
 const onDoubleClickBoardSquare = (event) => {
     let $target = $(event.target);
     let targetColour = rgbToHex($target.css("background-color")).toUpperCase();
-    console.log(targetColour);
     //Redden
     if (targetColour === lightSquareColour) $target.css("background-color", lightSquareRedColour);
     if (targetColour === darkSquareColour) $target.css("background-color", darkSquareRedColour);
@@ -126,13 +125,14 @@ const executePieceMove = ($firstSquare, $secondSquare) => {
     $secondSquare.data("colour", $firstSquare.data("colour"));
     $secondSquare.data("type", $firstSquare.data("type"));
     $firstSquare.removeData();
-}
+};
 //endregion
 
 $(function() {
     //region Initialize page properties
     $("#submitButton").on("click", onClickSubmitNum);
-    $("#mainGrid").css("grid-template-columns", `repeat(${gridLength}, 1fr)`);
+    let $mainGrid = $("#mainGrid");
+    $mainGrid.css("grid-template-columns", `repeat(${gridLength}, 1fr)`);
     //endregion
 
     //region Initialize Localbase database and initialize default entry
@@ -163,7 +163,7 @@ $(function() {
             //Set background image properties to square and add pieces as images
             fillRows($gridItem, i, j);
             //Add square to main grid (chess board)
-            $("#mainGrid").append($gridItem);
+            $mainGrid.append($gridItem);
         }
     }
     //endregion
