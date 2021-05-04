@@ -119,8 +119,13 @@ const rgbToHex = (col) => {
     }
 };
 const executePieceMove = ($firstSquare, $secondSquare) => {
+    //Transfer piece image
     $secondSquare.css("background-image", $firstSquare.css("background-image"));
     $firstSquare.css("background-image", "none");
+    //Transfer piece data properties
+    $secondSquare.data("colour", $firstSquare.data("colour"));
+    $secondSquare.data("type", $firstSquare.data("type"));
+    $firstSquare.removeData();
 }
 //endregion
 
