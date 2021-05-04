@@ -73,20 +73,6 @@ const onDoubleClickBoardSquare = (event) => {
         }
     });
 };
-const onClickSubmitNum = () => {
-    let num = $("#num").val();
-    $.ajax({
-        url: "/AffectNum",
-        contentType: "application/x-www-form-urlencoded",
-        dataType: "json",
-        type: "POST",
-        data: { num: num },
-        success: function(response) {
-            $("#num").val(response.num);
-            localStorage.setItem("num", response.num);
-        }
-    });
-};
 //endregion
 //region Other Functions
 const fillRows = ($gridItem, iRow, iColumn) => {
@@ -130,7 +116,6 @@ const executePieceMove = ($firstSquare, $secondSquare) => {
 
 $(function() {
     //region Initialize page properties
-    $("#submitButton").on("click", onClickSubmitNum);
     let $mainGrid = $("#mainGrid");
     $mainGrid.css("grid-template-columns", `repeat(${gridLength}, 1fr)`);
     //endregion
