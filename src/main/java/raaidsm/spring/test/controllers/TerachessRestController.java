@@ -9,8 +9,8 @@ import raaidsm.spring.test.models.NumForm;
 import raaidsm.spring.test.models.SquareForm;
 
 @RestController
-public class TestRestController {
-    private final Logger logger = LoggerFactory.getLogger(TestController.class);
+public class TerachessRestController {
+    private final Logger logger = LoggerFactory.getLogger(TerachessController.class);
 
     @PostMapping(value= "/AffectNum", produces="application/json")
     public NumForm affectNum(@ModelAttribute NumForm form) {

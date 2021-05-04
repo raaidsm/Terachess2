@@ -6,8 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class TestController {
-    private final Logger logger = LoggerFactory.getLogger(TestController.class);
+public class TerachessController {
+    private final Logger logger = LoggerFactory.getLogger(TerachessController.class);
 
     @GetMapping(value={"/", "/Index"})
     public String index() {
