@@ -41,6 +41,8 @@ const onClickBoardSquare = (event) => {
         isFirstSquareClicked = true;
     }
     else if (isFirstSquareClicked === true) {
+        //Guard clause for if piece-to-be-captured is of same colour a piece capturing
+        if ($clickedSquare.data("colour") === $target.data("colour")) return;
         clickedSquareColour = rgbToHex($clickedSquare.css("background-color")).toUpperCase();
         let clickedSquareName = $clickedSquare.prop("id");
         let secondClickedSquareName = $target.prop("id");
@@ -88,22 +90,20 @@ const onClickSubmitNum = () => {
 };
 //endregion
 //region Other Functions
-const fillRows = (gridItem, iRow, iColumn) => {
-    gridItem.css("background-size", "cover");
-    gridItem.css("background-position", "center");
-    gridItem.css("background-repeat", "no-repeat");
-    if (iRow === gridLength) {
-        gridItem.css("background-image", `url(../images/${blackFirstRank[iColumn]}.png)`);
-    }
-    else if (iRow === gridLength - 1) {
-        gridItem.css("background-image", `url(../images/${blackSecondRank[iColumn]}.png)`);
-    }
-    else if (iRow === 2) {
-        gridItem.css("background-image", `url(../images/${whiteSecondRank[iColumn]}.png)`);
-    }
-    else if (iRow === 1) {
-        gridItem.css("background-image", `url(../images/${whiteFirstRank[iColumn]}.png)`);
-    }
+const fillRows = ($gridItem, iRow, iColumn) => {
+    $gridItem.css("background-size", "cover");
+    $gridItem.css("background-position", "center");
+    $gridItem.css("background-repeat", "no-repeat");
+    let pieceDetails = "";
+
+    if (iRow === gridLength) pieceDetails = blackFirstRank[iColumn];
+    else if (iRow === gridLength - 1) pieceDetails = blackSecondRank[iColumn];
+    else if (iRow === 2) pieceDetails = whiteSecondRank[iColumn];
+    else if (iRow === 1) pieceDetails = whiteFirstRank[iColumn];
+
+    $gridItem.data("colour", pieceDetails.substring(0, 5));
+    $gridItem.data("type", pieceDetails.substring(6));
+    $gridItem.css("background-image", `url(../images/${pieceDetails}.png)`);
 };
 const rgbToHex = (col) => {
     if (col.charAt(0) === 'r')
