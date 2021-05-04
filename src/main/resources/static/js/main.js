@@ -116,14 +116,11 @@ const rgbToHex = (col) => {
         return '#' + r + g + b;
     }
 };
-const executePieceMove = (firstSquare, secondSquare) => {
+const executePieceMove = ($firstSquare, $secondSquare) => {
     //If first square clicked has no piece to move, just ignore and return
-    if (firstSquare.css("background-image") === "none") return;
-    //TODO: Ignore captures for now
-    if (secondSquare.css("background-image") !== "none") return;
-    let image = firstSquare.css("background-image");
-    secondSquare.css("background-image", image);
-    firstSquare.css("background-image", "none");
+    if ($firstSquare.css("background-image") === "none") return;
+    $secondSquare.css("background-image", $firstSquare.css("background-image"));
+    $firstSquare.css("background-image", "none");
 }
 //endregion
 
