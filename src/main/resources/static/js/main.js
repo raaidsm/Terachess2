@@ -37,15 +37,25 @@ const onClickBoardSquare = (event) => {
         isFirstSquareClicked = true;
     }
     else if (isFirstSquareClicked === true) {
-        targetColour = rgbToHex($clickedSquare.css("background-color")).toUpperCase();
+        clickedSquareColour = rgbToHex($clickedSquare.css("background-color")).toUpperCase();
         let clickedSquareName = $clickedSquare.prop("id");
         let secondClickedSquareName = $target.prop("id");
-        if (targetColour === lightSquareSelectedColour) $clickedSquare.css("background-color", lightSquareColour);
-        if (targetColour === darkSquareSelectedColour) $clickedSquare.css("background-color", darkSquareColour);
+        if (clickedSquareColour === lightSquareSelectedColour) $clickedSquare.css("background-color", lightSquareColour);
+        if (clickedSquareColour === darkSquareSelectedColour) $clickedSquare.css("background-color", darkSquareColour);
         $("#squareNameDisplay").val(`${clickedSquareName} to ${secondClickedSquareName}`);
+        executePieceMove($clickedSquare, $target);
         isFirstSquareClicked = false;
     }
 };
+const executePieceMove = (firstSquare, secondSquare) => {
+    //If first square clicked has no piece to move, just ignore and return
+    if (firstSquare.css("background-image") === "none") return;
+    //TODO: Ignore captures for now
+    if (secondSquare.css("background-image") !== "none") return;
+    let image = firstSquare.css("background-image");
+    secondSquare.css("background-image", image);
+    firstSquare.css("background-image", "none");
+}
 const onDoubleClickBoardSquare = (event) => {
     let $target = $(event.target);
     let targetColour = rgbToHex($target.css("background-color")).toUpperCase();
@@ -84,31 +94,20 @@ const onClickSubmitNum = () => {
 //endregion
 //region Other Functions
 const fillRows = (gridItem, iRow, iColumn) => {
+    gridItem.css("background-size", "cover");
+    gridItem.css("background-position", "center");
+    gridItem.css("background-repeat", "no-repeat");
     if (iRow === gridLength) {
         gridItem.css("background-image", `url(../images/${blackFirstRank[iColumn]}.png)`);
-        gridItem.css("background-size", "cover");
-        gridItem.css("background-position", "center");
-        gridItem.css("background-repeat", "no-repeat");
     }
-    if (iRow === gridLength - 1) {
+    else if (iRow === gridLength - 1) {
         gridItem.css("background-image", `url(../images/${blackSecondRank[iColumn]}.png)`);
-        gridItem.css("background-size", "cover");
-        gridItem.css("background-position", "center");
-        gridItem.css("background-repeat", "no-repeat");
     }
-    if (iRow === 2) {
-        //`../images/${blackFirstRank[j]}.png`
+    else if (iRow === 2) {
         gridItem.css("background-image", `url(../images/${whiteSecondRank[iColumn]}.png)`);
-        gridItem.css("background-size", "cover");
-        gridItem.css("background-position", "center");
-        gridItem.css("background-repeat", "no-repeat");
     }
-    if (iRow === 1) {
-        //`../images/${blackFirstRank[j]}.png`
+    else if (iRow === 1) {
         gridItem.css("background-image", `url(../images/${whiteFirstRank[iColumn]}.png)`);
-        gridItem.css("background-size", "cover");
-        gridItem.css("background-position", "center");
-        gridItem.css("background-repeat", "no-repeat");
     }
 };
 const rgbToHex = (col) => {
@@ -155,7 +154,7 @@ $(function() {
             //Assign click handlers to grid items
             $gridItem.on("click", onClickBoardSquare);
             $gridItem.on("dblclick", onDoubleClickBoardSquare);
-            //Add pieces according to rows
+            //Set background image properties to square then add pieces according to rows
             fillRows($gridItem, i, j);
             //Test text to make it not empty
             $("#mainGrid").append($gridItem);
