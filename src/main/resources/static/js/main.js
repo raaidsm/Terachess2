@@ -32,6 +32,8 @@ const onClickBoardSquare = (event) => {
     let $target = $(event.target);
     let targetColour = rgbToHex($target.css("background-color")).toUpperCase();
     if (isFirstSquareClicked === false) {
+        //Guard clause for if first square clicked not having a piece on it to move
+        if ($target.css("background-image") === "none") return;
         clickedSquareColour = targetColour;
         if (clickedSquareColour === lightSquareColour) $target.css("background-color", lightSquareSelectedColour);
         if (clickedSquareColour === darkSquareColour) $target.css("background-color", darkSquareSelectedColour);
@@ -117,8 +119,6 @@ const rgbToHex = (col) => {
     }
 };
 const executePieceMove = ($firstSquare, $secondSquare) => {
-    //If first square clicked has no piece to move, just ignore and return
-    if ($firstSquare.css("background-image") === "none") return;
     $secondSquare.css("background-image", $firstSquare.css("background-image"));
     $firstSquare.css("background-image", "none");
 }
