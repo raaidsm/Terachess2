@@ -2,12 +2,14 @@
 const gridItemTemplate = "<div class='gridItem'></div>";
 const gridLength = 8;
 const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];   //Please make this array automatic this is horrendous
+//region Colours
 const lightSquareColour = "#EEEED2";
 const darkSquareColour = "#769656";
 const lightSquareRedColour = "#F43E42";
 const darkSquareRedColour = "#E83536";
 const lightSquareSelectedColour = "#0073FF";
 const darkSquareSelectedColour = "#005FD4";
+//endregion
 //region Ranks of Pieces
 const blackFirstRank = ["black_rook", "black_knight", "black_bishop", "black_queen", "black_king",
     "black_bishop", "black_knight", "black_rook"];
@@ -47,15 +49,6 @@ const onClickBoardSquare = (event) => {
         isFirstSquareClicked = false;
     }
 };
-const executePieceMove = (firstSquare, secondSquare) => {
-    //If first square clicked has no piece to move, just ignore and return
-    if (firstSquare.css("background-image") === "none") return;
-    //TODO: Ignore captures for now
-    if (secondSquare.css("background-image") !== "none") return;
-    let image = firstSquare.css("background-image");
-    secondSquare.css("background-image", image);
-    firstSquare.css("background-image", "none");
-}
 const onDoubleClickBoardSquare = (event) => {
     let $target = $(event.target);
     let targetColour = rgbToHex($target.css("background-color")).toUpperCase();
@@ -122,6 +115,15 @@ const rgbToHex = (col) => {
         b = b.length === 1 ? '0' + b : b;
         return '#' + r + g + b;
     }
+};
+const executePieceMove = (firstSquare, secondSquare) => {
+    //If first square clicked has no piece to move, just ignore and return
+    if (firstSquare.css("background-image") === "none") return;
+    //TODO: Ignore captures for now
+    if (secondSquare.css("background-image") !== "none") return;
+    let image = firstSquare.css("background-image");
+    secondSquare.css("background-image", image);
+    firstSquare.css("background-image", "none");
 }
 //endregion
 
@@ -143,20 +145,22 @@ $(function() {
     //region Dynamically insert elements
     let doLightSquare = false;
     for (let i = gridLength; 0 < i; i--) {
-        //Flips the colour
+        //Flip the colour for the next square
         doLightSquare = doLightSquare === false;
         for (let j = 0; j < gridLength; j++) {
+            //Initialize square
             let $gridItem = $(gridItemTemplate);
+            //Set square coordinate name and colour
             $gridItem.prop("id", letters[j] + i);
             $gridItem.css("background-color", doLightSquare ? lightSquareColour : darkSquareColour);
-            //Flips the colour
+            //Flip the colour for the next square
             doLightSquare = doLightSquare === false;
-            //Assign click handlers to grid items
+            //Assign event handlers to grid items
             $gridItem.on("click", onClickBoardSquare);
             $gridItem.on("dblclick", onDoubleClickBoardSquare);
-            //Set background image properties to square then add pieces according to rows
+            //Set background image properties to square and add pieces as images
             fillRows($gridItem, i, j);
-            //Test text to make it not empty
+            //Add square to main grid (chess board)
             $("#mainGrid").append($gridItem);
         }
     }
