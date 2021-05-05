@@ -32,24 +32,21 @@ const onClickBoardSquare = (event) => {
     let $target = $(event.target);
     let targetColour = rgbToHex($target.css("background-color")).toUpperCase();
     if (isFirstSquareClicked === false) {
-        //Guard clause for if first square clicked not having a piece on it to move
+        //Guard clause for first square clicked not having a piece on it to move
         if ($target.css("background-image") === "none") return;
+        //Save selected square data to game-tracking variables
+        $clickedSquare = $target;
         clickedSquareColour = targetColour;
+        //Apply selected colour
         if (clickedSquareColour === lightSquareColour) $target.css("background-color", lightSquareSelectedColour);
         if (clickedSquareColour === darkSquareColour) $target.css("background-color", darkSquareSelectedColour);
-        $clickedSquare = $target;
+        //First square has been successfully clicked
         isFirstSquareClicked = true;
     }
     else if (isFirstSquareClicked === true) {
-        //Guard clause for if piece-to-be-captured is of same colour a piece capturing
-        if ($clickedSquare.data("colour") === $target.data("colour")) return;
-        //Change back the colour of the first clicked square
-        clickedSquareColour = rgbToHex($clickedSquare.css("background-color")).toUpperCase();
-        if (clickedSquareColour === lightSquareSelectedColour) $clickedSquare.css("background-color", lightSquareColour);
-        if (clickedSquareColour === darkSquareSelectedColour) $clickedSquare.css("background-color", darkSquareColour);
-        //Execute move
-        executePieceMove($clickedSquare, $target);
-        isFirstSquareClicked = false;
+        //Execute move only if both squares don't have the same colour of piece
+        if ($clickedSquare.data("colour") !== $target.data("colour")) executePieceMove($clickedSquare, $target);
+        resetFirstSquareSelection();
     }
 };
 const onDoubleClickBoardSquare = (event) => {
@@ -123,6 +120,16 @@ const executePieceMove = ($firstSquare, $secondSquare) => {
             $("#squareNameDisplay").val(`${response.firstSquare} - ${response.secondSquare}`);
         }
     });
+};
+const resetFirstSquareSelection = () => {
+    //Clear selection colour
+    clickedSquareColour = rgbToHex($clickedSquare.css("background-color")).toUpperCase();
+    if (clickedSquareColour === lightSquareSelectedColour) $clickedSquare.css("background-color", lightSquareColour);
+    if (clickedSquareColour === darkSquareSelectedColour) $clickedSquare.css("background-color", darkSquareColour);
+    //Clear game-tracking variables
+    $clickedSquare = null;
+    clickedSquareColour = null;
+    isFirstSquareClicked = false;
 };
 //endregion
 
