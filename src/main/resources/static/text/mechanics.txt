@@ -1,0 +1,6 @@
+-promotion (varies)
+-blocking with pieces (more complex in Terachess)
+-initial Pawn move (Chess-only)
+-castling (Chess-only)
+-initial King move (Terachess-only)
+-types of moves (move-and-capture, hop-mac, only-move, only-capture, hop-capture)
