@@ -108,7 +108,8 @@ const executePieceMove = ($firstSquare, $secondSquare) => {
     //Transfer piece data properties
     $secondSquare.data("colour", $firstSquare.data("colour"));
     $secondSquare.data("type", $firstSquare.data("type"));
-    $firstSquare.removeData();
+    $firstSquare.removeData("colour");
+    $firstSquare.removeData("type");
     //Communicate the two selected squares to rest controller
     $.ajax({
         url: "/ReadMove",
@@ -150,14 +151,15 @@ $(function() {
 
     //region Dynamically insert elements
     let doLightSquare = false;
-    for (let i = gridLength; 0 < i; i--) {
+    for (let y = gridLength; 0 < y; y--) {
         //Flip the colour for the next square
         doLightSquare = doLightSquare === false;
-        for (let j = 0; j < gridLength; j++) {
+        for (let x = 0; x < gridLength; x++) {
             //Initialize square
             let $gridItem = $(gridItemTemplate);
             //Set square coordinate name and colour
-            $gridItem.prop("id", letters[j] + i);
+            $gridItem.prop("id", letters[x] + y);
+            $gridItem.data("coordinate", `${x}-${y-1}`);
             $gridItem.css("background-color", doLightSquare ? lightSquareColour : darkSquareColour);
             //Flip the colour for the next square
             doLightSquare = doLightSquare === false;
@@ -165,7 +167,7 @@ $(function() {
             $gridItem.on("click", onClickBoardSquare);
             $gridItem.on("dblclick", onDoubleClickBoardSquare);
             //Set background image properties to square and add pieces as images
-            fillRows($gridItem, i, j);
+            fillRows($gridItem, y, x);
             //Add square to main grid (chess board)
             $mainGrid.append($gridItem);
         }
