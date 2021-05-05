@@ -1,3 +1,4 @@
+-check and checkmate
 -promotion (varies)
 -blocking with pieces (more complex in Terachess)
 -initial Pawn move (Chess-only)
