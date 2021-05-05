@@ -43,12 +43,11 @@ const onClickBoardSquare = (event) => {
     else if (isFirstSquareClicked === true) {
         //Guard clause for if piece-to-be-captured is of same colour a piece capturing
         if ($clickedSquare.data("colour") === $target.data("colour")) return;
+        //Change back the colour of the first clicked square
         clickedSquareColour = rgbToHex($clickedSquare.css("background-color")).toUpperCase();
-        let clickedSquareName = $clickedSquare.prop("id");
-        let secondClickedSquareName = $target.prop("id");
         if (clickedSquareColour === lightSquareSelectedColour) $clickedSquare.css("background-color", lightSquareColour);
         if (clickedSquareColour === darkSquareSelectedColour) $clickedSquare.css("background-color", darkSquareColour);
-        $("#squareNameDisplay").val(`${clickedSquareName} to ${secondClickedSquareName}`);
+        //Execute move
         executePieceMove($clickedSquare, $target);
         isFirstSquareClicked = false;
     }
@@ -111,6 +110,17 @@ const executePieceMove = ($firstSquare, $secondSquare) => {
     $secondSquare.data("colour", $firstSquare.data("colour"));
     $secondSquare.data("type", $firstSquare.data("type"));
     $firstSquare.removeData();
+    //Communicate the two selected squares to rest controller
+    $.ajax({
+        url: "/ReadMove",
+        contentType: "application/x-www-form-urlencoded",
+        dataType: "json",
+        type: "POST",
+        data: { firstSquare: $firstSquare.prop("id"), secondSquare: $secondSquare.prop("id") },
+        success: function(response) {
+            $("#squareNameDisplay").val(`${response.firstSquare} - ${response.secondSquare}`);
+        }
+    });
 };
 //endregion
 
