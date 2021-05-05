@@ -85,9 +85,11 @@ const fillRows = ($gridItem, iRow, iColumn) => {
     else if (iRow === 2) pieceDetails = whiteSecondRank[iColumn];
     else if (iRow === 1) pieceDetails = whiteFirstRank[iColumn];
 
-    $gridItem.data("colour", pieceDetails.substring(0, 5));
-    $gridItem.data("type", pieceDetails.substring(6));
-    $gridItem.css("background-image", `url(../images/${pieceDetails}.png)`);
+    if (pieceDetails !== "") {
+        $gridItem.data("colour", pieceDetails.substring(0, 5));
+        $gridItem.data("type", pieceDetails.substring(6));
+        $gridItem.css("background-image", `url(../images/${pieceDetails}.png)`);
+    }
 };
 const rgbToHex = (col) => {
     if (col.charAt(0) === 'r')

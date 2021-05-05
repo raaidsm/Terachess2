@@ -1,0 +1,2 @@
+-Implement saving of moves in client-side storage (IndexedDB)
+-Implement going back and forth in moves (undo last move, redo last move)
