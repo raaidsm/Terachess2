@@ -1,3 +1,9 @@
+OVERALL PLAN:
+-Starting position has a pre-defined set of legal moves
+-Once a legal move is made, Java code calculates legal moves for every piece
+  -This way, it knows if there is check/checkmate
+-When JavaScript side selects a square, it queries the Java side for all legal moves for that piece
+-When one of the legal moves is selected, the process repeats again
 GAME LOGIC:
 OVER THE INTERNET:
 -Host game on server somehow
