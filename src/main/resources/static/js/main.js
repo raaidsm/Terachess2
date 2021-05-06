@@ -58,16 +58,7 @@ const onDoubleClickBoardSquare = (event) => {
     //Un-Redden
     if (targetColour === lightSquareRedColour) $target.css("background-color", lightSquareColour);
     if (targetColour === darkSquareRedColour) $target.css("background-color", darkSquareColour);
-    $.ajax({
-        url: "/ReadSquare",
-        contentType: "application/x-www-form-urlencoded",
-        dataType: "json",
-        type: "POST",
-        data: { squareName: event.target.id },
-        success: function(response) {
-            $("#squareNameDisplay").val(response.squareName);
-        }
-    });
+    $("#squareNameDisplay").val($target.prop("id"));
 };
 //endregion
 //region Other Functions
