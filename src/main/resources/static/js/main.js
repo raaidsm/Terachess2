@@ -40,6 +40,13 @@ const onClickBoardSquare = (event) => {
         //Apply selected colour
         if (clickedSquareColour === lightSquareColour) $target.css("background-color", lightSquareSelectedColour);
         if (clickedSquareColour === darkSquareColour) $target.css("background-color", darkSquareSelectedColour);
+        //Send first selected square to Java code
+        $.ajax({
+            url: "/ReadFirstPieceSelection",
+            contentType: "application/x-www-form-urlencoded",
+            type: "POST",
+            data: { firstSquare: $target.prop("id"), secondSquare: null }
+        });
         //First square has been successfully clicked
         isFirstSquareClicked = true;
     }

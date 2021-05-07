@@ -11,6 +11,13 @@ import raaidsm.spring.test.models.MoveForm;
 public class TerachessRestController {
     private final Logger logger = LoggerFactory.getLogger(TerachessController.class);
 
+    @PostMapping(value="/ReadFirstPieceSelection", produces="application/json")
+    public MoveForm readFirstPieceSelection(@ModelAttribute MoveForm form) {
+        logger.trace("readFirstPieceSelection() runs");
+
+        return form;
+    }
+
     @PostMapping(value="/ReadMove", produces="application/json")
     public MoveForm readMove(@ModelAttribute MoveForm form) {
         logger.trace("readMove() runs");
