@@ -4,6 +4,9 @@ OVERALL PLAN:
   -This way, it knows if there is check/checkmate
 -When JavaScript side selects a square, it queries the Java side for all legal moves for that piece
 -When one of the legal moves is selected, the process repeats again
+
+GENERAL:
+-Break main.js code into modules
 GAME LOGIC:
 OVER THE INTERNET:
 -Host game on server somehow

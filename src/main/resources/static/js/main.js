@@ -44,8 +44,12 @@ const onClickBoardSquare = (event) => {
         $.ajax({
             url: "/ReadFirstPieceSelection",
             contentType: "application/x-www-form-urlencoded",
+            dataType: "json",
             type: "POST",
-            data: { firstSquare: $target.prop("id"), secondSquare: null }
+            data: { firstSquare: $target.prop("id"), secondSquare: null },
+            success: function(response) {
+                //TODO: Display all the legal moves on the board
+            }
         });
         //First square has been successfully clicked
         isFirstSquareClicked = true;
@@ -125,6 +129,7 @@ const resetFirstSquareSelection = () => {
     clickedSquareColour = rgbToHex($clickedSquare.css("background-color")).toUpperCase();
     if (clickedSquareColour === lightSquareSelectedColour) $clickedSquare.css("background-color", lightSquareColour);
     if (clickedSquareColour === darkSquareSelectedColour) $clickedSquare.css("background-color", darkSquareColour);
+    //TODO: Clear legal move colours off all squares
     //Clear game-tracking variables
     $clickedSquare = null;
     clickedSquareColour = null;
