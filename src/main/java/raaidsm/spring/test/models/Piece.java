@@ -2,7 +2,7 @@ package raaidsm.spring.test.models;
 
 import java.io.Serializable;
 
-public class Piece implements Serializable {
+public class Piece {
     private String name = "";
     private String colour = "";
     private String location = "";
