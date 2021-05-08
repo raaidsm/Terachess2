@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Piece implements Serializable {
-    private String name = "";
-    private String colour = "";
-    private String location = "";
-    private HashMap<String, Piece> board;
-    private List<String> legalMoves = new ArrayList<String>();
+    protected String name = "";
+    protected String colour = "";
+    protected String location = "";
+    protected HashMap<String, Piece> board;
+    protected List<String> legalMoves;
 
     public Piece() {}
     public Piece(String name, String colour, String location, HashMap<String, Piece> board) {
@@ -18,6 +18,7 @@ public class Piece implements Serializable {
         this.colour = colour;
         this.location = location;
         this.board = board;
+        this.legalMoves = new ArrayList<>();
 
         calculateMoves();
     }
