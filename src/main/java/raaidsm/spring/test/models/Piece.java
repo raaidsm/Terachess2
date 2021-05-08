@@ -11,6 +11,11 @@ public class Piece implements Serializable {
     private List<String> legalMoves = new ArrayList<String>();
 
     public Piece() {}
+    public Piece(String name, String colour, String location) {
+        this.name = name;
+        this.colour = colour;
+        this.location = location;
+    }
 
     public String getName() {
         return name;
