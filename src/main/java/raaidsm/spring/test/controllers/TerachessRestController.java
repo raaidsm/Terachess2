@@ -21,9 +21,11 @@ public class TerachessRestController {
     private final Logger logger = LoggerFactory.getLogger(TerachessController.class);
     private HashMap<String, Piece> board;
 
-    public TerachessRestController() {}
+    public TerachessRestController() {
+        setInitialBoard();
+    }
 
-    private void setInitialBoard() {
+    public void setInitialBoard() {
         board = new HashMap<String, Piece>(Map.ofEntries(
                 //Add all the initial pieces starting from the top left
 
