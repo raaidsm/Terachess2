@@ -50,24 +50,24 @@ public class TerachessRestController {
                 entry("H7", new Pawn("pawn", "black", "H7", board)),
                 //endregion
                 //region White second rank
-                entry("A2", new Pawn("pawn", "black", "A2", board)),
-                entry("B2", new Pawn("pawn", "black", "B2", board)),
-                entry("C2", new Pawn("pawn", "black", "C2", board)),
-                entry("D2", new Pawn("pawn", "black", "D2", board)),
-                entry("E2", new Pawn("pawn", "black", "E2", board)),
-                entry("F2", new Pawn("pawn", "black", "F2", board)),
-                entry("G2", new Pawn("pawn", "black", "G2", board)),
-                entry("H2", new Pawn("pawn", "black", "H2", board)),
+                entry("A2", new Pawn("pawn", "white", "A2", board)),
+                entry("B2", new Pawn("pawn", "white", "B2", board)),
+                entry("C2", new Pawn("pawn", "white", "C2", board)),
+                entry("D2", new Pawn("pawn", "white", "D2", board)),
+                entry("E2", new Pawn("pawn", "white", "E2", board)),
+                entry("F2", new Pawn("pawn", "white", "F2", board)),
+                entry("G2", new Pawn("pawn", "white", "G2", board)),
+                entry("H2", new Pawn("pawn", "white", "H2", board)),
                 //endregion
                 //region White first rank
-                entry("A1", new Rook("rook", "black", "A1", board)),
-                entry("B1", new Knight("knight", "black", "B1", board)),
-                entry("C1", new Bishop("bishop", "black", "C1", board)),
-                entry("D1", new Queen("queen", "black", "D1", board)),
-                entry("E1", new King("king", "black", "E1", board)),
-                entry("F1", new Bishop("bishop", "black", "F1", board)),
-                entry("G1", new Knight("knight", "black", "G1", board)),
-                entry("H1", new Rook("rook", "black", "H1", board))
+                entry("A1", new Rook("rook", "white", "A1", board)),
+                entry("B1", new Knight("knight", "white", "B1", board)),
+                entry("C1", new Bishop("bishop", "white", "C1", board)),
+                entry("D1", new Queen("queen", "white", "D1", board)),
+                entry("E1", new King("king", "white", "E1", board)),
+                entry("F1", new Bishop("bishop", "white", "F1", board)),
+                entry("G1", new Knight("knight", "white", "G1", board)),
+                entry("H1", new Rook("rook", "white", "H1", board))
                 //endregion
         ));
     }
