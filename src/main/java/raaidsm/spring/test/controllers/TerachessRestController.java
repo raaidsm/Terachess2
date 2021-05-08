@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import raaidsm.spring.test.models.MoveForm;
 import raaidsm.spring.test.models.Piece;
+import raaidsm.spring.test.models.pieces.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,42 +27,46 @@ public class TerachessRestController {
         board = new HashMap<String, Piece>(Map.ofEntries(
                 //Add all the initial pieces starting from the top left
 
-                //Black first rank
-                entry("A8", new Piece("rook", "black", "A8")),
-                entry("B8", new Piece("knight", "black", "B8")),
-                entry("C8", new Piece("bishop", "black", "C8")),
-                entry("D8", new Piece("queen", "black", "D8")),
-                entry("E8", new Piece("king", "black", "E8")),
-                entry("F8", new Piece("bishop", "black", "F8")),
-                entry("G8", new Piece("knight", "black", "G8")),
-                entry("H8", new Piece("rook", "black", "H8")),
-                //Black second rank
-                entry("A7", new Piece("pawn", "black", "A7")),
-                entry("B7", new Piece("pawn", "black", "B7")),
-                entry("C7", new Piece("pawn", "black", "C7")),
-                entry("D7", new Piece("pawn", "black", "D7")),
-                entry("E7", new Piece("pawn", "black", "E7")),
-                entry("F7", new Piece("pawn", "black", "F7")),
-                entry("G7", new Piece("pawn", "black", "G7")),
-                entry("H7", new Piece("pawn", "black", "H7")),
-                //White second rank
-                entry("A2", new Piece("pawn", "black", "A2")),
-                entry("B2", new Piece("pawn", "black", "B2")),
-                entry("C2", new Piece("pawn", "black", "C2")),
-                entry("D2", new Piece("pawn", "black", "D2")),
-                entry("E2", new Piece("pawn", "black", "E2")),
-                entry("F2", new Piece("pawn", "black", "F2")),
-                entry("G2", new Piece("pawn", "black", "G2")),
-                entry("H2", new Piece("pawn", "black", "H2")),
-                //White first rank
-                entry("A1", new Piece("rook", "black", "A1")),
-                entry("B1", new Piece("knight", "black", "B1")),
-                entry("C1", new Piece("bishop", "black", "C1")),
-                entry("D1", new Piece("queen", "black", "D1")),
-                entry("E1", new Piece("king", "black", "E1")),
-                entry("F1", new Piece("bishop", "black", "F1")),
-                entry("G1", new Piece("knight", "black", "G1")),
-                entry("H1", new Piece("rook", "black", "H1"))
+                //region Black first rank
+                entry("A8", new Rook("rook", "black", "A8", board)),
+                entry("B8", new Knight("knight", "black", "B8", board)),
+                entry("C8", new Bishop("bishop", "black", "C8", board)),
+                entry("D8", new Queen("queen", "black", "D8", board)),
+                entry("E8", new King("king", "black", "E8", board)),
+                entry("F8", new Bishop("bishop", "black", "F8", board)),
+                entry("G8", new Knight("knight", "black", "G8", board)),
+                entry("H8", new Rook("rook", "black", "H8", board)),
+                //endregion
+                //region Black second rank
+                entry("A7", new Pawn("pawn", "black", "A7", board)),
+                entry("B7", new Pawn("pawn", "black", "B7", board)),
+                entry("C7", new Pawn("pawn", "black", "C7", board)),
+                entry("D7", new Pawn("pawn", "black", "D7", board)),
+                entry("E7", new Pawn("pawn", "black", "E7", board)),
+                entry("F7", new Pawn("pawn", "black", "F7", board)),
+                entry("G7", new Pawn("pawn", "black", "G7", board)),
+                entry("H7", new Pawn("pawn", "black", "H7", board)),
+                //endregion
+                //region White second rank
+                entry("A2", new Pawn("pawn", "black", "A2", board)),
+                entry("B2", new Pawn("pawn", "black", "B2", board)),
+                entry("C2", new Pawn("pawn", "black", "C2", board)),
+                entry("D2", new Pawn("pawn", "black", "D2", board)),
+                entry("E2", new Pawn("pawn", "black", "E2", board)),
+                entry("F2", new Pawn("pawn", "black", "F2", board)),
+                entry("G2", new Pawn("pawn", "black", "G2", board)),
+                entry("H2", new Pawn("pawn", "black", "H2", board)),
+                //endregion
+                //region White first rank
+                entry("A1", new Rook("rook", "black", "A1", board)),
+                entry("B1", new Knight("knight", "black", "B1", board)),
+                entry("C1", new Bishop("bishop", "black", "C1", board)),
+                entry("D1", new Queen("queen", "black", "D1", board)),
+                entry("E1", new King("king", "black", "E1", board)),
+                entry("F1", new Bishop("bishop", "black", "F1", board)),
+                entry("G1", new Knight("knight", "black", "G1", board)),
+                entry("H1", new Rook("rook", "black", "H1", board))
+                //endregion
         ));
     }
 
