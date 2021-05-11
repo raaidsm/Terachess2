@@ -8,7 +8,7 @@ public class Pawn extends Piece {
     private boolean hasInitialPawnMove = true;
 
     public Pawn() {}
-    public Pawn(String name, String colour, String location, HashMap<String, Piece> board) {
-        super(name, colour, location, board);
+    public Pawn(String name, String colour, String location) {
+        super(name, colour, location);
     }
 }

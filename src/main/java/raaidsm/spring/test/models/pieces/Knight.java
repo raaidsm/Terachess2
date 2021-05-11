@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class Knight extends Piece {
     public Knight() {}
-    public Knight(String name, String colour, String location, HashMap<String, Piece> board) {
-        super(name, colour, location, board);
+    public Knight(String name, String colour, String location) {
+        super(name, colour, location);
     }
 }

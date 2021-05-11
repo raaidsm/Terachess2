@@ -8,7 +8,7 @@ public class Rook extends Piece {
     private boolean canCastle = true;
 
     public Rook() {}
-    public Rook(String name, String colour, String location, HashMap<String, Piece> board) {
-        super(name, colour, location, board);
+    public Rook(String name, String colour, String location) {
+        super(name, colour, location);
     }
 }

@@ -13,14 +13,12 @@ public class Piece implements Serializable {
     protected List<String> legalMoves;
 
     public Piece() {}
-    public Piece(String name, String colour, String location, HashMap<String, Piece> board) {
+    public Piece(String name, String colour, String location) {
         this.name = name;
         this.colour = colour;
         this.location = location;
-        this.board = board;
+        this.board = null;
         this.legalMoves = new ArrayList<>();
-
-        calculateMoves();
     }
 
     public String getName() {
@@ -40,6 +38,12 @@ public class Piece implements Serializable {
     }
     public void setLocation(String location) {
         this.location = location;
+    }
+    public HashMap<String, Piece> getBoard() {
+        return board;
+    }
+    public void setBoard(HashMap<String, Piece> board) {
+        this.board = board;
     }
     public List<String> getLegalMoves() {
         return legalMoves;
