@@ -49,7 +49,6 @@ const onClickBoardSquare = (event) => {
             type: "POST",
             data: { firstSquare: $target.prop("id"), secondSquare: null },
             success: function(response) {
-                //TODO: Display all the legal moves on the board
                 selectedSquares = response;
                 for (let i = 0; i < selectedSquares.length; i++) {
                     let $legalMoveSquare = $(`#${selectedSquares[i]}`);
@@ -144,7 +143,6 @@ const resetFirstSquareSelection = () => {
     clickedSquareColour = rgbToHex($clickedSquare.css("background-color")).toUpperCase();
     if (clickedSquareColour === lightSquareSelectedColour) $clickedSquare.css("background-color", lightSquareColour);
     if (clickedSquareColour === darkSquareSelectedColour) $clickedSquare.css("background-color", darkSquareColour);
-    //TODO: Clear legal move colours off all squares
     //Clear selection colour off all legal move squares
     for (let i = 0; i < selectedSquares.length; i++) {
         let $legalMoveSquare = $(`#${selectedSquares[i]}`);

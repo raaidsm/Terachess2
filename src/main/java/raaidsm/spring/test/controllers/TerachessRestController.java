@@ -7,12 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import raaidsm.spring.test.models.BoardManager;
 import raaidsm.spring.test.models.forms.MoveForm;
-import raaidsm.spring.test.models.Piece;
-import raaidsm.spring.test.models.pieces.*;
 
 import java.util.*;
-
-import static java.util.Map.entry;
 
 @RestController
 public class TerachessRestController {
@@ -38,7 +34,7 @@ public class TerachessRestController {
         //Receive names of the two squares clicked during a move and calculate how the board has changed
         logger.trace("readMove() runs");
 
-        //TODO: For now, return default value
+        //TODO: For now, returning default value
         return true;
     }
 }
