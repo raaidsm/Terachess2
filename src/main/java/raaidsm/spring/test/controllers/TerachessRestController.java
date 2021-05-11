@@ -28,8 +28,10 @@ public class TerachessRestController {
         //Receive the square name of a piece and return all legal moves for that piece
         logger.trace("readFirstPieceSelection() runs");
 
-        //TODO: For now, returning empty list
-        return new ArrayList<>();
+        //TODO: For now, returning default value
+        return new ArrayList<>(
+                Arrays.asList("E3", "E4")
+        );
     }
     @PostMapping(value="/ReadMove")
     public boolean readMove(@ModelAttribute MoveForm form) {

@@ -24,6 +24,7 @@ const whiteFirstRank = ["white_rook", "white_knight", "white_bishop", "white_que
 let isFirstSquareClicked = false;
 let $clickedSquare = null;
 let clickedSquareColour = null;
+let selectedSquares = null;
 //endregion
 //endregion
 
@@ -49,6 +50,17 @@ const onClickBoardSquare = (event) => {
             data: { firstSquare: $target.prop("id"), secondSquare: null },
             success: function(response) {
                 //TODO: Display all the legal moves on the board
+                selectedSquares = response;
+                for (let i = 0; i < selectedSquares.length; i++) {
+                    let $legalMoveSquare = $(`#${selectedSquares[i]}`);
+                    let legalMoveSquareColour = rgbToHex($legalMoveSquare.css("background-color")).toUpperCase();
+                    if (legalMoveSquareColour === lightSquareColour) {
+                        $legalMoveSquare.css("background-color", lightSquareSelectedColour);
+                    }
+                    else if (legalMoveSquareColour === darkSquareColour) {
+                        $legalMoveSquare.css("background-color", darkSquareSelectedColour);
+                    }
+                }
             }
         });
         //First square has been successfully clicked
@@ -128,11 +140,22 @@ const executePieceMove = ($firstSquare, $secondSquare) => {
     });
 };
 const resetFirstSquareSelection = () => {
-    //Clear selection colour
+    //Clear selection colour off first selected piece
     clickedSquareColour = rgbToHex($clickedSquare.css("background-color")).toUpperCase();
     if (clickedSquareColour === lightSquareSelectedColour) $clickedSquare.css("background-color", lightSquareColour);
     if (clickedSquareColour === darkSquareSelectedColour) $clickedSquare.css("background-color", darkSquareColour);
     //TODO: Clear legal move colours off all squares
+    //Clear selection colour off all legal move squares
+    for (let i = 0; i < selectedSquares.length; i++) {
+        let $legalMoveSquare = $(`#${selectedSquares[i]}`);
+        let legalMoveSquareColour = rgbToHex($legalMoveSquare.css("background-color")).toUpperCase();
+        if (legalMoveSquareColour === lightSquareSelectedColour) {
+            $legalMoveSquare.css("background-color", lightSquareColour);
+        }
+        if (legalMoveSquareColour === darkSquareSelectedColour) {
+            $legalMoveSquare.css("background-color", darkSquareColour);
+        }
+    }
     //Clear game-tracking variables
     $clickedSquare = null;
     clickedSquareColour = null;
