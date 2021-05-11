@@ -10,10 +10,7 @@ import raaidsm.spring.test.models.forms.MoveForm;
 import raaidsm.spring.test.models.Piece;
 import raaidsm.spring.test.models.pieces.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.Map.entry;
 
@@ -35,8 +32,11 @@ public class TerachessRestController {
         return new ArrayList<>();
     }
     @PostMapping(value="/ReadMove")
-    public void readMove(@ModelAttribute MoveForm form) {
+    public boolean readMove(@ModelAttribute MoveForm form) {
         //Receive names of the two squares clicked during a move and calculate how the board has changed
         logger.trace("readMove() runs");
+
+        //TODO: For now, return default value
+        return true;
     }
 }

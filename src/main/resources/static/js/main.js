@@ -104,14 +104,6 @@ const rgbToHex = (col) => {
     }
 };
 const executePieceMove = ($firstSquare, $secondSquare) => {
-    //Transfer piece image
-    $secondSquare.css("background-image", $firstSquare.css("background-image"));
-    $firstSquare.css("background-image", "none");
-    //Transfer piece data properties
-    $secondSquare.data("colour", $firstSquare.data("colour"));
-    $secondSquare.data("type", $firstSquare.data("type"));
-    $firstSquare.removeData("colour");
-    $firstSquare.removeData("type");
     //Communicate the two selected squares to rest controller
     $.ajax({
         url: "/ReadMove",
@@ -120,7 +112,18 @@ const executePieceMove = ($firstSquare, $secondSquare) => {
         type: "POST",
         data: { firstSquare: $firstSquare.prop("id"), secondSquare: $secondSquare.prop("id") },
         success: function(response) {
-            $("#squareNameDisplay").val(`${response.firstSquare} - ${response.secondSquare}`);
+            if (response === true) {
+                //Transfer piece image
+                $secondSquare.css("background-image", $firstSquare.css("background-image"));
+                $firstSquare.css("background-image", "none");
+                //Transfer piece data properties
+                $secondSquare.data("colour", $firstSquare.data("colour"));
+                $secondSquare.data("type", $firstSquare.data("type"));
+                $firstSquare.removeData("colour");
+                $firstSquare.removeData("type");
+                //Display the square moved from and the square moved to
+                $("#squareNameDisplay").val(`${$firstSquare.prop("id")} - ${$secondSquare.prop("id")}`);
+            }
         }
     });
 };
