@@ -9,6 +9,7 @@ public class Piece implements Serializable {
     protected String name = "";
     protected String colour = "";
     protected String location = "";
+    protected List<String> promotion;
     protected HashMap<String, Piece> board;
     protected List<String> legalMoves;
 
@@ -17,6 +18,7 @@ public class Piece implements Serializable {
         this.name = name;
         this.colour = colour;
         this.location = location;
+        this.promotion = new ArrayList<>();
         this.board = null;
         this.legalMoves = new ArrayList<>();
     }
