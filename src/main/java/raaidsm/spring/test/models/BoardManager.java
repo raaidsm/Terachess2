@@ -9,6 +9,7 @@ import static java.util.Map.entry;
 //Contains methods for manipulating the board
 public class BoardManager {
     public HashMap<String, Piece> board;
+    private boolean isCheck = false;
 
     public BoardManager() {
         this.board = new HashMap<>(Map.ofEntries(
@@ -57,5 +58,12 @@ public class BoardManager {
         ));
         //Set board field for each piece in the board
         board.forEach((coordinate, piece) -> piece.setBoard(board));
+    }
+
+    public boolean isCheck() {
+        return isCheck;
+    }
+    public void setCheck(boolean check) {
+        isCheck = check;
     }
 }
