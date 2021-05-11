@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import raaidsm.spring.test.models.MoveForm;
+import raaidsm.spring.test.models.forms.MoveForm;
 import raaidsm.spring.test.models.Piece;
 import raaidsm.spring.test.models.pieces.*;
 

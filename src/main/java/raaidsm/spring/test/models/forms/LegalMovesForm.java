@@ -1,4 +1,4 @@
-package raaidsm.spring.test.models;
+package raaidsm.spring.test.models.forms;
 
 import java.io.Serializable;
 import java.util.ArrayList;
