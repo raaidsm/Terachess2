@@ -6,21 +6,25 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Piece implements Serializable {
-    protected String name = "";
-    protected String colour = "";
-    protected String location = "";
+    protected String name;
+    protected String colour;
+    protected String location;
+    protected List<String> legalMoves;
+    protected boolean isPinned;
+    protected Piece pinningPiece;
     protected List<String> promotion;
     protected HashMap<String, Piece> board;
-    protected List<String> legalMoves;
 
     public Piece() {}
     public Piece(String name, String colour, String location) {
         this.name = name;
         this.colour = colour;
         this.location = location;
+        this.legalMoves = new ArrayList<>();
+        this.isPinned = false;
+        this.pinningPiece = null;
         this.promotion = new ArrayList<>();
         this.board = null;
-        this.legalMoves = new ArrayList<>();
     }
 
     public String getName() {
@@ -41,17 +45,29 @@ public class Piece implements Serializable {
     public void setLocation(String location) {
         this.location = location;
     }
-    public HashMap<String, Piece> getBoard() {
-        return board;
-    }
-    public void setBoard(HashMap<String, Piece> board) {
-        this.board = board;
-    }
     public List<String> getLegalMoves() {
         return legalMoves;
     }
     public void setLegalMoves(List<String> legalMoves) {
         this.legalMoves = legalMoves;
+    }
+    public boolean isPinned() {
+        return isPinned;
+    }
+    public void setPinned(boolean pinned) {
+        isPinned = pinned;
+    }
+    public List<String> getPromotion() {
+        return promotion;
+    }
+    public void setPromotion(List<String> promotion) {
+        this.promotion = promotion;
+    }
+    public HashMap<String, Piece> getBoard() {
+        return board;
+    }
+    public void setBoard(HashMap<String, Piece> board) {
+        this.board = board;
     }
 
     public void calculateMoves() {}

@@ -10,6 +10,7 @@ import static java.util.Map.entry;
 public class BoardManager {
     public HashMap<String, Piece> board;
     private boolean isCheck = false;
+    private String checkedKingColour = null;
 
     public BoardManager() {
         this.board = new HashMap<>(Map.ofEntries(
@@ -65,5 +66,31 @@ public class BoardManager {
     }
     public void setCheck(boolean check) {
         isCheck = check;
+    }
+
+    public void makeMove(String firstSquare, String secondSquare) {
+        //Take piece off first square
+        Piece pieceToMove = board.get(firstSquare);
+        board.put(firstSquare, null);
+        //Act on piece currently at second square if exists
+        Piece pieceToMoveTo = board.get(secondSquare);
+        if (pieceToMoveTo != null) {
+            pieceToMoveTo.setLocation(null);
+            //TODO: Record the captured piece
+        }
+        //Move piece to second square
+        board.put(secondSquare, pieceToMove);
+        pieceToMove.setLocation(secondSquare);
+        calculateAllLegalMoves();
+    }
+    private void calculateAllLegalMoves() {
+        /* OVERVIEW:
+        1. Calculate moves for each piece:
+            Determine if piece delivers check (and set isCheck)
+            Determine if piece pins another piece (and set isPinned for pinned piece)
+        Reduce moves for each piece according to board-state stipulations:
+            2. For each piece, reduce if piece is pinned
+            3. For each piece, reduce if check and piece is of same colour as checked king
+        */
     }
 }

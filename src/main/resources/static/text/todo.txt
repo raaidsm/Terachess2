@@ -7,6 +7,7 @@ OVERALL PLAN:
 
 GENERAL:
 -Break main.js code into modules
+-Make field variables to store the white and black kings
 GAME LOGIC:
 OVER THE INTERNET:
 -Host game on server somehow

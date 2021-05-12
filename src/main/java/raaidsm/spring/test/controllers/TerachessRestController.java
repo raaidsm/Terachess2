@@ -33,5 +33,7 @@ public class TerachessRestController {
     public void readMove(@ModelAttribute MoveForm form) {
         //Read move and calculate changes on the board
         logger.trace("readMove() runs");
+
+        boardManager.makeMove(form.getFirstSquare(), form.getSecondSquare());
     }
 }
