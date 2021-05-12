@@ -30,11 +30,8 @@ public class TerachessRestController {
         );
     }
     @PostMapping(value="/ReadMove")
-    public boolean readMove(@ModelAttribute MoveForm form) {
-        //Receive names of the two squares clicked during a move and calculate how the board has changed
+    public void readMove(@ModelAttribute MoveForm form) {
+        //Read move and calculate changes on the board
         logger.trace("readMove() runs");
-
-        //TODO: For now, returning default value
-        return true;
     }
 }

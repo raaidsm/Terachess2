@@ -13,4 +13,7 @@ public class Pawn extends Piece {
         String[] promotionPieces = { "queen", "rook", "bishop", "knight" };
         promotion.addAll(Arrays.asList(promotionPieces));
     }
+
+    @Override
+    public void calculateMoves() {}
 }

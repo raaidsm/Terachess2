@@ -67,7 +67,11 @@ const onClickBoardSquare = (event) => {
     }
     else if (isFirstSquareClicked === true) {
         //Execute move only if both squares don't have the same colour of piece
-        if ($clickedSquare.data("colour") !== $target.data("colour")) executePieceMove($clickedSquare, $target);
+        if ($clickedSquare.data("colour") !== $target.data("colour") &&
+            selectedSquares.includes($target.prop("id")))
+        {
+            executePieceMove($clickedSquare, $target);
+        }
         resetFirstSquareSelection();
     }
 };
@@ -115,27 +119,23 @@ const rgbToHex = (col) => {
     }
 };
 const executePieceMove = ($firstSquare, $secondSquare) => {
+    //Transfer piece image
+    $secondSquare.css("background-image", $firstSquare.css("background-image"));
+    $firstSquare.css("background-image", "none");
+    //Transfer piece data properties
+    $secondSquare.data("colour", $firstSquare.data("colour"));
+    $secondSquare.data("type", $firstSquare.data("type"));
+    $firstSquare.removeData("colour");
+    $firstSquare.removeData("type");
+    //Display the square moved from and the square moved to
+    $("#squareNameDisplay").val(`${$firstSquare.prop("id")} - ${$secondSquare.prop("id")}`);
     //Communicate the two selected squares to rest controller
     $.ajax({
         url: "/ReadMove",
         contentType: "application/x-www-form-urlencoded",
         dataType: "json",
         type: "POST",
-        data: { firstSquare: $firstSquare.prop("id"), secondSquare: $secondSquare.prop("id") },
-        success: function(response) {
-            if (response === true) {
-                //Transfer piece image
-                $secondSquare.css("background-image", $firstSquare.css("background-image"));
-                $firstSquare.css("background-image", "none");
-                //Transfer piece data properties
-                $secondSquare.data("colour", $firstSquare.data("colour"));
-                $secondSquare.data("type", $firstSquare.data("type"));
-                $firstSquare.removeData("colour");
-                $firstSquare.removeData("type");
-                //Display the square moved from and the square moved to
-                $("#squareNameDisplay").val(`${$firstSquare.prop("id")} - ${$secondSquare.prop("id")}`);
-            }
-        }
+        data: { firstSquare: $firstSquare.prop("id"), secondSquare: $secondSquare.prop("id") }
     });
 };
 const resetFirstSquareSelection = () => {
