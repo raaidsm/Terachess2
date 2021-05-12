@@ -9,10 +9,13 @@ import static java.util.Map.entry;
 //Contains methods for manipulating the board
 public class BoardManager {
     public HashMap<String, Piece> board;
-    private boolean isCheck = false;
-    private String checkedKingColour = null;
+    private Piece[] kings = new Piece[2];
+    private boolean isCheck;
+    private Piece checkingPiece;
+    private Piece checkedKing;
 
     public BoardManager() {
+        //Initialize board
         this.board = new HashMap<>(Map.ofEntries(
                 //Add all the initial pieces starting from the top left
 
@@ -59,6 +62,12 @@ public class BoardManager {
         ));
         //Set board field for each piece in the board
         board.forEach((coordinate, piece) -> piece.setBoard(board));
+        //Initialize other fields
+        this.kings[0] = board.get("E1");
+        this.kings[1] = board.get("E8");
+        this.isCheck = false;
+        this.checkingPiece = null;
+        this.checkedKing = null;
     }
 
     public boolean isCheck() {
