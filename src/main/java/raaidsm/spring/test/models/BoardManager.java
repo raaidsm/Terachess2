@@ -119,11 +119,13 @@ public class BoardManager {
         });
         //2)
         board.forEach((coordinate, piece) -> {
-            if (piece.isPinned()) piece.reduceMovesDueToPin();
+            if (!piece.getName().equals("king") && piece.isPinned()) piece.reduceMovesDueToPin();
         });
         //3)
         board.forEach((coordinate, piece) -> {
-            if (piece.getColour().equals(checkedKing.getColour())) piece.reduceMovesDueToCheck();
+            if (!piece.getName().equals("king") && piece.getColour().equals(checkedKing.getColour())) {
+                piece.reduceMovesDueToCheck();
+            }
         });
     }
 }
