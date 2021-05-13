@@ -73,4 +73,5 @@ public class Piece implements Serializable {
     public void calculateMoves() {}
     public void reduceMovesDueToPin() {}
     public void reduceMovesDueToCheck() {}
+    public void clearAllMoves() {}
 }

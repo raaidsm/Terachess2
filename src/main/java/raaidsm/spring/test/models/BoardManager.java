@@ -1,7 +1,10 @@
 package raaidsm.spring.test.models;
 
 import raaidsm.spring.test.models.pieces.*;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static java.util.Map.entry;
@@ -11,7 +14,7 @@ public class BoardManager {
     public HashMap<String, Piece> board;
     private Piece[] kings = new Piece[2];
     private boolean isCheck;
-    private Piece checkingPiece;
+    private List<Piece> checkingPieces;
     private Piece checkedKing;
 
     public BoardManager() {
@@ -66,7 +69,7 @@ public class BoardManager {
         this.kings[0] = board.get("E1");
         this.kings[1] = board.get("E8");
         this.isCheck = false;
-        this.checkingPiece = null;
+        this.checkingPieces = new ArrayList<>();
         this.checkedKing = null;
     }
 
@@ -94,6 +97,7 @@ public class BoardManager {
     }
     private void calculateAllLegalMoves() {
         /* OVERVIEW:
+        0) If double check, only calculate moves for king
         1) Calculate moves for each piece:
             Determine if piece delivers check (and set isCheck)
             Determine if piece pins another piece (and set isPinned for pinned piece)
@@ -101,10 +105,16 @@ public class BoardManager {
             2) For each piece, reduce if piece is pinned
             3) For each piece, reduce if check and piece is of same colour as checked king
         */
+        //0)
+        if (1 < checkingPieces.size()) {
+            board.forEach((coordinate, piece) -> {
+                if (piece.getName().equals("king")) piece.calculateMoves();
+                else piece.clearAllMoves();
+            });
+            return;
+        }
         //1)
-        board.forEach((coordinate, piece) -> {
-            piece.calculateMoves();
-        });
+        board.forEach((coordinate, piece) -> piece.calculateMoves());
         //2)
         board.forEach((coordinate, piece) -> {
             if (piece.isPinned()) piece.reduceMovesDueToPin();
