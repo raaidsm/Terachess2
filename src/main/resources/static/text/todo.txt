@@ -7,8 +7,10 @@ OVERALL PLAN:
 
 GENERAL:
 -Break main.js code into modules
--Make field variables to store the white and black kings
 GAME LOGIC:
+-Make calculateMoves function return pieces delivering checkmate and the king being checked
+-Track which squares are attacked, and by which coloured piece
+-Establish clause for checkmate
 OVER THE INTERNET:
 -Host game on server somehow
 -Implement WebSockets to host communication with another person
