@@ -1,5 +1,7 @@
 package raaidsm.spring.test.models;
 
+import raaidsm.spring.test.models.pieces.King;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,7 +72,10 @@ public class Piece implements Serializable {
         this.board = board;
     }
 
-    public void calculateMoves() {}
+    public King calculateMoves() {
+        //TODO: For now, returning default value
+        return null;
+    }
     public void reduceMovesDueToPin() {}
     public void reduceMovesDueToCheck() {}
     public void clearAllMoves() {}

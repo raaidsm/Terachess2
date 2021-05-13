@@ -15,5 +15,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void calculateMoves() {}
+    public King calculateMoves() {
+        //TODO: For now, returning default value
+        return null;
+    }
 }

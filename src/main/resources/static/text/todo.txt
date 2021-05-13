@@ -8,7 +8,8 @@ OVERALL PLAN:
 GENERAL:
 -Break main.js code into modules
 GAME LOGIC:
--Make calculateMoves function return pieces delivering checkmate and the king being checked
+-Make calculateMoves function return the king being checked
+-Don't reduce moves from check for kings
 -Track which squares are attacked, and by which coloured piece
 -Establish clause for checkmate
 OVER THE INTERNET:

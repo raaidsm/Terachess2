@@ -114,7 +114,9 @@ public class BoardManager {
             return;
         }
         //1)
-        board.forEach((coordinate, piece) -> piece.calculateMoves());
+        board.forEach((coordinate, piece) -> {
+            checkedKing = piece.calculateMoves();
+        });
         //2)
         board.forEach((coordinate, piece) -> {
             if (piece.isPinned()) piece.reduceMovesDueToPin();
