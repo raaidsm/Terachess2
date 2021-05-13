@@ -94,12 +94,24 @@ public class BoardManager {
     }
     private void calculateAllLegalMoves() {
         /* OVERVIEW:
-        1. Calculate moves for each piece:
+        1) Calculate moves for each piece:
             Determine if piece delivers check (and set isCheck)
             Determine if piece pins another piece (and set isPinned for pinned piece)
         Reduce moves for each piece according to board-state stipulations:
-            2. For each piece, reduce if piece is pinned
-            3. For each piece, reduce if check and piece is of same colour as checked king
+            2) For each piece, reduce if piece is pinned
+            3) For each piece, reduce if check and piece is of same colour as checked king
         */
+        //1)
+        board.forEach((coordinate, piece) -> {
+            piece.calculateMoves();
+        });
+        //2)
+        board.forEach((coordinate, piece) -> {
+            if (piece.isPinned()) piece.reduceMovesDueToPin();
+        });
+        //3)
+        board.forEach((coordinate, piece) -> {
+            if (piece.getColour().equals(checkedKing.getColour())) piece.reduceMovesDueToCheck();
+        });
     }
 }
