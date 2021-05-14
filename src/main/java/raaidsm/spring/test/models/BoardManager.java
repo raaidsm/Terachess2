@@ -15,6 +15,7 @@ public class BoardManager {
     private Piece[] kings = new Piece[2];
     private boolean isCheck;
     private List<Piece> checkingPieces;
+    private List<AttackType> checkTypes;
     private Piece checkedKing;
     private final int boardLength = 8;
     private final char[] letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
@@ -78,6 +79,7 @@ public class BoardManager {
         this.kings[1] = board.get("E8").containedPiece;
         this.isCheck = false;
         this.checkingPieces = new ArrayList<>();
+        this.checkTypes = new ArrayList<>();
         this.checkedKing = null;
     }
 

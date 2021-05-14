@@ -8,7 +8,6 @@ OVERALL PLAN:
 GENERAL:
 -Break main.js code into modules
 GAME LOGIC:
--Establish different types of attacks
 -Establish clause for checkmate
 OVER THE INTERNET:
 -Host game on server somehow
