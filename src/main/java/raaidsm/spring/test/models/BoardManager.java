@@ -11,6 +11,7 @@ import static java.util.Map.entry;
 
 //Contains methods for manipulating the board
 public class BoardManager {
+    //region Field Variables
     private final int boardLength = 8;
     private final char[] letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
     public HashMap<String, Square> board;
@@ -22,9 +23,10 @@ public class BoardManager {
     private List<Piece> checkingPieces;
     private List<AttackType> checkTypes;
     private Piece checkedKing;
+    //endregion
 
     public BoardManager() {
-        //Initialize board
+        //region Initialize Board With Pieces
         this.board = new HashMap<>(Map.ofEntries(
                 //Add all the initial pieces starting from the top left
 
@@ -69,13 +71,16 @@ public class BoardManager {
                 entry("H1", new Square(new Rook("rook", "white", "H1")))
                 //endregion
         ));
-        //Initialize coloured lists of pieces
+        //endregion
+        //region Initialize Coloured Piece Lists
         this.whitePieces = new ArrayList<>();
         this.blackPieces = new ArrayList<>();
         this.pieceListsByColour = new HashMap<>(Map.ofEntries(
                 entry("white", whitePieces),
                 entry("black", blackPieces)
         ));
+        //endregion
+        //region Set Board Field
         //Set board field for each piece and add it to the designated coloured list of pieces
         board.forEach((coordinate, square) -> {
             Piece piece = square.containedPiece;
@@ -83,19 +88,23 @@ public class BoardManager {
             piece.setBoard(board);
             pieceListsByColour.get(pieceColour).add(piece);
         });
+        //endregion
+        //region Add Empty Squares
         //Add the empty squares with no pieces
         for (int y = boardLength - 2; 0 < y; y--) {
             for (int x = 0; x < boardLength; x++) {
                 board.put(letters[x] + String.valueOf(y), new Square(null));
             }
         }
-        //Initialize other fields
+        //endregion
+        //region Initialize Other Fields
         this.kings[0] = board.get("E1").containedPiece;
         this.kings[1] = board.get("E8").containedPiece;
         this.isCheck = false;
         this.checkingPieces = new ArrayList<>();
         this.checkTypes = new ArrayList<>();
         this.checkedKing = null;
+        //endregion
     }
 
     public boolean isCheck() {
