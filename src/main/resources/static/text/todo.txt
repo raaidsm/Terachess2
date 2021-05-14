@@ -5,7 +5,8 @@ OVERALL PLAN:
 -When JavaScript side selects a square, it queries the Java side for all legal moves for that piece
 -When one of the legal moves is selected, the process repeats again
 
-GENERAL:
+REFACTORING:
+-Move boardLength and letters fields of BoardManager to the top of the list
 -Break main.js code into modules
 GAME LOGIC:
 -Establish clause for checkmate

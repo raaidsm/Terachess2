@@ -127,7 +127,7 @@ public class BoardManager {
         //1)
         board.forEach((coordinate, square) -> {
             Piece piece = square.containedPiece;
-            checkedKing = piece.calculateMoves();
+            checkedKing = piece.calculateMoves().kingChecked;
         });
         //2)
         board.forEach((coordinate, square) -> {

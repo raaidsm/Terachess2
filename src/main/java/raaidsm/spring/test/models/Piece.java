@@ -72,11 +72,23 @@ public class Piece implements Serializable {
         this.board = board;
     }
 
-    public King calculateMoves() {
+    public MoveCalcResults calculateMoves() {
+        //OVERVIEW:
+        //Return checked king (null if none) and whether piece has any legal moves
         //TODO: For now, returning default value
-        return null;
+        return new MoveCalcResults(null, false);
     }
-    public void reduceMovesDueToPin() {}
-    public void reduceMovesDueToCheck() {}
+    public MoveCalcResults reduceMovesDueToPin() {
+        //OVERVIEW:
+        //Return whether piece has any legal moves
+        //TODO: For now, returning default value
+        return new MoveCalcResults(null, false);
+    }
+    public MoveCalcResults reduceMovesDueToCheck() {
+        //OVERVIEW:
+        //Return whether piece has any legal moves
+        //TODO: For now, returning default value
+        return new MoveCalcResults(null, false);
+    }
     public void clearAllMoves() {}
 }
