@@ -14,6 +14,9 @@ public class BoardManager {
     private final int boardLength = 8;
     private final char[] letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
     public HashMap<String, Square> board;
+    private List<Piece> whitePieces;
+    private List<Piece> blackPieces;
+    private HashMap<String, List<Piece>> pieceListsByColour;
     private Piece[] kings = new Piece[2];
     private boolean isCheck;
     private List<Piece> checkingPieces;
@@ -66,14 +69,26 @@ public class BoardManager {
                 entry("H1", new Square(new Rook("rook", "white", "H1")))
                 //endregion
         ));
-        //Add all the empty squares with no pieces
+        //Initialize coloured lists of pieces
+        this.whitePieces = new ArrayList<>();
+        this.blackPieces = new ArrayList<>();
+        this.pieceListsByColour = new HashMap<>(Map.ofEntries(
+                entry("white", whitePieces),
+                entry("black", blackPieces)
+        ));
+        //Set board field for each piece and add it to the designated coloured list of pieces
+        board.forEach((coordinate, square) -> {
+            Piece piece = square.containedPiece;
+            String pieceColour = piece.getColour();
+            piece.setBoard(board);
+            pieceListsByColour.get(pieceColour).add(piece);
+        });
+        //Add the empty squares with no pieces
         for (int y = boardLength - 2; 0 < y; y--) {
             for (int x = 0; x < boardLength; x++) {
                 board.put(letters[x] + String.valueOf(y), new Square(null));
             }
         }
-        //Set board field for each piece in the board
-        board.forEach((coordinate, square) -> square.containedPiece.setBoard(board));
         //Initialize other fields
         this.kings[0] = board.get("E1").containedPiece;
         this.kings[1] = board.get("E8").containedPiece;
@@ -91,18 +106,22 @@ public class BoardManager {
     }
 
     public void makeMove(String firstSquare, String secondSquare) {
-        //Take piece off first square
+        //Take piece-to-move off of first square
         Piece pieceToMove = board.get(firstSquare).containedPiece;
         board.put(firstSquare, null);
-        //Act on piece currently at second square if exists
+        //Record and remove piece-to-move-to, if exists
         Piece pieceToMoveTo = board.get(secondSquare).containedPiece;
         if (pieceToMoveTo != null) {
             pieceToMoveTo.setLocation(null);
+            board.get(secondSquare).containedPiece = null;
+            String pieceColour = pieceToMoveTo.getColour();
+            pieceListsByColour.get(pieceColour).remove(pieceToMoveTo);
             //TODO: Record the captured piece
         }
-        //Move piece to second square
-        board.get(secondSquare).containedPiece = pieceToMoveTo;
+        //Move piece-to-move to second square
+        board.get(secondSquare).containedPiece = pieceToMove;
         pieceToMove.setLocation(secondSquare);
+        //Move has been made, now calculate all legal moves
         calculateAllLegalMoves();
     }
     private void calculateAllLegalMoves() {
