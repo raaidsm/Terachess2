@@ -15,7 +15,7 @@ public class Piece implements Serializable {
     protected boolean isPinned;
     protected Piece pinningPiece;
     protected List<String> promotion;
-    protected HashMap<String, Piece> board;
+    protected HashMap<String, Square> board;
 
     public Piece() {}
     public Piece(String name, String colour, String location) {
@@ -65,10 +65,10 @@ public class Piece implements Serializable {
     public void setPromotion(List<String> promotion) {
         this.promotion = promotion;
     }
-    public HashMap<String, Piece> getBoard() {
+    public HashMap<String, Square> getBoard() {
         return board;
     }
-    public void setBoard(HashMap<String, Piece> board) {
+    public void setBoard(HashMap<String, Square> board) {
         this.board = board;
     }
 
