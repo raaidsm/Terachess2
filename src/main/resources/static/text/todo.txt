@@ -8,7 +8,7 @@ OVERALL PLAN:
 GENERAL:
 -Break main.js code into modules
 GAME LOGIC:
--Track which squares are attacked, and by which coloured piece
+-Establish different types of attacks
 -Establish clause for checkmate
 OVER THE INTERNET:
 -Host game on server somehow
