@@ -11,14 +11,14 @@ import static java.util.Map.entry;
 
 //Contains methods for manipulating the board
 public class BoardManager {
+    private final int boardLength = 8;
+    private final char[] letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
     public HashMap<String, Square> board;
     private Piece[] kings = new Piece[2];
     private boolean isCheck;
     private List<Piece> checkingPieces;
     private List<AttackType> checkTypes;
     private Piece checkedKing;
-    private final int boardLength = 8;
-    private final char[] letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
 
     public BoardManager() {
         //Initialize board
