@@ -1,5 +1,7 @@
 package raaidsm.spring.test.models;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import raaidsm.spring.test.models.pieces.*;
 import raaidsm.spring.test.models.utils.AttackType;
 import raaidsm.spring.test.models.utils.Colour;
@@ -15,6 +17,7 @@ import static java.util.Map.entry;
 //Contains methods for manipulating the board
 public class BoardManager {
     //region Field Variables
+    private final Logger logger = LoggerFactory.getLogger(BoardManager.class);
     //region Constants
     private final int boardLength = 8;
     private final char[] letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
@@ -128,7 +131,7 @@ public class BoardManager {
     public void makeMove(String firstSquare, String secondSquare) {
         //Take piece-to-move off of first square
         Piece pieceToMove = board.get(firstSquare).containedPiece;
-        board.put(firstSquare, null);
+        board.get(firstSquare).containedPiece = null;
         //Record and remove piece-to-move-to, if exists
         Piece pieceToMoveTo = board.get(secondSquare).containedPiece;
         if (pieceToMoveTo != null) {
