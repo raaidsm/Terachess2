@@ -6,8 +6,7 @@ OVERALL PLAN:
 -When one of the legal moves is selected, the process repeats again
 
 REFACTORING:
--Move boardLength and letters fields of BoardManager to the top of the list
--Implement enum for piece colour
+-Implement enum for piece colour and maybe also for piece type
 -Break main.js code into modules
 GAME LOGIC:
 -Establish clause for checkmate
