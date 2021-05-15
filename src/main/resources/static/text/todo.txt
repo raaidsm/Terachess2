@@ -7,6 +7,7 @@ OVERALL PLAN:
 
 REFACTORING:
 -Implement enum for piece colour and maybe also for piece type
+-Make board field of BoardManager private because nothing outside uses it
 -Break main.js code into modules
 GAME LOGIC:
 -Establish clause for checkmate
