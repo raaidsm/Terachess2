@@ -1,6 +1,8 @@
 package raaidsm.spring.test.models;
 
 import raaidsm.spring.test.models.pieces.*;
+import raaidsm.spring.test.models.utils.AttackType;
+import raaidsm.spring.test.models.utils.TurnManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;

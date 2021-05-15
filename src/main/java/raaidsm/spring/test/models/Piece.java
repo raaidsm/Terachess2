@@ -1,6 +1,6 @@
 package raaidsm.spring.test.models;
 
-import raaidsm.spring.test.models.pieces.King;
+import raaidsm.spring.test.models.utils.MoveCalcResults;
 
 import java.io.Serializable;
 import java.util.ArrayList;

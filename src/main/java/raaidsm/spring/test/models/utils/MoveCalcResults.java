@@ -1,4 +1,4 @@
-package raaidsm.spring.test.models;
+package raaidsm.spring.test.models.utils;
 
 import javassist.compiler.ast.Pair;
 import raaidsm.spring.test.models.pieces.King;

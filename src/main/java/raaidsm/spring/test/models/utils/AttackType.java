@@ -1,4 +1,4 @@
-package raaidsm.spring.test.models;
+package raaidsm.spring.test.models.utils;
 
 public enum AttackType {
     MOVEORCAPTURE,
