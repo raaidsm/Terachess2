@@ -12,17 +12,23 @@ import static java.util.Map.entry;
 //Contains methods for manipulating the board
 public class BoardManager {
     //region Field Variables
+    //region Constants
     private final int boardLength = 8;
     private final char[] letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
+    //endregion
+    //region Board Tracking
     public HashMap<String, Square> board;
     private List<Piece> whitePieces;
     private List<Piece> blackPieces;
     private HashMap<String, List<Piece>> pieceListsByColour;
     private Piece[] kings = new Piece[2];
+    //endregion
+    //region Check
     private boolean isCheck;
     private List<Piece> checkingPieces;
     private List<AttackType> checkTypes;
     private Piece checkedKing;
+    //endregion
     //endregion
 
     public BoardManager() {
