@@ -14,9 +14,4 @@ public class Pawn extends Piece {
         promotion.addAll(Arrays.asList(promotionPieces));
     }
 
-    @Override
-    public King calculateMoves() {
-        //TODO: For now, returning default value
-        return null;
-    }
 }
