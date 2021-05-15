@@ -2,8 +2,6 @@ package raaidsm.spring.test.models.pieces;
 
 import raaidsm.spring.test.models.Piece;
 
-import java.util.HashMap;
-
 public class King extends Piece {
     private boolean canCastle = true;
 
