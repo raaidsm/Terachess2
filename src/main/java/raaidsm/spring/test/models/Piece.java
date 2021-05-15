@@ -1,5 +1,6 @@
 package raaidsm.spring.test.models;
 
+import raaidsm.spring.test.models.utils.Colour;
 import raaidsm.spring.test.models.utils.MoveCalcResults;
 
 import java.io.Serializable;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public class Piece implements Serializable {
     protected String name;
-    protected String colour;
+    protected Colour colour;
     protected String location;
     protected List<String> legalMoves;
     protected boolean isPinned;
@@ -18,7 +19,7 @@ public class Piece implements Serializable {
     protected HashMap<String, Square> board;
 
     public Piece() {}
-    public Piece(String name, String colour, String location) {
+    public Piece(String name, Colour colour, String location) {
         this.name = name;
         this.colour = colour;
         this.location = location;
@@ -35,10 +36,10 @@ public class Piece implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    public String getColour() {
+    public Colour getColour() {
         return colour;
     }
-    public void setColour(String colour) {
+    public void setColour(Colour colour) {
         this.colour = colour;
     }
     public String getLocation() {

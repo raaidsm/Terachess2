@@ -1,12 +1,11 @@
 package raaidsm.spring.test.models.pieces;
 
 import raaidsm.spring.test.models.Piece;
-
-import java.util.HashMap;
+import raaidsm.spring.test.models.utils.Colour;
 
 public class Bishop extends Piece {
     public Bishop() {}
-    public Bishop(String name, String colour, String location) {
+    public Bishop(String name, Colour colour, String location) {
         super(name, colour, location);
     }
 }

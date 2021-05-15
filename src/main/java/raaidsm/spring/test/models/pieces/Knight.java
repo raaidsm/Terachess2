@@ -1,12 +1,11 @@
 package raaidsm.spring.test.models.pieces;
 
 import raaidsm.spring.test.models.Piece;
-
-import java.util.HashMap;
+import raaidsm.spring.test.models.utils.Colour;
 
 public class Knight extends Piece {
     public Knight() {}
-    public Knight(String name, String colour, String location) {
+    public Knight(String name, Colour colour, String location) {
         super(name, colour, location);
     }
 }
