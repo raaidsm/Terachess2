@@ -22,6 +22,7 @@ public class BoardManager {
     private List<Piece> blackPieces;
     private HashMap<String, List<Piece>> pieceListsByColour;
     private Piece[] kings = new Piece[2];
+    private TurnManager turnManager;
     //endregion
     //region Check
     private boolean isCheck;
@@ -106,6 +107,7 @@ public class BoardManager {
         //region Initialize Other Fields
         this.kings[0] = board.get("E1").containedPiece;
         this.kings[1] = board.get("E8").containedPiece;
+        this.turnManager = new TurnManager();
         this.isCheck = false;
         this.checkingPieces = new ArrayList<>();
         this.checkTypes = new ArrayList<>();
@@ -149,31 +151,24 @@ public class BoardManager {
             2) For each piece, reduce if piece is pinned
             3) For each piece, reduce if check and piece is of same colour as checked king
         */
+        List<Piece> pieces = pieceListsByColour.get(turnManager.getColour().toString());
         //0)
         if (1 < checkingPieces.size()) {
-            board.forEach((coordinate, square) -> {
-                Piece piece = square.containedPiece;
+            pieces.forEach(piece -> {
                 if (piece.getName().equals("king")) piece.calculateMoves();
                 else piece.clearAllMoves();
             });
             return;
         }
         //1)
-        board.forEach((coordinate, square) -> {
-            Piece piece = square.containedPiece;
-            checkedKing = piece.calculateMoves().kingChecked;
-        });
+        pieces.forEach(piece -> checkedKing = piece.calculateMoves().kingChecked);
         //2)
-        board.forEach((coordinate, square) -> {
-            Piece piece = square.containedPiece;
-            if (!piece.getName().equals("king") && piece.isPinned()) piece.reduceMovesDueToPin();
+        pieces.forEach(piece -> {
+            if (!piece.getName().equals("king")) piece.reduceMovesDueToPin();
         });
         //3)
-        board.forEach((coordinate, square) -> {
-            Piece piece = square.containedPiece;
-            if (!piece.getName().equals("king") && piece.getColour().equals(checkedKing.getColour())) {
-                piece.reduceMovesDueToCheck();
-            }
+        pieces.forEach(piece -> {
+            if (!piece.getName().equals("king")) piece.reduceMovesDueToCheck();
         });
     }
 }
