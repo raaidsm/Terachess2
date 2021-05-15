@@ -11,13 +11,13 @@ public class TurnManager {
         return colour;
     }
 
-    public void switchColour() {
+    public void switchC() {
         if (colour == Colour.WHITE) colour = Colour.BLACK;
         else if (colour == Colour.BLACK) colour = Colour.WHITE;
     }
-    public Colour getColourAndSwitch() {
+    public Colour getAndSwitch() {
         Colour tempColour = colour;
-        switchColour();
+        switchC();
         return tempColour;
     }
 }
