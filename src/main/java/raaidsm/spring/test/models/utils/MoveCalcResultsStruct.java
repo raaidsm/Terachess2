@@ -3,11 +3,11 @@ package raaidsm.spring.test.models.utils;
 import javassist.compiler.ast.Pair;
 import raaidsm.spring.test.models.pieces.King;
 
-public class MoveCalcResults {
+public class MoveCalcResultsStruct {
     public King kingChecked;
     public boolean hasMoves;
 
-    public MoveCalcResults(King kingChecked, boolean hasMoves) {
+    public MoveCalcResultsStruct(King kingChecked, boolean hasMoves) {
         this.kingChecked = kingChecked;
         this.hasMoves = hasMoves;
     }

@@ -1,7 +1,7 @@
 package raaidsm.spring.test.models;
 
 import raaidsm.spring.test.models.utils.Colour;
-import raaidsm.spring.test.models.utils.MoveCalcResults;
+import raaidsm.spring.test.models.utils.MoveCalcResultsStruct;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -73,23 +73,23 @@ public class Piece implements Serializable {
         this.board = board;
     }
 
-    public MoveCalcResults calculateMoves() {
+    public MoveCalcResultsStruct calculateMoves() {
         //OVERVIEW:
         //Return checked king (null if none) and whether piece has any legal moves
         //TODO: For now, returning default value
-        return new MoveCalcResults(null, false);
+        return new MoveCalcResultsStruct(null, false);
     }
-    public MoveCalcResults reduceMovesDueToPin() {
+    public MoveCalcResultsStruct reduceMovesDueToPin() {
         //OVERVIEW:
         //Return whether piece has any legal moves
         //TODO: For now, returning default value
-        return new MoveCalcResults(null, false);
+        return new MoveCalcResultsStruct(null, false);
     }
-    public MoveCalcResults reduceMovesDueToCheck() {
+    public MoveCalcResultsStruct reduceMovesDueToCheck() {
         //OVERVIEW:
         //Return whether piece has any legal moves
         //TODO: For now, returning default value
-        return new MoveCalcResults(null, false);
+        return new MoveCalcResultsStruct(null, false);
     }
     public void clearAllMoves() {}
 
