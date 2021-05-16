@@ -2,10 +2,11 @@ package raaidsm.spring.test.models.pieces;
 
 import raaidsm.spring.test.models.Piece;
 import raaidsm.spring.test.models.utils.Colour;
+import raaidsm.spring.test.models.utils.PieceType;
 
 public class Knight extends Piece {
     public Knight() {}
-    public Knight(String name, Colour colour, String location) {
+    public Knight(PieceType name, Colour colour, String location) {
         super(name, colour, location);
     }
 }

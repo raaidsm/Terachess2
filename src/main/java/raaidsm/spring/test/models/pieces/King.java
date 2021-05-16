@@ -2,12 +2,13 @@ package raaidsm.spring.test.models.pieces;
 
 import raaidsm.spring.test.models.Piece;
 import raaidsm.spring.test.models.utils.Colour;
+import raaidsm.spring.test.models.utils.PieceType;
 
 public class King extends Piece {
     private boolean canCastle = true;
 
     public King() {}
-    public King(String name, Colour colour, String location) {
+    public King(PieceType name, Colour colour, String location) {
         super(name, colour, location);
     }
 }

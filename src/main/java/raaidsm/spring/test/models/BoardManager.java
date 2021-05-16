@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import raaidsm.spring.test.models.pieces.*;
 import raaidsm.spring.test.models.utils.AttackType;
 import raaidsm.spring.test.models.utils.Colour;
+import raaidsm.spring.test.models.utils.PieceType;
 import raaidsm.spring.test.models.utils.TurnManager;
 
 import java.util.ArrayList;
@@ -44,44 +45,44 @@ public class BoardManager {
                 //Add all the initial pieces starting from the top left
 
                 //region Black first rank
-                entry("A8", new Square(new Rook("rook", Colour.BLACK, "A8"))),
-                entry("B8", new Square(new Knight("knight", Colour.BLACK, "B8"))),
-                entry("C8", new Square(new Bishop("bishop", Colour.BLACK, "C8"))),
-                entry("D8", new Square(new Queen("queen", Colour.BLACK, "D8"))),
-                entry("E8", new Square(new King("king", Colour.BLACK, "E8"))),
-                entry("F8", new Square(new Bishop("bishop", Colour.BLACK, "F8"))),
-                entry("G8", new Square(new Knight("knight", Colour.BLACK, "G8"))),
-                entry("H8", new Square(new Rook("rook", Colour.BLACK, "H8"))),
+                entry("A8", new Square(new Rook(PieceType.ROOK, Colour.BLACK, "A8"))),
+                entry("B8", new Square(new Knight(PieceType.KNIGHT, Colour.BLACK, "B8"))),
+                entry("C8", new Square(new Bishop(PieceType.BISHOP, Colour.BLACK, "C8"))),
+                entry("D8", new Square(new Queen(PieceType.QUEEN, Colour.BLACK, "D8"))),
+                entry("E8", new Square(new King(PieceType.KING, Colour.BLACK, "E8"))),
+                entry("F8", new Square(new Bishop(PieceType.BISHOP, Colour.BLACK, "F8"))),
+                entry("G8", new Square(new Knight(PieceType.KNIGHT, Colour.BLACK, "G8"))),
+                entry("H8", new Square(new Rook(PieceType.ROOK, Colour.BLACK, "H8"))),
                 //endregion
                 //region Black second rank
-                entry("A7", new Square(new Pawn("pawn", Colour.BLACK, "A7"))),
-                entry("B7", new Square(new Pawn("pawn", Colour.BLACK, "B7"))),
-                entry("C7", new Square(new Pawn("pawn", Colour.BLACK, "C7"))),
-                entry("D7", new Square(new Pawn("pawn", Colour.BLACK, "D7"))),
-                entry("E7", new Square(new Pawn("pawn", Colour.BLACK, "E7"))),
-                entry("F7", new Square(new Pawn("pawn", Colour.BLACK, "F7"))),
-                entry("G7", new Square(new Pawn("pawn", Colour.BLACK, "G7"))),
-                entry("H7", new Square(new Pawn("pawn", Colour.BLACK, "H7"))),
+                entry("A7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "A7"))),
+                entry("B7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "B7"))),
+                entry("C7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "C7"))),
+                entry("D7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "D7"))),
+                entry("E7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "E7"))),
+                entry("F7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "F7"))),
+                entry("G7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "G7"))),
+                entry("H7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "H7"))),
                 //endregion
                 //region White second rank
-                entry("A2", new Square(new Pawn("pawn", Colour.WHITE, "A2"))),
-                entry("B2", new Square(new Pawn("pawn", Colour.WHITE, "B2"))),
-                entry("C2", new Square(new Pawn("pawn", Colour.WHITE, "C2"))),
-                entry("D2", new Square(new Pawn("pawn", Colour.WHITE, "D2"))),
-                entry("E2", new Square(new Pawn("pawn", Colour.WHITE, "E2"))),
-                entry("F2", new Square(new Pawn("pawn", Colour.WHITE, "F2"))),
-                entry("G2", new Square(new Pawn("pawn", Colour.WHITE, "G2"))),
-                entry("H2", new Square(new Pawn("pawn", Colour.WHITE, "H2"))),
+                entry("A2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "A2"))),
+                entry("B2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "B2"))),
+                entry("C2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "C2"))),
+                entry("D2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "D2"))),
+                entry("E2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "E2"))),
+                entry("F2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "F2"))),
+                entry("G2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "G2"))),
+                entry("H2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "H2"))),
                 //endregion
                 //region White first rank
-                entry("A1", new Square(new Rook("rook", Colour.WHITE, "A1"))),
-                entry("B1", new Square(new Knight("knight", Colour.WHITE, "B1"))),
-                entry("C1", new Square(new Bishop("bishop", Colour.WHITE, "C1"))),
-                entry("D1", new Square(new Queen("queen", Colour.WHITE, "D1"))),
-                entry("E1", new Square(new King("king", Colour.WHITE, "E1"))),
-                entry("F1", new Square(new Bishop("bishop", Colour.WHITE, "F1"))),
-                entry("G1", new Square(new Knight("knight", Colour.WHITE, "G1"))),
-                entry("H1", new Square(new Rook("rook", Colour.WHITE, "H1")))
+                entry("A1", new Square(new Rook(PieceType.ROOK, Colour.WHITE, "A1"))),
+                entry("B1", new Square(new Knight(PieceType.KNIGHT, Colour.WHITE, "B1"))),
+                entry("C1", new Square(new Bishop(PieceType.BISHOP, Colour.WHITE, "C1"))),
+                entry("D1", new Square(new Queen(PieceType.QUEEN, Colour.WHITE, "D1"))),
+                entry("E1", new Square(new King(PieceType.KING, Colour.WHITE, "E1"))),
+                entry("F1", new Square(new Bishop(PieceType.BISHOP, Colour.WHITE, "F1"))),
+                entry("G1", new Square(new Knight(PieceType.KNIGHT, Colour.WHITE, "G1"))),
+                entry("H1", new Square(new Rook(PieceType.ROOK, Colour.WHITE, "H1")))
                 //endregion
         ));
         //endregion
@@ -161,7 +162,7 @@ public class BoardManager {
         //0)
         if (1 < checkingPieces.size()) {
             pieces.forEach(piece -> {
-                if (piece.getName().equals("king")) piece.calculateMoves();
+                if (piece.getType() == PieceType.KING) piece.calculateMoves();
                 else piece.clearAllMoves();
             });
             return;
@@ -170,11 +171,11 @@ public class BoardManager {
         pieces.forEach(piece -> checkedKing = piece.calculateMoves().kingChecked);
         //2)
         pieces.forEach(piece -> {
-            if (!piece.getName().equals("king")) piece.reduceMovesDueToPin();
+            if (piece.getType() != PieceType.KING) piece.reduceMovesDueToPin();
         });
         //3)
         pieces.forEach(piece -> {
-            if (!piece.getName().equals("king")) piece.reduceMovesDueToCheck();
+            if (piece.getType() != PieceType.KING) piece.reduceMovesDueToCheck();
         });
     }
 }

@@ -2,6 +2,7 @@ package raaidsm.spring.test.models;
 
 import raaidsm.spring.test.models.utils.Colour;
 import raaidsm.spring.test.models.utils.MoveCalcResultsStruct;
+import raaidsm.spring.test.models.utils.PieceType;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Piece implements Serializable {
-    protected String name;
+    protected PieceType type;
     protected Colour colour;
     protected String location;
     protected List<String> legalMoves;
@@ -19,8 +20,8 @@ public class Piece implements Serializable {
     protected HashMap<String, Square> board;
 
     public Piece() {}
-    public Piece(String name, Colour colour, String location) {
-        this.name = name;
+    public Piece(PieceType type, Colour colour, String location) {
+        this.type = type;
         this.colour = colour;
         this.location = location;
         this.legalMoves = new ArrayList<>();
@@ -30,11 +31,11 @@ public class Piece implements Serializable {
         this.board = null;
     }
 
-    public String getName() {
-        return name;
+    public PieceType getType() {
+        return type;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setType(PieceType type) {
+        this.type = type;
     }
     public Colour getColour() {
         return colour;
@@ -96,7 +97,7 @@ public class Piece implements Serializable {
     @Override
     public String toString() {
         return "Piece{" +
-                "name='" + name + '\'' +
+                "name='" + type + '\'' +
                 ", colour=" + colour +
                 ", location='" + location + '\'' +
                 ", isBoard=" + (board != null) +
