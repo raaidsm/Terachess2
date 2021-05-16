@@ -92,4 +92,14 @@ public class Piece implements Serializable {
         return new MoveCalcResults(null, false);
     }
     public void clearAllMoves() {}
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "name='" + name + '\'' +
+                ", colour=" + colour +
+                ", location='" + location + '\'' +
+                ", isBoard=" + (board != null) +
+                '}';
+    }
 }

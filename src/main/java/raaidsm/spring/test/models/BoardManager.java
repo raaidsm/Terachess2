@@ -104,7 +104,7 @@ public class BoardManager {
         //endregion
         //region Add Empty Squares
         //Add the empty squares with no pieces
-        for (int y = boardLength - 2; 0 < y; y--) {
+        for (int y = boardLength - 2; 2 < y; y--) {
             for (int x = 0; x < boardLength; x++) {
                 board.put(letters[x] + String.valueOf(y), new Square(null));
             }

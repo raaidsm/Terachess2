@@ -20,4 +20,11 @@ public class Square implements Serializable {
                 entry("white", false), entry("black", false)
         ));
     }
+
+    @Override
+    public String toString() {
+        return "Square{" +
+                "containedPiece=" + containedPiece +
+                '}';
+    }
 }
