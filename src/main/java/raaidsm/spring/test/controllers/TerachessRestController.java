@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import raaidsm.spring.test.models.BoardManager;
+import raaidsm.spring.test.models.exceptions.CheckmateException;
 import raaidsm.spring.test.models.forms.MoveForm;
 
 import java.util.*;
@@ -34,6 +35,10 @@ public class TerachessRestController {
         //Read move and calculate changes on the board
         logger.trace("readMove() runs");
 
-        boardManager.makeMove(form.getFirstSquare(), form.getSecondSquare());
+        boolean gameUnderProgress = boardManager.makeMove(form.getFirstSquare(), form.getSecondSquare());
+        //TODO: For now, crash the program when checkmate is achieved
+        if (!gameUnderProgress) {
+            throw new CheckmateException("Checkmate.");
+        }
     }
 }

@@ -126,7 +126,7 @@ public class BoardManager {
         isCheck = check;
     }
 
-    public void makeMove(String firstSquare, String secondSquare) {
+    public boolean makeMove(String firstSquare, String secondSquare) {
         //Take piece-to-move off of first square
         Piece pieceToMove = board.get(firstSquare).containedPiece;
         board.get(firstSquare).containedPiece = null;
@@ -143,9 +143,9 @@ public class BoardManager {
         board.get(secondSquare).containedPiece = pieceToMove;
         pieceToMove.setLocation(secondSquare);
         //Move has been made, now calculate all legal moves
-        calculateAllLegalMoves();
+        return calculateAllLegalMoves();
     }
-    private void calculateAllLegalMoves() {
+    private boolean calculateAllLegalMoves() {
         /* OVERVIEW:
         0) If double check, only calculate moves for king
         1) Calculate moves for each piece:
@@ -156,23 +156,39 @@ public class BoardManager {
             3) For each piece, reduce if check and piece is of same colour as checked king
         */
         List<Piece> pieces = pieceListsByColour.get(turnManager.getColour());
+        boolean legalMovesFound = false;
         //0)
         if (1 < checkingPieces.size()) {
-            pieces.forEach(piece -> {
-                if (piece.getType() == PieceType.KING) piece.calculateMoves();
+            for (Piece piece : pieces) {
+                if (piece.getType() == PieceType.KING) {
+                    MoveCalcResultsStruct results = piece.calculateMoves();
+                    if (results.hasMoves) legalMovesFound = true;
+                }
                 else piece.clearAllMoves();
-            });
-            return;
+            }
+            turnManager.switchC();
+            return legalMovesFound;         //Checkmate.
         }
         //1)
-        pieces.forEach(piece -> checkedKing = piece.calculateMoves().kingChecked);
+        for (Piece piece : pieces) {
+            MoveCalcResultsStruct results = piece.calculateMoves();
+            if (results.hasMoves) legalMovesFound = true;
+        }
         //2)
-        pieces.forEach(piece -> {
-            if (piece.getType() != PieceType.KING) piece.reduceMovesDueToPin();
-        });
+        for (Piece piece : pieces) {
+            if (piece.getType() != PieceType.KING) {
+                MoveCalcResultsStruct results = piece.reduceMovesDueToPin();
+                if (results.hasMoves) legalMovesFound = true;
+            }
+        }
         //3)
-        pieces.forEach(piece -> {
-            if (piece.getType() != PieceType.KING) piece.reduceMovesDueToCheck();
-        });
+        for (Piece piece : pieces) {
+            if (piece.getType() != PieceType.KING) {
+                MoveCalcResultsStruct results = piece.reduceMovesDueToCheck();
+                if (results.hasMoves) legalMovesFound = true;
+            }
+        }
+        turnManager.switchC();
+        return legalMovesFound;         //Checkmate.
     }
 }
