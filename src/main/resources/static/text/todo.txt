@@ -10,6 +10,8 @@ REFACTORING:
 -Make board field of BoardManager private because nothing outside uses it
 -Break main.js code into modules
 GAME LOGIC:
+-Create clause for stalemate
+-Create checkManager for check-tracking
 -Change check-tracking variables when check is detected
 -Rest check-tracking variables after a move is made (as making a legal move while under check stops check)
 -Establish clause for checkmate

@@ -156,39 +156,67 @@ public class BoardManager {
             3) For each piece, reduce if check and piece is of same colour as checked king
         */
         List<Piece> pieces = pieceListsByColour.get(turnManager.getColour());
-        boolean legalMovesFound = false;
+        boolean legalMovesFound;
         //0)
         if (1 < checkingPieces.size()) {
-            for (Piece piece : pieces) {
-                if (piece.getType() == PieceType.KING) {
-                    MoveCalcResultsStruct results = piece.calculateMoves();
-                    if (results.hasMoves) legalMovesFound = true;
-                }
-                else piece.clearAllMoves();
-            }
+            legalMovesFound = caseMultiCheck(pieces);
             turnManager.switchC();
             return legalMovesFound;         //Checkmate.
         }
         //1)
+        legalMovesFound = calculateMoves(pieces);
+        //2)
+        legalMovesFound = reduceMovesDueToPin(pieces);
+        //3)
+        legalMovesFound = reduceMovesDueToCheck(pieces);
+        turnManager.switchC();
+        return legalMovesFound;         //Checkmate.
+    }
+    private boolean caseMultiCheck(List<Piece> pieces) {
+        /* OVERVIEW:
+        Returns: wasLegalMoveFound */
+        boolean legalMovesFound = false;
+        for (Piece piece : pieces) {
+            if (piece.getType() == PieceType.KING) {
+                MoveCalcResultsStruct results = piece.calculateMoves();
+                if (results.hasMoves) legalMovesFound = true;
+            }
+            else piece.clearAllMoves();
+        }
+        return legalMovesFound;
+    }
+    private boolean calculateMoves(List<Piece> pieces) {
+        /* OVERVIEW:
+        Returns: wasLegalMoveFound */
+        boolean legalMovesFound = false;
         for (Piece piece : pieces) {
             MoveCalcResultsStruct results = piece.calculateMoves();
             if (results.hasMoves) legalMovesFound = true;
         }
-        //2)
+        return legalMovesFound;
+    }
+    private boolean reduceMovesDueToPin(List<Piece> pieces) {
+        /* OVERVIEW:
+        Returns: wasLegalMoveFound */
+        boolean legalMovesFound = false;
         for (Piece piece : pieces) {
             if (piece.getType() != PieceType.KING) {
                 MoveCalcResultsStruct results = piece.reduceMovesDueToPin();
                 if (results.hasMoves) legalMovesFound = true;
             }
         }
-        //3)
+        return legalMovesFound;
+    }
+    private boolean reduceMovesDueToCheck(List<Piece> pieces) {
+        /* OVERVIEW:
+        Returns: wasLegalMoveFound */
+        boolean legalMovesFound = false;
         for (Piece piece : pieces) {
             if (piece.getType() != PieceType.KING) {
                 MoveCalcResultsStruct results = piece.reduceMovesDueToCheck();
                 if (results.hasMoves) legalMovesFound = true;
             }
         }
-        turnManager.switchC();
-        return legalMovesFound;         //Checkmate.
+        return legalMovesFound;
     }
 }
