@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import raaidsm.spring.test.models.BoardManager;
 import raaidsm.spring.test.models.exceptions.CheckmateException;
+import raaidsm.spring.test.models.exceptions.StalemateException;
 import raaidsm.spring.test.models.forms.MoveForm;
 import raaidsm.spring.test.models.utils.GameStatus;
 
@@ -38,6 +39,7 @@ public class TerachessRestController {
 
         GameStatus gameStatus = boardManager.makeMove(form.getFirstSquare(), form.getSecondSquare());
         //TODO: For now, crash the program when checkmate is achieved
-        if (gameStatus == GameStatus.CHECKMATE) throw new CheckmateException("Checkmate.");
+        if (gameStatus == GameStatus.CHECKMATE) throw new CheckmateException();
+        else if (gameStatus == GameStatus.STALEMATE) throw new StalemateException();
     }
 }
