@@ -3,10 +3,7 @@ package raaidsm.spring.test.models;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import raaidsm.spring.test.models.pieces.*;
-import raaidsm.spring.test.models.utils.AttackType;
-import raaidsm.spring.test.models.utils.Colour;
-import raaidsm.spring.test.models.utils.PieceType;
-import raaidsm.spring.test.models.utils.TurnManager;
+import raaidsm.spring.test.models.utils.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;

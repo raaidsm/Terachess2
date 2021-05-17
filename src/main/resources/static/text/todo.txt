@@ -6,7 +6,6 @@ OVERALL PLAN:
 -When one of the legal moves is selected, the process repeats again
 
 REFACTORING:
--Implement enum for piece type
 -Make board field of BoardManager private because nothing outside uses it
 -Break main.js code into modules
 GAME LOGIC:
