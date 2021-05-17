@@ -126,7 +126,7 @@ public class BoardManager {
         isCheck = check;
     }
 
-    public boolean makeMove(String firstSquare, String secondSquare) {
+    public GameStatus makeMove(String firstSquare, String secondSquare) {
         //Take piece-to-move off of first square
         Piece pieceToMove = board.get(firstSquare).containedPiece;
         board.get(firstSquare).containedPiece = null;
@@ -145,7 +145,7 @@ public class BoardManager {
         //Move has been made, now calculate all legal moves
         return calculateAllLegalMoves();
     }
-    private boolean calculateAllLegalMoves() {
+    private GameStatus calculateAllLegalMoves() {
         /* OVERVIEW:
         0) If double check, only calculate moves for king
         1) Calculate moves for each piece:
@@ -157,20 +157,36 @@ public class BoardManager {
         */
         List<Piece> pieces = pieceListsByColour.get(turnManager.getColour());
         boolean legalMovesFound;
-        //0)
+        //region Multi-Check
         if (1 < checkingPieces.size()) {
             legalMovesFound = caseMultiCheck(pieces);
             turnManager.switchC();
-            return legalMovesFound;         //Checkmate.
+            if (legalMovesFound) return GameStatus.LIVE;
+            else return GameStatus.CHECKMATE;
         }
-        //1)
-        legalMovesFound = calculateMoves(pieces);
-        //2)
+        //endregion
+        //region Calculate All Possible Moves
+        legalMovesFound = calculateAllPossibleMoves(pieces);
+        //endregion
+        //region Reduce Moves Due to Pin
+        if (!legalMovesFound) {
+            if (isCheck) return GameStatus.CHECKMATE;
+            else return GameStatus.STALEMATE;
+        }
         legalMovesFound = reduceMovesDueToPin(pieces);
-        //3)
-        legalMovesFound = reduceMovesDueToCheck(pieces);
+        //endregion
+        //region Reduce Moves Due to Check
+        if (!legalMovesFound) {
+            if (isCheck) return GameStatus.CHECKMATE;
+            else return GameStatus.STALEMATE;
+        }
+        if (isCheck) legalMovesFound = reduceMovesDueToCheck(pieces);
+        //endregion
+        //region Set tracking variables for next turn
         turnManager.switchC();
-        return legalMovesFound;         //Checkmate.
+        //endregion
+        if (legalMovesFound) return GameStatus.LIVE;
+        else return GameStatus.CHECKMATE;
     }
     private boolean caseMultiCheck(List<Piece> pieces) {
         /* OVERVIEW:
@@ -185,7 +201,7 @@ public class BoardManager {
         }
         return legalMovesFound;
     }
-    private boolean calculateMoves(List<Piece> pieces) {
+    private boolean calculateAllPossibleMoves(List<Piece> pieces) {
         /* OVERVIEW:
         Returns: wasLegalMoveFound */
         boolean legalMovesFound = false;
