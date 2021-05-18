@@ -1,4 +1,4 @@
-package raaidsm.spring.test.models.utils;
+package raaidsm.spring.test.models.piece_properties;
 
 public enum Colour {
     WHITE("white"), BLACK("black");

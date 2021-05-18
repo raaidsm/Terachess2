@@ -4,6 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import raaidsm.spring.test.models.pieces.*;
 import raaidsm.spring.test.models.utils.*;
+import raaidsm.spring.test.models.managers.TurnManager;
+import raaidsm.spring.test.models.piece_properties.AttackType;
+import raaidsm.spring.test.models.piece_properties.Colour;
+import raaidsm.spring.test.models.piece_properties.PieceType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,9 +17,9 @@ import java.util.Map;
 import static java.util.Map.entry;
 
 //Contains methods for manipulating the board
-public class BoardManager {
+public class GameEngine {
     //region Field Variables
-    private final Logger logger = LoggerFactory.getLogger(BoardManager.class);
+    private final Logger logger = LoggerFactory.getLogger(GameEngine.class);
     //region Constants
     private final int boardLength = 8;
     private final char[] letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
@@ -36,7 +40,7 @@ public class BoardManager {
     //endregion
     //endregion
 
-    public BoardManager() {
+    public GameEngine() {
         //region Initialize Board With Pieces
         this.board = new HashMap<>(Map.ofEntries(
                 //Add all the initial pieces starting from the top left

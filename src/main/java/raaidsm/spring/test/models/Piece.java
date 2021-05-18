@@ -1,8 +1,8 @@
 package raaidsm.spring.test.models;
 
-import raaidsm.spring.test.models.utils.Colour;
+import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.utils.MoveCalcResultsStruct;
-import raaidsm.spring.test.models.utils.PieceType;
+import raaidsm.spring.test.models.piece_properties.PieceType;
 
 import java.io.Serializable;
 import java.util.ArrayList;

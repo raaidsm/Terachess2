@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import raaidsm.spring.test.models.BoardManager;
+import raaidsm.spring.test.models.GameEngine;
 import raaidsm.spring.test.models.exceptions.CheckmateException;
 import raaidsm.spring.test.models.exceptions.StalemateException;
 import raaidsm.spring.test.models.forms.MoveForm;
@@ -16,10 +16,10 @@ import java.util.*;
 @RestController
 public class TerachessRestController {
     private final Logger logger = LoggerFactory.getLogger(TerachessController.class);
-    private BoardManager boardManager;
+    private GameEngine gameEngine;
 
     public TerachessRestController() {
-        boardManager = new BoardManager();
+        gameEngine = new GameEngine();
     }
 
     @PostMapping(value="/ReadFirstPieceSelection", produces="application/json")
@@ -37,7 +37,7 @@ public class TerachessRestController {
         //Read move and calculate changes on the board
         logger.trace("readMove() runs");
 
-        GameStatus gameStatus = boardManager.makeMove(form.getFirstSquare(), form.getSecondSquare());
+        GameStatus gameStatus = gameEngine.makeMove(form.getFirstSquare(), form.getSecondSquare());
         //TODO: For now, crash the program when checkmate is achieved
         if (gameStatus == GameStatus.CHECKMATE) throw new CheckmateException();
         else if (gameStatus == GameStatus.STALEMATE) throw new StalemateException();
