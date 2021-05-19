@@ -173,6 +173,7 @@ public class GameEngine {
         if (checkManager.isCheck()) legalMovesFound = reduceMovesDueToCheck(pieces);
         //endregion
         //region Set tracking variables for next turn
+        checkManager.clearChecks();
         turnManager.switchC();
         //endregion
         if (legalMovesFound) return GameStatus.LIVE;
