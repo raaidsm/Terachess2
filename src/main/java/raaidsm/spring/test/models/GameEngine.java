@@ -25,13 +25,13 @@ public class GameEngine {
     private final char[] letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
     //endregion
     //region Board Tracking
-    public HashMap<String, Square> board;
+    private HashMap<String, Square> board;
     private List<Piece> whitePieces;
     private List<Piece> blackPieces;
     private HashMap<Colour, List<Piece>> pieceListsByColour;
-    private TurnManager turnManager;
     //endregion
-    //region Check
+    //region Turn and Check Managers
+    private TurnManager turnManager;
     private CheckManager checkManager;
     //endregion
     //endregion
