@@ -6,11 +6,9 @@ OVERALL PLAN:
 -When one of the legal moves is selected, the process repeats again
 
 REFACTORING:
--Make board field of BoardManager private because nothing outside uses it
 -Break main.js code into modules
 
 GAME LOGIC:
--Create checkManager for check-tracking
 -Refactor piece-move calculating methods to return type of attack against king instead of simply boolean
 -Change check-tracking variables when check is detected
 -Reset check-tracking variables after a move is made (as making a legal move while under check stops check)
