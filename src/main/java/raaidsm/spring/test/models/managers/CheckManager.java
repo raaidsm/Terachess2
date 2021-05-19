@@ -43,15 +43,11 @@ public class CheckManager {
     }
 
     public void setCheck(Piece piece, AttackType attackType, King checkedKing) {
-        //Change isCheck
         isCheck = true;
-        //Change checkedKing
         this.checkedKing = checkedKing;
-        //Change checkingPieces
         checkingPieces.add(new CheckingPieceStruct(piece, attackType));
     }
     public void clearChecks() {
-        kings.clear();
         isCheck = false;
         checkedKing = null;
         checkingPieces.clear();
