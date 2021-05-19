@@ -16,7 +16,6 @@ import java.util.Map;
 
 import static java.util.Map.entry;
 
-//Contains methods for manipulating the board
 public class GameEngine {
     //region Field Variables
     private final Logger logger = LoggerFactory.getLogger(GameEngine.class);
