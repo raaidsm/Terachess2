@@ -11,6 +11,7 @@ REFACTORING:
 
 GAME LOGIC:
 -Create checkManager for check-tracking
+-Refactor piece-move calculating methods to return type of attack against king instead of simply boolean
 -Change check-tracking variables when check is detected
 -Reset check-tracking variables after a move is made (as making a legal move while under check stops check)
 -Implement draw conditions such as too many turns without captures, repetition, insufficient material, etc.

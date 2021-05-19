@@ -2,10 +2,10 @@ package raaidsm.spring.test.models;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import raaidsm.spring.test.models.managers.CheckManager;
 import raaidsm.spring.test.models.pieces.*;
 import raaidsm.spring.test.models.utils.*;
 import raaidsm.spring.test.models.managers.TurnManager;
-import raaidsm.spring.test.models.piece_properties.AttackType;
 import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.piece_properties.PieceType;
 
@@ -29,14 +29,10 @@ public class GameEngine {
     private List<Piece> whitePieces;
     private List<Piece> blackPieces;
     private HashMap<Colour, List<Piece>> pieceListsByColour;
-    private Piece[] kings = new Piece[2];
     private TurnManager turnManager;
     //endregion
     //region Check
-    private boolean isCheck;
-    private List<Piece> checkingPieces;
-    private List<AttackType> checkTypes;
-    private Piece checkedKing;
+    private CheckManager checkManager;
     //endregion
     //endregion
 
@@ -113,21 +109,11 @@ public class GameEngine {
         }
         //endregion
         //region Initialize Other Fields
-        this.kings[0] = board.get("E1").containedPiece;
-        this.kings[1] = board.get("E8").containedPiece;
         this.turnManager = new TurnManager();
-        this.isCheck = false;
-        this.checkingPieces = new ArrayList<>();
-        this.checkTypes = new ArrayList<>();
-        this.checkedKing = null;
+        King whiteKing = (King)board.get("E1").containedPiece;
+        King blackKing = (King)board.get("E8").containedPiece;
+        this.checkManager = new CheckManager(whiteKing, blackKing);
         //endregion
-    }
-
-    public boolean isCheck() {
-        return isCheck;
-    }
-    public void setCheck(boolean check) {
-        isCheck = check;
     }
 
     public GameStatus makeMove(String firstSquare, String secondSquare) {
@@ -162,7 +148,7 @@ public class GameEngine {
         List<Piece> pieces = pieceListsByColour.get(turnManager.getColour());
         boolean legalMovesFound;
         //region Multi-Check
-        if (1 < checkingPieces.size()) {
+        if (1 < checkManager.getCheckingPieces().size()) {
             legalMovesFound = caseMultiCheck(pieces);
             turnManager.switchC();
             if (legalMovesFound) return GameStatus.LIVE;
@@ -174,17 +160,17 @@ public class GameEngine {
         //endregion
         //region Reduce Moves Due to Pin
         if (!legalMovesFound) {
-            if (isCheck) return GameStatus.CHECKMATE;
+            if (checkManager.isCheck()) return GameStatus.CHECKMATE;
             else return GameStatus.STALEMATE;
         }
         legalMovesFound = reduceMovesDueToPin(pieces);
         //endregion
         //region Reduce Moves Due to Check
         if (!legalMovesFound) {
-            if (isCheck) return GameStatus.CHECKMATE;
+            if (checkManager.isCheck()) return GameStatus.CHECKMATE;
             else return GameStatus.STALEMATE;
         }
-        if (isCheck) legalMovesFound = reduceMovesDueToCheck(pieces);
+        if (checkManager.isCheck()) legalMovesFound = reduceMovesDueToCheck(pieces);
         //endregion
         //region Set tracking variables for next turn
         turnManager.switchC();
