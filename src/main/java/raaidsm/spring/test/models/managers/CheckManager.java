@@ -42,12 +42,11 @@ public class CheckManager {
         return checkingPieces;
     }
 
-    public void setCheck(Piece piece, AttackType attackType) {
+    public void setCheck(Piece piece, AttackType attackType, King checkedKing) {
         //Change isCheck
         isCheck = true;
         //Change checkedKing
-        if (piece.getColour() == Colour.WHITE) checkedKing = kings.get(Colour.BLACK);
-        else if (piece.getColour() == Colour.BLACK) checkedKing = kings.get(Colour.WHITE);
+        this.checkedKing = checkedKing;
         //Change checkingPieces
         checkingPieces.add(new CheckingPieceStruct(piece, attackType));
     }

@@ -198,6 +198,7 @@ public class GameEngine {
         for (Piece piece : pieces) {
             MoveCalcResultsStruct results = piece.calculateMoves();
             if (results.hasMoves) legalMovesFound = true;
+            if (results.checkedKing != null) checkManager.setCheck(piece, results.attackType, results.checkedKing);
         }
         return legalMovesFound;
     }

@@ -78,19 +78,19 @@ public class Piece implements Serializable {
         //OVERVIEW:
         //Return checked king (null if none) and whether piece has any legal moves
         //TODO: For now, returning default value
-        return new MoveCalcResultsStruct(null, false);
+        return new MoveCalcResultsStruct(null, null, false);
     }
     public MoveCalcResultsStruct reduceMovesDueToPin() {
         //OVERVIEW:
         //Return whether piece has any legal moves
         //TODO: For now, returning default value
-        return new MoveCalcResultsStruct(null, false);
+        return new MoveCalcResultsStruct(null, null, false);
     }
     public MoveCalcResultsStruct reduceMovesDueToCheck() {
         //OVERVIEW:
         //Return whether piece has any legal moves
         //TODO: For now, returning default value
-        return new MoveCalcResultsStruct(null, false);
+        return new MoveCalcResultsStruct(null, null, false);
     }
     public void clearAllMoves() {}
 
