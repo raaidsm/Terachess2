@@ -12,7 +12,7 @@ import java.util.List;
 public class Piece implements Serializable {
     protected PieceType type;
     protected Colour colour;
-    protected String location;
+    protected Point location;
     protected List<String> legalMoves;
     protected boolean isPinned;
     protected Piece pinningPiece;
@@ -23,7 +23,7 @@ public class Piece implements Serializable {
     public Piece(PieceType type, Colour colour, String location) {
         this.type = type;
         this.colour = colour;
-        this.location = location;
+        this.location = new Point(location);
         this.legalMoves = new ArrayList<>();
         this.isPinned = false;
         this.pinningPiece = null;
@@ -44,10 +44,10 @@ public class Piece implements Serializable {
         this.colour = colour;
     }
     public String getLocation() {
-        return location;
+        return location.getPoint();
     }
     public void setLocation(String location) {
-        this.location = location;
+        this.location.setPoint(location);
     }
     public List<String> getLegalMoves() {
         return legalMoves;
