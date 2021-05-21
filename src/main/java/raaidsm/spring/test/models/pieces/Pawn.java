@@ -54,12 +54,13 @@ public class Pawn extends Piece {
         //Both squares above are open so up2 is valid
         return new MoveCalcResultsStruct(null, AttackType.ONLY_MOVE, true);
     }
-    private MoveCalcResultsStruct upLeft() {
+    private MoveCalcResultsStruct upCapture(int direction) {
+        assert direction == 1 || direction == -1;
         //Take away initial pawn move since a move has been made
         hasInitialPawnMove = false;
         //This variable inverts "left" and "right" for black pieces
         int directionByColour = colour == Colour.WHITE ? 1 : -1;
-        String squareName = location.findRelativeByXAndY(-1 * directionByColour, 1);
+        String squareName = location.findRelativeByXAndY(direction * directionByColour, 1);
         //Guard clause for relative point going off the board
         if (squareName == null) return new MoveCalcResultsStruct(null, null, false);
         Piece pieceAtSquare = board.get(squareName).containedPiece;
@@ -70,11 +71,5 @@ public class Pawn extends Piece {
             return new MoveCalcResultsStruct((King)pieceAtSquare, AttackType.ONLY_CAPTURE, true);
         }
         return new MoveCalcResultsStruct(null, AttackType.ONLY_CAPTURE, true);
-    }
-    private MoveCalcResultsStruct upRight() {
-        //Take away initial pawn move since a move has been made
-        hasInitialPawnMove = false;
-        //TODO: For now, returning default value
-        return null;
     }
 }
