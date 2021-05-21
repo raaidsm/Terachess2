@@ -4,6 +4,8 @@ import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.utils.AttackingPieceStruct;
 import raaidsm.spring.test.models.utils.MoveCalcResultsStruct;
 import raaidsm.spring.test.models.piece_properties.PieceType;
+import raaidsm.spring.test.models.utils.SquarePreviewStruct;
+import raaidsm.spring.test.models.utils.SquareStatus;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -103,5 +105,17 @@ public class Piece implements Serializable {
                 ", location='" + location + '\'' +
                 ", isBoard=" + (board != null) +
                 '}';
+    }
+    private SquarePreviewStruct previewRelativeSquare(int x, int y) {
+        String squareName = location.findRelativeByXAndY(x, y);
+        if (squareName == null) return new SquarePreviewStruct(SquareStatus.NO_SQUARE, null, null);
+        Piece pieceAtSquare = board.get(squareName).containedPiece;
+        if (pieceAtSquare == null) return new SquarePreviewStruct(SquareStatus.EMPTY, null, null);
+        if (pieceAtSquare.getType() == PieceType.KING) {
+            return new SquarePreviewStruct(SquareStatus.KING, pieceAtSquare, pieceAtSquare.getColour());
+        }
+        else {
+            return new SquarePreviewStruct(SquareStatus.NON_KING_PIECE, pieceAtSquare, pieceAtSquare.getColour());
+        }
     }
 }
