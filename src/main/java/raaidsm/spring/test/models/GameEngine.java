@@ -131,6 +131,12 @@ public class GameEngine {
         //Move piece-to-move to second square
         board.get(secondSquare).containedPiece = pieceToMove;
         pieceToMove.setLocation(secondSquare);
+        //If piece is a pawn, take away its initial move
+        if (pieceToMove.getType() == PieceType.PAWN) {
+            //DEBUGGING: This might not properly change hasInitialPawnMove for a pawn
+            Pawn pawn = (Pawn)pieceToMove;
+            pawn.removeInitialPawnMove();
+        }
         //Move has been made, now calculate all legal moves
         return calculateAllLegalMoves();
     }

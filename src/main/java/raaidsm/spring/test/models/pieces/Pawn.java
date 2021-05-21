@@ -19,6 +19,10 @@ public class Pawn extends Piece {
         promotion.addAll(Arrays.asList(promotionPieces));
     }
 
+    public void removeInitialPawnMove() {
+        hasInitialPawnMove = false;
+    }
+
     @Override
     public MoveCalcResultsStruct calculateMoves() {
         //TODO: For now, returning default value
