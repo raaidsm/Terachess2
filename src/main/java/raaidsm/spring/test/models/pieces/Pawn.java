@@ -7,7 +7,9 @@ import raaidsm.spring.test.models.piece_properties.PieceType;
 import raaidsm.spring.test.models.utils.AttackingPieceStruct;
 import raaidsm.spring.test.models.utils.MoveCalcResultsStruct;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Pawn extends Piece {
     private boolean hasInitialPawnMove = true;
@@ -25,8 +27,27 @@ public class Pawn extends Piece {
 
     @Override
     public MoveCalcResultsStruct calculateMoves() {
-        //TODO: For now, returning default value
-        return new MoveCalcResultsStruct(null, null, true);
+        //region Variables to return
+        King checkedKing = null;
+        AttackType checkAttackType = null;
+        boolean hasMoves = false;
+        //endregion
+
+        List<MoveCalcResultsStruct> results = new ArrayList<>();
+        results.add(up1());
+        results.add(up2());
+        results.add(upCapture(-1));
+        results.add(upCapture(1));
+        for (MoveCalcResultsStruct result : results) {
+            hasMoves = true;
+            if (result.hasMoves) {
+                checkedKing = result.checkedKing;
+                AttackType attackType = result.attackType;
+                if (checkedKing != null) checkAttackType = attackType;
+                legalMoves.add(new AttackingPieceStruct(this, attackType));
+            }
+        }
+        return new MoveCalcResultsStruct(checkedKing, checkAttackType, hasMoves);
     }
     private MoveCalcResultsStruct up1() {
         //OVERVIEW: ONLY_MOVE
