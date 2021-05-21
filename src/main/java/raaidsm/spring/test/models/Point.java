@@ -12,7 +12,7 @@ public class Point implements Serializable {
         setPoint(squareName);
     }
     public String getPoint() {
-        char letterRep = letters[x+1];
+        char letterRep = letters[x - 1];
         int numberRep = y;
         return Character.toString(letterRep) + numberRep;
     }
@@ -21,5 +21,11 @@ public class Point implements Serializable {
         int numberRep = Integer.parseInt(squareName.substring(1));
         x = new String(letters).indexOf(letterRep) + 1;
         y = numberRep;
+    }
+
+    public String moveByXAndY(int x, int y) {
+        int letterRep = letters[this.x + x - 1];
+        int numberRep = this.y + y;
+        return Character.toString(letterRep) + numberRep;
     }
 }
