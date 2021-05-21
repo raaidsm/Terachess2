@@ -85,10 +85,10 @@ public class Pawn extends Piece {
         Piece pieceAtSquare = board.get(squareName).containedPiece;
         //Guard clause for there being no piece to capture
         if (pieceAtSquare == null) return new MoveCalcResultsStruct(null, null, false);
-        //Square has something to capture at this square
-        if (pieceAtSquare.getType() == PieceType.KING) {
-            return new MoveCalcResultsStruct((King)pieceAtSquare, AttackType.ONLY_CAPTURE, true);
-        }
+        //Square has a same-coloured piece that can't be captured
+        if (colour == pieceAtSquare.getColour()) return new MoveCalcResultsStruct(null, null, false);
+        //Square has an enemy piece to capture at this square
+        if (pieceAtSquare.getType() == PieceType.KING) return new MoveCalcResultsStruct((King)pieceAtSquare, AttackType.ONLY_CAPTURE, true);
         return new MoveCalcResultsStruct(null, AttackType.ONLY_CAPTURE, true);
     }
 }
