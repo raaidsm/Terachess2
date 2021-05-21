@@ -1,6 +1,7 @@
 package raaidsm.spring.test.models;
 
 import raaidsm.spring.test.models.piece_properties.Colour;
+import raaidsm.spring.test.models.utils.AttackingPieceStruct;
 import raaidsm.spring.test.models.utils.MoveCalcResultsStruct;
 import raaidsm.spring.test.models.piece_properties.PieceType;
 
@@ -13,7 +14,7 @@ public class Piece implements Serializable {
     protected PieceType type;
     protected Colour colour;
     protected Point location;
-    protected List<String> legalMoves;
+    protected List<AttackingPieceStruct> legalMoves;
     protected boolean isPinned;
     protected Piece pinningPiece;
     protected List<String> promotion;
@@ -49,10 +50,10 @@ public class Piece implements Serializable {
     public void setLocation(String location) {
         this.location.setPoint(location);
     }
-    public List<String> getLegalMoves() {
+    public List<AttackingPieceStruct> getLegalMoves() {
         return legalMoves;
     }
-    public void setLegalMoves(List<String> legalMoves) {
+    public void setLegalMoves(List<AttackingPieceStruct> legalMoves) {
         this.legalMoves = legalMoves;
     }
     public boolean isPinned() {
