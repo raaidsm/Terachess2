@@ -24,11 +24,10 @@ public class Point implements Serializable {
     }
     public String findRelativeByXAndY(int x, int y) {
         int tempX = this.x + x;
-        int tempY = this.y + y;
+        int numberRep = this.y + y;
         //Guard clause for relative point going off the board
-        if (boardLength < tempX && boardLength < tempY) return null;
+        if (boardLength < tempX || boardLength < numberRep) return null;
         int letterRep = letters[tempX - 1];
-        int numberRep = tempY;
         return Character.toString(letterRep) + numberRep;
     }
 }
