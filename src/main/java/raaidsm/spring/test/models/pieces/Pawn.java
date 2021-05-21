@@ -26,8 +26,6 @@ public class Pawn extends Piece {
     }
     private MoveCalcResultsStruct up1() {
         //OVERVIEW: ONLY_MOVE
-        //Take away initial pawn move since a move has been made
-        hasInitialPawnMove = false;
         String squareName = location.findRelativeByXAndY(0, 1);
         //Guard clause for relative point going off the board
         if (squareName == null) return new MoveCalcResultsStruct(null, null, false);
@@ -41,8 +39,6 @@ public class Pawn extends Piece {
         //OVERVIEW: ONLY_MOVE
         //Guard clause for not having initial pawn move to make
         if (!hasInitialPawnMove) return new MoveCalcResultsStruct(null, null, false);
-        //Take away initial pawn move since a move has been made
-        hasInitialPawnMove = false;
         for (int i = 1; i <= 2; i++) {
             String squareName = location.findRelativeByXAndY(0, i);
             //Guard clause for relative point going off the board
@@ -56,8 +52,6 @@ public class Pawn extends Piece {
     }
     private MoveCalcResultsStruct upCapture(int direction) {
         assert direction == 1 || direction == -1;
-        //Take away initial pawn move since a move has been made
-        hasInitialPawnMove = false;
         //This variable inverts "left" and "right" for black pieces
         int directionByColour = colour == Colour.WHITE ? 1 : -1;
         String squareName = location.findRelativeByXAndY(direction * directionByColour, 1);
