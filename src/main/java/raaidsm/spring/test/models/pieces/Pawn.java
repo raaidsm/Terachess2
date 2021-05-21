@@ -32,14 +32,27 @@ public class Pawn extends Piece {
         //Guard clause for relative point going off the board
         if (squareName == null) return new MoveCalcResultsStruct(null, null, false);
         Piece pieceAtSquare = board.get(squareName).containedPiece;
-        //There is a piece in the way
+        //Guard clause for there being a piece in the way
         if (pieceAtSquare != null) return new MoveCalcResultsStruct(null, null, false);
         //Square is free to move to
-        else return new MoveCalcResultsStruct(null, AttackType.ONLY_MOVE, true);
+        return new MoveCalcResultsStruct(null, AttackType.ONLY_MOVE, true);
     }
     private MoveCalcResultsStruct up2() {
-        //TODO: For now, returning default value
-        return null;
+        //OVERVIEW: ONLY_MOVE
+        //Guard clause for not having initial pawn move to make
+        if (!hasInitialPawnMove) return new MoveCalcResultsStruct(null, null, false);
+        //Take away initial pawn move since a move has been made
+        hasInitialPawnMove = false;
+        for (int i = 1; i <= 2; i++) {
+            String squareName = location.findRelativeByXAndY(0, i);
+            //Guard clause for relative point going off the board
+            if (squareName == null) return new MoveCalcResultsStruct(null, null, false);
+            Piece pieceAtSquare = board.get(squareName).containedPiece;
+            //Guard clause for there being a piece in the way
+            if (pieceAtSquare != null) return new MoveCalcResultsStruct(null, null, false);
+        }
+        //Both squares above are open so up2 is valid
+        return new MoveCalcResultsStruct(null, AttackType.ONLY_MOVE, true);
     }
     private MoveCalcResultsStruct upLeft() {
         //Take away initial pawn move since a move has been made
