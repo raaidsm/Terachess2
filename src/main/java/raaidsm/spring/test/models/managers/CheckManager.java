@@ -4,18 +4,17 @@ import raaidsm.spring.test.models.Piece;
 import raaidsm.spring.test.models.piece_properties.AttackType;
 import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.pieces.King;
-import raaidsm.spring.test.models.utils.CheckingPieceStruct;
+import raaidsm.spring.test.models.utils.AttackingPieceStruct;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CheckManager {
     private HashMap<Colour, King> kings;
     private boolean isCheck;
     private King checkedKing;
-    private List<CheckingPieceStruct> checkingPieces;
+    private List<AttackingPieceStruct> checkingPieces;
 
     public CheckManager(King whiteKing, King blackKing) {
         //Guard clause for if kings to initialize are null
@@ -38,14 +37,14 @@ public class CheckManager {
     public King getCheckedKing() {
         return checkedKing;
     }
-    public List<CheckingPieceStruct> getCheckingPieces() {
+    public List<AttackingPieceStruct> getCheckingPieces() {
         return checkingPieces;
     }
 
     public void setCheck(Piece piece, AttackType attackType, King checkedKing) {
         isCheck = true;
         this.checkedKing = checkedKing;
-        checkingPieces.add(new CheckingPieceStruct(piece, attackType));
+        checkingPieces.add(new AttackingPieceStruct(piece, attackType));
     }
     public void clearChecks() {
         isCheck = false;
