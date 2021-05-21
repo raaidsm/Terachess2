@@ -1,6 +1,6 @@
 package raaidsm.spring.test.models.utils;
 
-public enum SquareStatus {
+public enum SqrStat {
     NO_SQUARE,
     EMPTY,
     NON_KING_PIECE,

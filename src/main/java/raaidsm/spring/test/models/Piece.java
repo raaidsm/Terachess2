@@ -5,7 +5,7 @@ import raaidsm.spring.test.models.utils.AttackingPieceStruct;
 import raaidsm.spring.test.models.utils.MoveCalcResultsStruct;
 import raaidsm.spring.test.models.piece_properties.PieceType;
 import raaidsm.spring.test.models.utils.SquarePreviewStruct;
-import raaidsm.spring.test.models.utils.SquareStatus;
+import raaidsm.spring.test.models.utils.SqrStat;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -108,14 +108,14 @@ public class Piece implements Serializable {
     }
     protected SquarePreviewStruct previewRelativeSquare(int x, int y) {
         String squareName = location.findRelativeByXAndY(x, y);
-        if (squareName == null) return new SquarePreviewStruct(SquareStatus.NO_SQUARE, null, null);
+        if (squareName == null) return new SquarePreviewStruct(SqrStat.NO_SQUARE, null, null);
         Piece pieceAtSquare = board.get(squareName).containedPiece;
-        if (pieceAtSquare == null) return new SquarePreviewStruct(SquareStatus.EMPTY, null, null);
+        if (pieceAtSquare == null) return new SquarePreviewStruct(SqrStat.EMPTY, null, null);
         if (pieceAtSquare.getType() == PieceType.KING) {
-            return new SquarePreviewStruct(SquareStatus.KING, pieceAtSquare, pieceAtSquare.getColour());
+            return new SquarePreviewStruct(SqrStat.KING, pieceAtSquare, pieceAtSquare.getColour());
         }
         else {
-            return new SquarePreviewStruct(SquareStatus.NON_KING_PIECE, pieceAtSquare, pieceAtSquare.getColour());
+            return new SquarePreviewStruct(SqrStat.NON_KING_PIECE, pieceAtSquare, pieceAtSquare.getColour());
         }
     }
 }

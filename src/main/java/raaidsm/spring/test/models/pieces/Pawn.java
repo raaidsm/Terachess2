@@ -6,6 +6,8 @@ import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.piece_properties.PieceType;
 import raaidsm.spring.test.models.utils.AttackingPieceStruct;
 import raaidsm.spring.test.models.utils.MoveCalcResultsStruct;
+import raaidsm.spring.test.models.utils.SquarePreviewStruct;
+import raaidsm.spring.test.models.utils.SqrStat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,26 +53,28 @@ public class Pawn extends Piece {
     }
     private MoveCalcResultsStruct up1() {
         //OVERVIEW: ONLY_MOVE
-        String squareName = location.findRelativeByXAndY(0, 1);
+        int directionByColour = colour == Colour.WHITE ? 1 : -1;
+        SquarePreviewStruct preview = previewRelativeSquare(0, directionByColour);
+        SqrStat status = preview.squareStatus;
         //Guard clause for relative point going off the board
-        if (squareName == null) return new MoveCalcResultsStruct(null, null, false);
-        Piece pieceAtSquare = board.get(squareName).containedPiece;
+        if (status == SqrStat.NO_SQUARE) return new MoveCalcResultsStruct(null, null, false);
         //Guard clause for there being a piece in the way
-        if (pieceAtSquare != null) return new MoveCalcResultsStruct(null, null, false);
+        if (status != SqrStat.EMPTY) return new MoveCalcResultsStruct(null, null, false);
         //Square is free to move to
         return new MoveCalcResultsStruct(null, AttackType.ONLY_MOVE, true);
     }
     private MoveCalcResultsStruct up2() {
         //OVERVIEW: ONLY_MOVE
+        int directionByColour = colour == Colour.WHITE ? 1 : -1;
         //Guard clause for not having initial pawn move to make
         if (!hasInitialPawnMove) return new MoveCalcResultsStruct(null, null, false);
         for (int i = 1; i <= 2; i++) {
-            String squareName = location.findRelativeByXAndY(0, i);
+            SquarePreviewStruct preview = previewRelativeSquare(0, i * directionByColour);
+            SqrStat status = preview.squareStatus;
             //Guard clause for relative point going off the board
-            if (squareName == null) return new MoveCalcResultsStruct(null, null, false);
-            Piece pieceAtSquare = board.get(squareName).containedPiece;
+            if (status == SqrStat.NO_SQUARE) return new MoveCalcResultsStruct(null, null, false);
             //Guard clause for there being a piece in the way
-            if (pieceAtSquare != null) return new MoveCalcResultsStruct(null, null, false);
+            if (status != SqrStat.EMPTY) return new MoveCalcResultsStruct(null, null, false);
         }
         //Both squares above are open so up2 is valid
         return new MoveCalcResultsStruct(null, AttackType.ONLY_MOVE, true);
@@ -79,16 +83,16 @@ public class Pawn extends Piece {
         assert direction == 1 || direction == -1;
         //This variable inverts "left" and "right" for black pieces
         int directionByColour = colour == Colour.WHITE ? 1 : -1;
-        String squareName = location.findRelativeByXAndY(direction * directionByColour, 1);
+        SquarePreviewStruct preview = previewRelativeSquare(direction * directionByColour, directionByColour);
+        SqrStat status = preview.squareStatus;
         //Guard clause for relative point going off the board
-        if (squareName == null) return new MoveCalcResultsStruct(null, null, false);
-        Piece pieceAtSquare = board.get(squareName).containedPiece;
+        if (status == SqrStat.NO_SQUARE) return new MoveCalcResultsStruct(null, null, false);
         //Guard clause for there being no piece to capture
-        if (pieceAtSquare == null) return new MoveCalcResultsStruct(null, null, false);
+        if (status == SqrStat.EMPTY) return new MoveCalcResultsStruct(null, null, false);
         //Square has a same-coloured piece that can't be captured
-        if (colour == pieceAtSquare.getColour()) return new MoveCalcResultsStruct(null, null, false);
+        if (colour == preview.pieceColour) return new MoveCalcResultsStruct(null, null, false);
         //Square has an enemy piece to capture at this square
-        if (pieceAtSquare.getType() == PieceType.KING) return new MoveCalcResultsStruct((King)pieceAtSquare, AttackType.ONLY_CAPTURE, true);
+        if (status == SqrStat.KING) return new MoveCalcResultsStruct((King)preview.piece, AttackType.ONLY_CAPTURE, true);
         return new MoveCalcResultsStruct(null, AttackType.ONLY_CAPTURE, true);
     }
 }
