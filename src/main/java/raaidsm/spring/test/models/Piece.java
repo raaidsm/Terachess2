@@ -106,7 +106,7 @@ public class Piece implements Serializable {
                 ", isBoard=" + (board != null) +
                 '}';
     }
-    private SquarePreviewStruct previewRelativeSquare(int x, int y) {
+    protected SquarePreviewStruct previewRelativeSquare(int x, int y) {
         String squareName = location.findRelativeByXAndY(x, y);
         if (squareName == null) return new SquarePreviewStruct(SquareStatus.NO_SQUARE, null, null);
         Piece pieceAtSquare = board.get(squareName).containedPiece;
