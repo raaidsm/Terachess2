@@ -22,10 +22,13 @@ public class Point implements Serializable {
         x = new String(letters).indexOf(letterRep) + 1;
         y = numberRep;
     }
-
-    public String moveByXAndY(int x, int y) {
-        int letterRep = letters[this.x + x - 1];
-        int numberRep = this.y + y;
+    public String findRelativeByXAndY(int x, int y) {
+        int tempX = this.x + x;
+        int tempY = this.y + y;
+        //Guard clause for relative point going off the board
+        if (boardLength < tempX && boardLength < tempY) return null;
+        int letterRep = letters[tempX - 1];
+        int numberRep = tempY;
         return Character.toString(letterRep) + numberRep;
     }
 }
