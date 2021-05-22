@@ -66,6 +66,12 @@ public class Piece implements Serializable {
     public void setPinned(boolean pinned) {
         isPinned = pinned;
     }
+    public Piece getPinningPiece() {
+        return pinningPiece;
+    }
+    public void setPinningPiece(Piece pinningPiece) {
+        this.pinningPiece = pinningPiece;
+    }
     public List<String> getPromotion() {
         return promotion;
     }
