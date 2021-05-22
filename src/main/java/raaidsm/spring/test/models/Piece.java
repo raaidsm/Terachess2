@@ -1,6 +1,8 @@
 package raaidsm.spring.test.models;
 
+import raaidsm.spring.test.models.piece_properties.AttackType;
 import raaidsm.spring.test.models.piece_properties.Colour;
+import raaidsm.spring.test.models.pieces.King;
 import raaidsm.spring.test.models.utils.AttackingPieceStruct;
 import raaidsm.spring.test.models.utils.MoveCalcResultsStruct;
 import raaidsm.spring.test.models.piece_properties.PieceType;
@@ -78,10 +80,24 @@ public class Piece implements Serializable {
     }
 
     public MoveCalcResultsStruct calculateMoves() {
-        //OVERVIEW:
-        //Return checked king (null if none) and whether piece has any legal moves
-        //TODO: For now, returning default value
-        return new MoveCalcResultsStruct(null, null, false);
+        //OVERVIEW: Return checked king (null if none) and whether piece has any legal moves
+        //region Variables to Return
+        King checkedKing = null;
+        AttackType checkAttackType = null;
+        boolean hasMoves = false;
+        //endregion
+
+        List<MoveCalcResultsStruct> results = calculateSquarePreviewResults();
+        for (MoveCalcResultsStruct result : results) {
+            hasMoves = true;
+            if (result.hasMoves) {
+                checkedKing = result.checkedKing;
+                AttackType attackType = result.attackType;
+                if (checkedKing != null) checkAttackType = attackType;
+                legalMoves.add(new AttackingPieceStruct(this, attackType));
+            }
+        }
+        return new MoveCalcResultsStruct(checkedKing, checkAttackType, hasMoves);
     }
     public MoveCalcResultsStruct reduceMovesDueToPin() {
         //OVERVIEW:
@@ -96,15 +112,9 @@ public class Piece implements Serializable {
         return new MoveCalcResultsStruct(null, null, false);
     }
     public void clearAllMoves() {}
-
-    @Override
-    public String toString() {
-        return "Piece{" +
-                "name='" + type + '\'' +
-                ", colour=" + colour +
-                ", location='" + location + '\'' +
-                ", isBoard=" + (board != null) +
-                '}';
+    protected List<MoveCalcResultsStruct> calculateSquarePreviewResults() {
+        //TODO: Default value
+        return new ArrayList<>();
     }
     protected SquarePreviewStruct previewRelativeSquare(int x, int y) {
         String squareName = location.findRelativeByXAndY(x, y);
@@ -117,5 +127,15 @@ public class Piece implements Serializable {
         else {
             return new SquarePreviewStruct(SqrStat.NON_KING_PIECE, pieceAtSquare, pieceAtSquare.getColour());
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "name='" + type + '\'' +
+                ", colour=" + colour +
+                ", location='" + location + '\'' +
+                ", isBoard=" + (board != null) +
+                '}';
     }
 }

@@ -4,7 +4,6 @@ import raaidsm.spring.test.models.Piece;
 import raaidsm.spring.test.models.piece_properties.AttackType;
 import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.piece_properties.PieceType;
-import raaidsm.spring.test.models.utils.AttackingPieceStruct;
 import raaidsm.spring.test.models.utils.MoveCalcResultsStruct;
 import raaidsm.spring.test.models.utils.SquarePreviewStruct;
 import raaidsm.spring.test.models.utils.SqrStat;
@@ -28,28 +27,13 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public MoveCalcResultsStruct calculateMoves() {
-        //region Variables to return
-        King checkedKing = null;
-        AttackType checkAttackType = null;
-        boolean hasMoves = false;
-        //endregion
-
+    protected List<MoveCalcResultsStruct> calculateSquarePreviewResults() {
         List<MoveCalcResultsStruct> results = new ArrayList<>();
         results.add(up1());
         results.add(up2());
         results.add(upCapture(-1));
         results.add(upCapture(1));
-        for (MoveCalcResultsStruct result : results) {
-            hasMoves = true;
-            if (result.hasMoves) {
-                checkedKing = result.checkedKing;
-                AttackType attackType = result.attackType;
-                if (checkedKing != null) checkAttackType = attackType;
-                legalMoves.add(new AttackingPieceStruct(this, attackType));
-            }
-        }
-        return new MoveCalcResultsStruct(checkedKing, checkAttackType, hasMoves);
+        return results;
     }
     private MoveCalcResultsStruct up1() {
         //OVERVIEW: ONLY_MOVE
