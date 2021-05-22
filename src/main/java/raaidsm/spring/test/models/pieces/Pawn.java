@@ -80,6 +80,7 @@ public class Pawn extends Piece {
         return new MoveCalcResultsStruct(null, AttackType.ONLY_MOVE, true);
     }
     private MoveCalcResultsStruct upCapture(int direction) {
+        //OVERVIEW: ONLY_CAPTURE
         assert direction == 1 || direction == -1;
         //This variable inverts "left" and "right" for black pieces
         int directionByColour = colour == Colour.WHITE ? 1 : -1;
