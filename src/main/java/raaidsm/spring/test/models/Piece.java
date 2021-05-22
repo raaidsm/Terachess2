@@ -113,7 +113,7 @@ public class Piece implements Serializable {
     }
     public void clearAllMoves() {}
     protected List<MoveCalcResultsStruct> calculateSquarePreviewResults() {
-        //TODO: Default value
+        //Default value
         return new ArrayList<>();
     }
     protected SquarePreviewStruct previewRelativeSquare(int x, int y) {
