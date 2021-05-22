@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Piece implements Serializable {
+    //region Field Variables
     protected PieceType type;
     protected Colour colour;
     protected Point location;
@@ -23,6 +24,7 @@ public class Piece implements Serializable {
     protected Piece pinningPiece;
     protected List<String> promotion;
     protected HashMap<String, Square> board;
+    //endregion
 
     public Piece() {}
     public Piece(PieceType type, Colour colour, String location) {
@@ -36,6 +38,7 @@ public class Piece implements Serializable {
         this.board = null;
     }
 
+    //region Getters & Setters
     public PieceType getType() {
         return type;
     }
@@ -84,6 +87,7 @@ public class Piece implements Serializable {
     public void setBoard(HashMap<String, Square> board) {
         this.board = board;
     }
+    //endregion
 
     public MoveCalcResultsStruct calculateMoves() {
         //OVERVIEW: Return checked king (null if none) and whether piece has any legal moves
