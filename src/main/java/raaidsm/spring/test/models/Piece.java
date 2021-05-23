@@ -121,7 +121,9 @@ public class Piece implements Serializable {
         //TODO: For now, returning default value
         return new MoveCalcResultsStruct(null, null, false);
     }
-    public void clearAllMoves() {}
+    public void clearAllMoves() {
+        legalMoves.clear();
+    }
     protected List<MoveCalcResultsStruct> calculateSquarePreviewResults() {
         //Default value
         return new ArrayList<>();
