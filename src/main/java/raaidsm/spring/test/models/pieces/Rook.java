@@ -23,14 +23,14 @@ public class Rook extends Piece {
     @Override
     protected List<MoveCalcResultsStruct> calculateSquarePreviewResults() {
         List<MoveCalcResultsStruct> results = new ArrayList<>();
-        results.addAll(moveInALine(Direction.UP));
-        results.addAll(moveInALine(Direction.DOWN));
-        results.addAll(moveInALine(Direction.LEFT));
-        results.addAll(moveInALine(Direction.RIGHT));
+        results.addAll(moveOrCaptureInALine(Direction.UP));
+        results.addAll(moveOrCaptureInALine(Direction.DOWN));
+        results.addAll(moveOrCaptureInALine(Direction.LEFT));
+        results.addAll(moveOrCaptureInALine(Direction.RIGHT));
         //TODO: For now, return default value
         return results;
     }
-    private List<MoveCalcResultsStruct> moveInALine(Direction dir) {
+    private List<MoveCalcResultsStruct> moveOrCaptureInALine(Direction dir) {
         /* OVERVIEW:
         -MOVE_OR_CAPTURE
         -Calculate moves in a line.
