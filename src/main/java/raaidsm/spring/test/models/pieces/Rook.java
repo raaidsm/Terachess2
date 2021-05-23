@@ -24,9 +24,9 @@ public class Rook extends Piece {
     protected List<MoveCalcResultsStruct> calculateSquarePreviewResults() {
         List<MoveCalcResultsStruct> results = new ArrayList<>();
         results.addAll(moveOrCaptureInALine(Direction.UP));
+        results.addAll(moveOrCaptureInALine(Direction.RIGHT));
         results.addAll(moveOrCaptureInALine(Direction.DOWN));
         results.addAll(moveOrCaptureInALine(Direction.LEFT));
-        results.addAll(moveOrCaptureInALine(Direction.RIGHT));
         return results;
     }
 }
