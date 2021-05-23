@@ -131,14 +131,30 @@ public class GameEngine {
         //Move piece-to-move to second square
         board.get(secondSquare).containedPiece = pieceToMove;
         pieceToMove.setLocation(secondSquare);
-        //If piece is a pawn, take away its initial move
-        if (pieceToMove.getType() == PieceType.PAWN) {
-            //DEBUGGING: This might not properly change hasInitialPawnMove for a pawn
-            Pawn pawn = (Pawn)pieceToMove;
-            pawn.removeInitialPawnMove();
-        }
+        //Change piece properties according to which piece it is
+        changePiecePropertiesUponMove(pieceToMove);
         //Move has been made, now calculate all legal moves
         return calculateAllLegalMoves();
+    }
+    private void changePiecePropertiesUponMove(Piece piece) {
+        //If piece that just made a move is a pawn, take away its initial move
+        if (piece.getType() == PieceType.PAWN) {
+            assert piece instanceof Pawn;
+            Pawn pawn = (Pawn)piece;
+            pawn.removeInitialPawnMove();
+        }
+        //If piece that just made a move is a king, remove its castling rights
+        if (piece.getType() == PieceType.KING) {
+            assert piece instanceof King;
+            King king = (King)piece;
+            king.removeCastlingRights();
+        }
+        //If piece that just made a move is a rook, remove its castling rights
+        if (piece.getType() == PieceType.ROOK) {
+            assert piece instanceof Rook;
+            Rook rook = (Rook)piece;
+            rook.removeCastlingRights();
+        }
     }
     private GameStatus calculateAllLegalMoves() {
         /* OVERVIEW:

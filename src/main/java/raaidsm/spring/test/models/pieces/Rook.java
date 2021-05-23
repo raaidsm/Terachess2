@@ -20,6 +20,10 @@ public class Rook extends Piece {
         super(name, colour, location);
     }
 
+    public void removeCastlingRights() {
+        canCastle = false;
+    }
+
     @Override
     protected List<MoveCalcResultsStruct> calculateSquarePreviewResults() {
         List<MoveCalcResultsStruct> results = new ArrayList<>();

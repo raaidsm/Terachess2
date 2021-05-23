@@ -11,4 +11,8 @@ public class King extends Piece {
     public King(PieceType name, Colour colour, String location) {
         super(name, colour, location);
     }
+
+    public void removeCastlingRights() {
+        canCastle = false;
+    }
 }

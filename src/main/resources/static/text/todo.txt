@@ -6,6 +6,7 @@ OVERALL PLAN:
 -When one of the legal moves is selected, the process repeats again
 
 REFACTORING:
+-Create CastlingPiece interface and make King and Rook classes into implementations of that interface
 -Break main.js code into modules
 
 GAME LOGIC:
