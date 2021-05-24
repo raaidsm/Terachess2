@@ -1,5 +1,8 @@
 package raaidsm.spring.test.models.pieces;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import raaidsm.spring.test.models.GameEngine;
 import raaidsm.spring.test.models.Piece;
 import raaidsm.spring.test.models.piece_properties.AttackType;
 import raaidsm.spring.test.models.piece_properties.Colour;
@@ -12,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Knight extends Piece {
+    private final Logger logger = LoggerFactory.getLogger(GameEngine.class);
+
     public Knight() {}
     public Knight(PieceType name, Colour colour, String location) {
         super(name, colour, location);
@@ -19,6 +24,8 @@ public class Knight extends Piece {
 
     @Override
     protected List<MoveCalcResultsStruct> calculateSquarePreviewResults() {
+        //DEBUGGING
+        logger.trace("Knight.calculateSquarePreviewResults() runs");
         List<MoveCalcResultsStruct> results = new ArrayList<>();
         results.add(hop(-1, 2));
         results.add(hop(1, 2));
@@ -32,6 +39,8 @@ public class Knight extends Piece {
     }
     private MoveCalcResultsStruct hop(int x, int y) {
         //OVERVIEW: HOP_MOVE_OR_CAPTURE
+        //DEBUGGING
+        logger.trace("Knight.hop() runs");
         assert (x == 1 || x == 2) && (y == 1 || y == 2);
         SquarePreviewStruct preview = previewRelativeSquare(x, y);
         SqrStat status = preview.squareStatus;
