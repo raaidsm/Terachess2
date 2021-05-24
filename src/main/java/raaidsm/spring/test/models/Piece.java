@@ -1,5 +1,7 @@
 package raaidsm.spring.test.models;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import raaidsm.spring.test.models.piece_properties.AttackType;
 import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.pieces.King;
@@ -13,6 +15,7 @@ import java.util.List;
 
 public class Piece implements Serializable {
     //region Field Variables
+    private final Logger logger = LoggerFactory.getLogger(GameEngine.class);
     protected PieceType type;
     protected Colour colour;
     protected Point location;
@@ -88,6 +91,8 @@ public class Piece implements Serializable {
 
     public MoveCalcResultsStruct calculateMoves() {
         //OVERVIEW: Return checked king (null if none) and whether piece has any legal moves
+        //DEBUGGING
+        logger.trace("calculateMoves() runs");
         //region Variables to Return
         King checkedKing = null;
         AttackType checkAttackType = null;
@@ -176,6 +181,8 @@ public class Piece implements Serializable {
         return results;
     }
     protected SquarePreviewStruct previewRelativeSquare(int x, int y) {
+        //DEBUGGING
+        logger.trace("previewRelativeSquare() runs");
         String squareName = location.findRelativeByXAndY(x, y);
         if (squareName == null) return new SquarePreviewStruct(SqrStat.NO_SQUARE, null, null);
         Piece pieceAtSquare = board.get(squareName).containedPiece;
