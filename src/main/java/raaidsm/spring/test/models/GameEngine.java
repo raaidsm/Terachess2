@@ -129,8 +129,8 @@ public class GameEngine {
             //TODO: Record the captured piece
         }
         //Move piece-to-move to second square
-        board.get(secondSquare).containedPiece = pieceToMove;
         pieceToMove.setLocation(secondSquare);
+        board.get(secondSquare).containedPiece = pieceToMove;
         //Change piece properties according to which piece it is
         changePiecePropertiesUponMove(pieceToMove);
         //Move has been made, now calculate all legal moves

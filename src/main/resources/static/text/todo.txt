@@ -6,11 +6,9 @@ OVERALL PLAN:
 -When one of the legal moves is selected, the process repeats again
 
 REFACTORING:
--Create CastlingPiece interface and make King and Rook classes into implementations of that interface
 -Break main.js code into modules
 
 GAME LOGIC:
--Remove piece from corresponding list of coloured pieces when captured
 -Implement draw conditions such as too many turns without captures, repetition, insufficient material, etc.
 
 OVER THE INTERNET:
