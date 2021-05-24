@@ -92,7 +92,7 @@ public class Piece implements Serializable {
     public MoveCalcResultsStruct calculateMoves() {
         //OVERVIEW: Return checked king (null if none) and whether piece has any legal moves
         //DEBUGGING
-        logger.trace("calculateMoves() runs");
+        logger.trace("Piece.calculateMoves() runs");
         //region Variables to Return
         King checkedKing = null;
         AttackType checkAttackType = null;
@@ -127,6 +127,8 @@ public class Piece implements Serializable {
         legalMoves.clear();
     }
     protected List<MoveCalcResultsStruct> calculateSquarePreviewResults() {
+        //DEBUGGING
+        logger.trace("Piece.calculateSquarePreviewResults() runs");
         //Default value
         return new ArrayList<>();
     }
@@ -181,8 +183,10 @@ public class Piece implements Serializable {
         return results;
     }
     protected SquarePreviewStruct previewRelativeSquare(int x, int y) {
-        //DEBUGGING
-        logger.trace("previewRelativeSquare() runs");
+        //region DEBUGGING
+        logger.trace("Piece.previewRelativeSquare() runs");
+        logger.trace(this.toString());
+        //endregion
         String squareName = location.findRelativeByXAndY(x, y);
         if (squareName == null) return new SquarePreviewStruct(SqrStat.NO_SQUARE, null, null);
         Piece pieceAtSquare = board.get(squareName).containedPiece;

@@ -117,7 +117,7 @@ public class GameEngine {
 
     public GameStatus makeMove(String firstSquare, String secondSquare) {
         //DEBUGGING
-        logger.trace("makeMove() runs");
+        logger.trace("GameEngine.makeMove() runs");
         //Take piece-to-move off of first square
         Piece pieceToMove = board.get(firstSquare).containedPiece;
         board.get(firstSquare).containedPiece = null;
@@ -171,7 +171,7 @@ public class GameEngine {
             3) For each piece, reduce if check and piece is of same colour as checked king
         */
         //DEBUGGING
-        logger.trace("calculateAllLegalMoves() runs");
+        logger.trace("GameEngine.calculateAllLegalMoves() runs");
         List<Piece> pieces = pieceListsByColour.get(turnManager.getColour());
         boolean legalMovesFound;
         //region Multi-Check
@@ -225,7 +225,7 @@ public class GameEngine {
         /* OVERVIEW:
         Returns: wasLegalMoveFound */
         //DEBUGGING
-        logger.trace("calculateAllPossibleMoves() runs");
+        logger.trace("GameEngine.calculateAllPossibleMoves() runs");
         boolean legalMovesFound = false;
         for (Piece piece : pieces) {
             MoveCalcResultsStruct results = piece.calculateMoves();
