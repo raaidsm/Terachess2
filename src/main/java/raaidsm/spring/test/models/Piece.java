@@ -183,12 +183,14 @@ public class Piece implements Serializable {
         return results;
     }
     protected SquarePreviewStruct previewRelativeSquare(int x, int y) {
-        //region DEBUGGING
+        //DEBUGGING
         logger.trace("Piece.previewRelativeSquare() runs");
+        //DEBUGGING
         logger.trace(this.toString());
-        //endregion
         String squareName = location.findRelativeByXAndY(x, y);
         if (squareName == null) return new SquarePreviewStruct(SqrStat.NO_SQUARE, null, null);
+        //DEBUGGING
+        logger.trace("Preview relative square of square name " + squareName);
         Piece pieceAtSquare = board.get(squareName).containedPiece;
         if (pieceAtSquare == null) return new SquarePreviewStruct(SqrStat.EMPTY, null, null);
         if (pieceAtSquare.getType() == PieceType.KING) {

@@ -38,4 +38,12 @@ public class Point implements Serializable {
         int letterRep = letters[tempX - 1];
         return Character.toString(letterRep) + numberRep;
     }
+
+    @Override
+    public String toString() {
+        return "Point{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }
