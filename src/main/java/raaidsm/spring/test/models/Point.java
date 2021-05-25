@@ -33,8 +33,9 @@ public class Point implements Serializable {
         if (x == 0 && y == 0) throw new PieceNotOnBoardException("No relative coordinate for piece off the board");
         int tempX = this.x + x;
         int numberRep = this.y + y;
-        //Guard clause for relative point going off the board
+        //Two guard clauses for relative point going off the board
         if (boardLength < tempX || boardLength < numberRep) return null;
+        if (tempX < 1 || numberRep < 1) return null;
         int letterRep = letters[tempX - 1];
         return Character.toString(letterRep) + numberRep;
     }
