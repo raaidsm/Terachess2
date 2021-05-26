@@ -185,8 +185,6 @@ public class GameEngine {
         //region Calculate All Possible Moves
         legalMovesFound = calculateAllPossibleMoves(pieces);
         //endregion
-        //DEBUGGING
-        logger.trace("Calculating all possible moves is done");
         //region Reduce Moves Due to Pin
         if (!legalMovesFound) {
             if (checkManager.isCheck()) return GameStatus.CHECKMATE;

@@ -23,6 +23,7 @@ public class Point implements Serializable {
         if (squareName == null) {
             x = 0;
             y = 0;
+            return;
         }
         String letterRep = squareName.substring(0, 1);
         int numberRep = Integer.parseInt(squareName.substring(1));
