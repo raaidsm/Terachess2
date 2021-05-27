@@ -9,6 +9,7 @@ REFACTORING:
 -Break main.js code into modules
 
 GAME LOGIC:
+-Calculate all legal moves at the start of the game when the board is finished initializing
 -Implement draw conditions such as too many turns without captures, repetition, insufficient material, etc.
 
 OVER THE INTERNET:
