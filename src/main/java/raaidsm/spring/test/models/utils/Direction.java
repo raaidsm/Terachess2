@@ -1,6 +1,7 @@
 package raaidsm.spring.test.models.utils;
 
 public enum Direction {
+    //region Instances
     UP(0, 1),
     UP_RIGHT(1, 1),
     RIGHT(1, 0),
@@ -9,6 +10,7 @@ public enum Direction {
     DOWN_LEFT(-1, -1),
     LEFT(-1, 0),
     UP_LEFT(-1, 1);
+    //endregion
 
     public int defaultX;
     public int defaultY;

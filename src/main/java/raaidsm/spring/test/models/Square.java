@@ -1,5 +1,7 @@
 package raaidsm.spring.test.models;
 
+import raaidsm.spring.test.models.piece_properties.Colour;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,8 +19,15 @@ public class Square implements Serializable {
         this.containedPiece = containedPiece;
         this.piecesAttacking = new ArrayList<>();
         this.attackingColours = new HashMap<>(Map.ofEntries(
-                entry("white", false), entry("black", false)
+                entry(Colour.WHITE.toString(), false), entry(Colour.BLACK.toString(), false)
         ));
+    }
+
+    public boolean isAttacked(Colour clrOfPieceAsking) {
+        boolean hasAttackingPieces = !piecesAttacking.isEmpty();
+        Colour oppositeColour = clrOfPieceAsking == Colour.WHITE ? Colour.BLACK : Colour.WHITE;
+
+        return hasAttackingPieces && attackingColours.get(oppositeColour);
     }
 
     @Override
