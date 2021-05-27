@@ -111,7 +111,7 @@ public class Piece implements Serializable {
                 //Record legal move in the square attacked
                 Square squareAttacked = board.get(squareName);
                 squareAttacked.piecesAttacking.add(this);
-                squareAttacked.attackingColours.put(colour.toString(), true);
+                squareAttacked.attackingColours.put(colour.toString(), Boolean.valueOf("true"));
             }
         }
         //Returning squareName as null because many different squares are possibly attacked

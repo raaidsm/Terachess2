@@ -19,7 +19,8 @@ public class Square implements Serializable {
         this.containedPiece = containedPiece;
         this.piecesAttacking = new ArrayList<>();
         this.attackingColours = new HashMap<>(Map.ofEntries(
-                entry(Colour.WHITE.toString(), false), entry(Colour.BLACK.toString(), false)
+                entry(Colour.WHITE.toString(), Boolean.valueOf("false")),
+                entry(Colour.BLACK.toString(), Boolean.valueOf("false"))
         ));
     }
 
@@ -27,12 +28,12 @@ public class Square implements Serializable {
         boolean hasAttackingPieces = !piecesAttacking.isEmpty();
         Colour oppositeColour = clrOfPieceAsking == Colour.WHITE ? Colour.BLACK : Colour.WHITE;
 
-        return hasAttackingPieces && attackingColours.get(oppositeColour);
+        return hasAttackingPieces && attackingColours.get(oppositeColour.toString());
     }
     public void clearAttacks() {
         piecesAttacking.clear();
-        attackingColours.put(Colour.WHITE.toString(), false);
-        attackingColours.put(Colour.BLACK.toString(), false);
+        attackingColours.put(Colour.WHITE.toString(), Boolean.valueOf("false"));
+        attackingColours.put(Colour.BLACK.toString(), Boolean.valueOf("false"));
     }
 
     @Override
