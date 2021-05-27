@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Knight extends Piece {
-    private final Logger logger = LoggerFactory.getLogger(GameEngine.class);
+    private final Logger logger = LoggerFactory.getLogger(Knight.class);
 
     public Knight() {}
     public Knight(PieceType name, Colour colour, String location) {

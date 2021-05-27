@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Pawn extends Piece {
-    private final Logger logger = LoggerFactory.getLogger(GameEngine.class);
+    private final Logger logger = LoggerFactory.getLogger(Pawn.class);
     private boolean hasInitialPawnMove = true;
 
     public Pawn() {}

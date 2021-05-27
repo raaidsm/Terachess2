@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Piece implements Serializable {
     //region Field Variables
-    private final Logger logger = LoggerFactory.getLogger(GameEngine.class);
+    private final Logger logger = LoggerFactory.getLogger(Piece.class);
     protected PieceType type;
     protected Colour colour;
     protected Point location;
