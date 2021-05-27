@@ -32,8 +32,6 @@ public class Pawn extends Piece {
 
     @Override
     protected List<MoveCalcResultsStruct> calculateSquarePreviewResults() {
-        //DEBUGGING
-        logger.trace("Pawn.calculateSquarePreviewResults() runs");
         List<MoveCalcResultsStruct> results = new ArrayList<>();
         results.add(up1());
         results.add(up2());
@@ -43,8 +41,6 @@ public class Pawn extends Piece {
     }
     private MoveCalcResultsStruct up1() {
         //OVERVIEW: ONLY_MOVE
-        //DEBUGGING
-        logger.trace("Pawn.up1() runs");
         int directionByColour = colour == Colour.WHITE ? 1 : -1;
         SquarePreviewStruct preview = previewRelativeSquare(0, directionByColour);
         SqrStat status = preview.squareStatus;
@@ -57,8 +53,6 @@ public class Pawn extends Piece {
     }
     private MoveCalcResultsStruct up2() {
         //OVERVIEW: ONLY_MOVE
-        //DEBUGGING
-        logger.trace("Pawn.up2() runs");
         int directionByColour = colour == Colour.WHITE ? 1 : -1;
         //Guard clause for not having initial pawn move to make
         if (!hasInitialPawnMove) return new MoveCalcResultsStruct(null, null, false);
@@ -75,8 +69,6 @@ public class Pawn extends Piece {
     }
     private MoveCalcResultsStruct upCapture(int direction) {
         //OVERVIEW: ONLY_CAPTURE
-        //DEBUGGING
-        logger.trace("Pawn.upCapture() runs");
         assert direction == 1 || direction == -1;
         //This variable inverts "left" and "right" for black pieces
         int directionByColour = colour == Colour.WHITE ? 1 : -1;

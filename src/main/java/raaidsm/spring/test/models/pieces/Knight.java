@@ -24,8 +24,6 @@ public class Knight extends Piece {
 
     @Override
     protected List<MoveCalcResultsStruct> calculateSquarePreviewResults() {
-        //DEBUGGING
-        logger.trace("Knight.calculateSquarePreviewResults() runs");
         List<MoveCalcResultsStruct> results = new ArrayList<>();
         results.add(hop(-1, 2));
         results.add(hop(1, 2));
@@ -39,8 +37,6 @@ public class Knight extends Piece {
     }
     private MoveCalcResultsStruct hop(int x, int y) {
         //OVERVIEW: HOP_MOVE_OR_CAPTURE
-        //DEBUGGING
-        logger.trace("Knight.hop() runs");
         assert (x == 1 || x == 2) && (y == 1 || y == 2);
         SquarePreviewStruct preview = previewRelativeSquare(x, y);
         SqrStat status = preview.squareStatus;
