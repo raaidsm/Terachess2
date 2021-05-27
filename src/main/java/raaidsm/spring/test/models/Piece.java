@@ -184,14 +184,13 @@ public class Piece implements Serializable {
             results.add(new MoveCalcResultsStruct(null, squareName, attackType, true));
         }
 
-        dir.resetMagnitude();
         if (pinnablePieceHit) continueToFindPin(pinnablePiece, dir);
         return results;
     }
     protected void continueToFindPin(Piece pinnablePiece, Direction dir) {
-        int i = 1;
+        int i = dir.getMagnitude();
         while (true) {
-            dir.setMagnitude(i++);
+            dir.setMagnitude(++i);
             SquarePreviewStruct preview = previewRelativeSquare(dir.x, dir.y);
             SqrStat status = preview.squareStatus;
             //Guard clause for hitting the edge of the board
