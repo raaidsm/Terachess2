@@ -25,14 +25,12 @@ public class GameEngine {
     private final char[] letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
     //endregion
     //region Board Tracking
-    private HashMap<String, Square> board;
-    private List<Piece> whitePieces;
-    private List<Piece> blackPieces;
-    private HashMap<Colour, List<Piece>> pieceListsByColour;
+    private final HashMap<String, Square> board;
+    private final HashMap<Colour, List<Piece>> pieceListsByColour;
     //endregion
     //region Turn and Check Managers
-    private TurnManager turnManager;
-    private CheckManager checkManager;
+    private final TurnManager turnManager;
+    private final CheckManager checkManager;
     //endregion
     //endregion
 
@@ -84,11 +82,8 @@ public class GameEngine {
         ));
         //endregion
         //region Initialize Coloured Piece Lists
-        this.whitePieces = new ArrayList<>();
-        this.blackPieces = new ArrayList<>();
         this.pieceListsByColour = new HashMap<>(Map.ofEntries(
-                entry(Colour.WHITE, whitePieces),
-                entry(Colour.BLACK, blackPieces)
+                entry(Colour.WHITE, new ArrayList<>()), entry(Colour.BLACK, new ArrayList<>())
         ));
         //endregion
         //region Set Board Field

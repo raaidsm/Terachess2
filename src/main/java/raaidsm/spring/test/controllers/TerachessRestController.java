@@ -16,7 +16,7 @@ import java.util.*;
 @RestController
 public class TerachessRestController {
     private final Logger logger = LoggerFactory.getLogger(TerachessController.class);
-    private GameEngine gameEngine;
+    private final GameEngine gameEngine;
 
     public TerachessRestController() {
         gameEngine = new GameEngine();
@@ -38,7 +38,7 @@ public class TerachessRestController {
         logger.trace("readMove() runs");
 
         GameStatus gameStatus = gameEngine.makeMove(form.getFirstSquare(), form.getSecondSquare());
-        //TODO: For now, crash the program when checkmate is achieved
+        //TODO: For now, throwing exception when game stops for any reason (Checkmate, Stalemate, etc.)
         if (gameStatus == GameStatus.CHECKMATE) throw new CheckmateException();
         else if (gameStatus == GameStatus.STALEMATE) throw new StalemateException();
     }
