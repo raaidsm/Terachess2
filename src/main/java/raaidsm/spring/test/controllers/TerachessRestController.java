@@ -32,6 +32,7 @@ public class TerachessRestController {
                 Arrays.asList("E3", "E4")
         );
     }
+
     @PostMapping(value="/ReadMove")
     public void readMove(@ModelAttribute MoveForm form) {
         //Read move and calculate changes on the board
