@@ -114,13 +114,13 @@ public class Piece implements Serializable {
         //OVERVIEW:
         //Return whether piece has any legal moves
         //TODO: For now, returning default value
-        return new MoveCalcResultsStruct(null, null, false);
+        return new MoveCalcResultsStruct(null, null, true);
     }
     public MoveCalcResultsStruct reduceMovesDueToCheck() {
         //OVERVIEW:
         //Return whether piece has any legal moves
         //TODO: For now, returning default value
-        return new MoveCalcResultsStruct(null, null, false);
+        return new MoveCalcResultsStruct(null, null, true);
     }
     public void clearAllMoves() {
         legalMoves.clear();
