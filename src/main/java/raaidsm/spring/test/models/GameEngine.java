@@ -116,8 +116,7 @@ public class GameEngine {
     }
 
     public GameStatus makeMove(String firstSquare, String secondSquare) {
-        //DEBUGGING
-        logger.trace("GameEngine.makeMove() runs");
+        logger.trace("makeMove() runs");
         //Take piece-to-move off of first square
         Piece pieceToMove = board.get(firstSquare).containedPiece;
         board.get(firstSquare).containedPiece = null;
@@ -139,7 +138,6 @@ public class GameEngine {
         return calculateAllLegalMoves();
     }
     private void changePiecePropertiesUponMove(Piece piece) {
-        //DEBUGGING
         logger.trace("changePiecePropertiesUponMove() runs");
         //If piece that just made a move is a pawn, take away its initial move
         if (piece.getType() == PieceType.PAWN) {
@@ -170,8 +168,7 @@ public class GameEngine {
             2) For each piece, reduce if piece is pinned
             3) For each piece, reduce if check and piece is of same colour as checked king
         */
-        //DEBUGGING
-        logger.trace("GameEngine.calculateAllLegalMoves() runs");
+        logger.trace("calculateAllLegalMoves() runs");
         List<Piece> pieces = pieceListsByColour.get(turnManager.getColour());
         boolean legalMovesFound;
         //region Multi-Check
@@ -222,8 +219,7 @@ public class GameEngine {
     private boolean calculateAllPossibleMoves(List<Piece> pieces) {
         /* OVERVIEW:
         Returns: wasLegalMoveFound */
-        //DEBUGGING
-        logger.trace("GameEngine.calculateAllPossibleMoves() runs");
+        logger.trace("calculateAllPossibleMoves() runs");
         boolean legalMovesFound = false;
         for (Piece piece : pieces) {
             MoveCalcResultsStruct results = piece.calculateMoves();

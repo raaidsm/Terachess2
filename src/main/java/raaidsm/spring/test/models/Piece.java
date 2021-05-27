@@ -91,8 +91,7 @@ public class Piece implements Serializable {
 
     public MoveCalcResultsStruct calculateMoves() {
         //OVERVIEW: Return checked king (null if none) and whether piece has any legal moves
-        //DEBUGGING
-        logger.trace("Piece.calculateMoves() runs");
+        logger.trace("calculateMoves() runs");
         //region Variables to Return
         King checkedKing = null;
         AttackType checkAttackType = null;
@@ -127,8 +126,7 @@ public class Piece implements Serializable {
         legalMoves.clear();
     }
     protected List<MoveCalcResultsStruct> calculateSquarePreviewResults() {
-        //DEBUGGING
-        logger.trace("Piece.calculateSquarePreviewResults() runs");
+        logger.trace("calculateSquarePreviewResults() runs");
         //Default value
         return new ArrayList<>();
     }
