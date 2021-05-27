@@ -6,9 +6,13 @@ OVERALL PLAN:
 -When one of the legal moves is selected, the process repeats again
 
 REFACTORING:
+-Remove `OVERALL PLAN` from this file
+-Add regions to this file
 -Break main.js code into modules
 
 GAME LOGIC:
+-Save which square an attack hits (in AttackingPieceStruct)
+-Implement method that returns list of squares attacked by a piece located at a specified square in GameEngine class
 -Implement draw conditions such as too many turns without captures, repetition, insufficient material, etc.
 
 OVER THE INTERNET:
