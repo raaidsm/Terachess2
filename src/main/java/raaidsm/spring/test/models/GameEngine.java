@@ -125,11 +125,14 @@ public class GameEngine {
     }
     public GameStatus makeMove(String firstSquare, String secondSquare) {
         logger.trace("makeMove() runs");
+
         //Clear all previous attacks
         clearAllAttacksOnSquares();
+
         //Take piece-to-move off of first square
         Piece pieceToMove = board.get(firstSquare).containedPiece;
         board.get(firstSquare).containedPiece = null;
+
         //Record and remove piece-to-move-to, if exists
         Piece pieceToMoveTo = board.get(secondSquare).containedPiece;
         if (pieceToMoveTo != null) {
@@ -139,11 +142,14 @@ public class GameEngine {
             pieceListsByColour.get(pieceColour).remove(pieceToMoveTo);
             //TODO: Record the captured piece
         }
+
         //Move piece-to-move to second square
         pieceToMove.setLocation(secondSquare);
         board.get(secondSquare).containedPiece = pieceToMove;
+
         //Change piece properties according to which piece it is
         changePiecePropertiesUponMove(pieceToMove);
+
         //Move has been made, now calculate all legal moves
         return calculateAllLegalMoves();
     }
