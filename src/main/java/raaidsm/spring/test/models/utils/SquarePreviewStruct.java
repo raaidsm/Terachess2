@@ -5,11 +5,13 @@ import raaidsm.spring.test.models.piece_properties.Colour;
 
 public class SquarePreviewStruct {
     public SqrStat squareStatus;
+    public String squareName;
     public Piece piece;
     public Colour pieceColour;
 
-    public SquarePreviewStruct(SqrStat squareStatus, Piece piece, Colour pieceColour) {
+    public SquarePreviewStruct(SqrStat squareStatus, String squareName, Piece piece, Colour pieceColour) {
         this.squareStatus = squareStatus;
+        this.squareName = squareName;
         this.piece = piece;
         this.pieceColour = pieceColour;
     }

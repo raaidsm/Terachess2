@@ -8,12 +8,17 @@ OVERALL PLAN:
 REFACTORING:
 -Remove `OVERALL PLAN` from this file
 -Add regions to this file
+-Just...refactor MoveCalcResultsStruct
 -Break main.js code into modules
 
 GAME LOGIC:
 -Save which square an attack hits (in AttackingPieceStruct)
 -Implement method that returns list of squares attacked by a piece located at a specified square in GameEngine class
 -Implement draw conditions such as too many turns without captures, repetition, insufficient material, etc.
+
+BUGS:
+-continueToFindPin() is sent a Direction with the magnitude reset, meaning the method is calculating not from the
+ pinnable piece onwards, but all the way from the location of the attacking piece
 
 OVER THE INTERNET:
 -Host game on server somehow

@@ -105,22 +105,23 @@ public class Piece implements Serializable {
                 checkedKing = result.checkedKing;
                 AttackType attackType = result.attackType;
                 if (checkedKing != null) checkAttackType = attackType;
-                legalMoves.add(new AttackingPieceStruct(this, attackType));
+                legalMoves.add(new AttackingPieceStruct(this, attackType, result.squareName));
             }
         }
-        return new MoveCalcResultsStruct(checkedKing, checkAttackType, hasMoves);
+        //Returning squareName as null because many different squares are possibly attacked
+        return new MoveCalcResultsStruct(checkedKing, null, checkAttackType, hasMoves);
     }
     public MoveCalcResultsStruct reduceMovesDueToPin() {
         //OVERVIEW:
         //Return whether piece has any legal moves
         //TODO: For now, returning default value
-        return new MoveCalcResultsStruct(null, null, true);
+        return new MoveCalcResultsStruct(null, null, null, true);
     }
     public MoveCalcResultsStruct reduceMovesDueToCheck() {
         //OVERVIEW:
         //Return whether piece has any legal moves
         //TODO: For now, returning default value
-        return new MoveCalcResultsStruct(null, null, true);
+        return new MoveCalcResultsStruct(null, null, null, true);
     }
     public void clearAllMoves() {
         legalMoves.clear();
@@ -147,8 +148,9 @@ public class Piece implements Serializable {
         while (!pinnablePieceHit && !unpinnablePieceHit && !edgeOfBoardHit) {
             dir.setMagnitude(i++);
             SquarePreviewStruct preview = previewRelativeSquare(dir.x, dir.y);
-            Piece piece = preview.piece;
             SqrStat status = preview.squareStatus;
+            String squareName = preview.squareName;
+            Piece piece = preview.piece;
             //Guard clause for hitting edge of the board
             if (status == SqrStat.NO_SQUARE) {
                 edgeOfBoardHit = true;
@@ -163,17 +165,17 @@ public class Piece implements Serializable {
             if (status != SqrStat.EMPTY) {
                 if (piece.getType() == PieceType.KING) {
                     unpinnablePieceHit = true;
-                    results.add(new MoveCalcResultsStruct((King)piece, attackType, true));
+                    results.add(new MoveCalcResultsStruct((King)piece, squareName, attackType, true));
                 }
                 else {
                     pinnablePieceHit = true;
                     pinnablePiece = piece;
-                    results.add(new MoveCalcResultsStruct(null, attackType, true));
+                    results.add(new MoveCalcResultsStruct(null, squareName, attackType, true));
                 }
                 continue;
             }
             //If code reaches this point, it means the square is empty
-            results.add(new MoveCalcResultsStruct(null, attackType, true));
+            results.add(new MoveCalcResultsStruct(null, squareName, attackType, true));
         }
 
         dir.resetMagnitude();
@@ -201,14 +203,19 @@ public class Piece implements Serializable {
     }
     protected SquarePreviewStruct previewRelativeSquare(int x, int y) {
         String squareName = location.findRelativeByXAndY(x, y);
-        if (squareName == null) return new SquarePreviewStruct(SqrStat.NO_SQUARE, null, null);
+        if (squareName == null) {
+            return new SquarePreviewStruct(SqrStat.NO_SQUARE, null, null, null);
+        }
         Piece pieceAtSquare = board.get(squareName).containedPiece;
-        if (pieceAtSquare == null) return new SquarePreviewStruct(SqrStat.EMPTY, null, null);
+        if (pieceAtSquare == null) {
+            return new SquarePreviewStruct(SqrStat.EMPTY, squareName, null, null);
+        }
         if (pieceAtSquare.getType() == PieceType.KING) {
-            return new SquarePreviewStruct(SqrStat.KING, pieceAtSquare, pieceAtSquare.getColour());
+            return new SquarePreviewStruct(SqrStat.KING, squareName, pieceAtSquare, pieceAtSquare.getColour());
         }
         else {
-            return new SquarePreviewStruct(SqrStat.NON_KING_PIECE, pieceAtSquare, pieceAtSquare.getColour());
+            return new SquarePreviewStruct(SqrStat.NON_KING_PIECE,
+                    squareName, pieceAtSquare, pieceAtSquare.getColour());
         }
     }
 

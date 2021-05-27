@@ -25,27 +25,41 @@ public class Knight extends Piece {
     @Override
     protected List<MoveCalcResultsStruct> calculateSquarePreviewResults() {
         List<MoveCalcResultsStruct> results = new ArrayList<>();
-        results.add(hop(-1, 2));
-        results.add(hop(1, 2));
-        results.add(hop(-2, 1));
-        results.add(hop(2, 1));
-        results.add(hop(-2, -1));
-        results.add(hop(2, -1));
-        results.add(hop(-1, -2));
-        results.add(hop(1, -2));
+        List<MoveCalcResultsStruct> tempResults = new ArrayList<>();
+
+        tempResults.add(hop(-1, 2));
+        tempResults.add(hop(1, 2));
+        tempResults.add(hop(-2, 1));
+        tempResults.add(hop(2, 1));
+        tempResults.add(hop(-2, -1));
+        tempResults.add(hop(2, -1));
+        tempResults.add(hop(-1, -2));
+        tempResults.add(hop(1, -2));
+
+        //Add every non-null result to list of results
+        for (MoveCalcResultsStruct tempResult : tempResults) {
+            if (tempResult != null) results.add(tempResult);
+        }
+
         return results;
     }
     private MoveCalcResultsStruct hop(int x, int y) {
         //OVERVIEW: HOP_MOVE_OR_CAPTURE
         assert (x == 1 || x == 2) && (y == 1 || y == 2);
+        //AttackType for this collection of attacks (yes, collection even though there's only one)
+        AttackType attackType = AttackType.HOP_MOVE_OR_CAPTURE;
         SquarePreviewStruct preview = previewRelativeSquare(x, y);
         SqrStat status = preview.squareStatus;
+        String squareName = preview.squareName;
+        Piece piece = preview.piece;
         //Guard clause for relative point going off the board
-        if (status == SqrStat.NO_SQUARE) return new MoveCalcResultsStruct(null, null, false);
+        if (status == SqrStat.NO_SQUARE) return null;
         //Square has a same-coloured piece that can't be captured
-        if (colour == preview.pieceColour) return new MoveCalcResultsStruct(null, null, false);
+        if (colour == preview.pieceColour) return null;
         //Attacking enemy king
-        if (status == SqrStat.KING) return new MoveCalcResultsStruct((King)preview.piece, AttackType.HOP_MOVE_OR_CAPTURE, true);
-        return new MoveCalcResultsStruct(null, AttackType.HOP_MOVE_OR_CAPTURE, true);
+        if (status == SqrStat.KING) {
+            return new MoveCalcResultsStruct((King)piece, squareName, attackType, true);
+        }
+        return new MoveCalcResultsStruct(null, squareName, attackType, true);
     }
 }
