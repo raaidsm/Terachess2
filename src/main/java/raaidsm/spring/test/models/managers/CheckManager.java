@@ -41,10 +41,10 @@ public class CheckManager {
         return checkingPieces;
     }
 
-    public void setCheck(Piece piece, AttackType attackType, King checkedKing, String squareAttacked) {
+    public void setCheck(Piece piece, AttackType attackType, King checkedKing, String squareName) {
         isCheck = true;
         this.checkedKing = checkedKing;
-        checkingPieces.add(new AttackingPieceStruct(piece, attackType, squareAttacked));
+        checkingPieces.add(new AttackingPieceStruct(piece, attackType, squareName));
     }
     public void clearChecks() {
         isCheck = false;
