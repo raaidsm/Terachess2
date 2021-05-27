@@ -115,6 +115,14 @@ public class GameEngine {
         //endregion
     }
 
+    public List<String> getLegalMovesForAPiece(String squareNameOfPiece) {
+        List<AttackingPieceStruct> legalMoves = board.get(squareNameOfPiece).containedPiece.legalMoves;
+        List<String> legalMoveSquareNames = new ArrayList<>();
+        for (AttackingPieceStruct legalMove : legalMoves) {
+            legalMoveSquareNames.add(legalMove.attackedSquareName);
+        }
+        return legalMoveSquareNames;
+    }
     public GameStatus makeMove(String firstSquare, String secondSquare) {
         logger.trace("makeMove() runs");
         //Take piece-to-move off of first square

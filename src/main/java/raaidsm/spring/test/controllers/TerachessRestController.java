@@ -27,10 +27,7 @@ public class TerachessRestController {
         //Receive the square name of a piece and return all legal moves for that piece
         logger.trace("readFirstPieceSelection() runs");
 
-        //TODO: For now, returning default value
-        return new ArrayList<>(
-                Arrays.asList("E3", "E4")
-        );
+        return gameEngine.getLegalMovesForAPiece(form.getFirstSquare());
     }
 
     @PostMapping(value="/ReadMove")
