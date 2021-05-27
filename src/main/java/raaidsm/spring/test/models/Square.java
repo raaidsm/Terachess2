@@ -29,6 +29,11 @@ public class Square implements Serializable {
 
         return hasAttackingPieces && attackingColours.get(oppositeColour);
     }
+    public void clearAttacks() {
+        piecesAttacking.clear();
+        attackingColours.put(Colour.WHITE.toString(), false);
+        attackingColours.put(Colour.BLACK.toString(), false);
+    }
 
     @Override
     public String toString() {

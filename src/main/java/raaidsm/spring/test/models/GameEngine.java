@@ -125,6 +125,8 @@ public class GameEngine {
     }
     public GameStatus makeMove(String firstSquare, String secondSquare) {
         logger.trace("makeMove() runs");
+        //Clear all previous attacks
+        clearAllAttacksOnSquares();
         //Take piece-to-move off of first square
         Piece pieceToMove = board.get(firstSquare).containedPiece;
         board.get(firstSquare).containedPiece = null;
@@ -144,6 +146,9 @@ public class GameEngine {
         changePiecePropertiesUponMove(pieceToMove);
         //Move has been made, now calculate all legal moves
         return calculateAllLegalMoves();
+    }
+    private void clearAllAttacksOnSquares() {
+        board.forEach((squareName, square) -> square.clearAttacks());
     }
     private void changePiecePropertiesUponMove(Piece piece) {
         logger.trace("changePiecePropertiesUponMove() runs");
