@@ -2,6 +2,7 @@ package raaidsm.spring.test.models;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import raaidsm.spring.test.models.exceptions.InvalidGameException;
 import raaidsm.spring.test.models.managers.CheckManager;
 import raaidsm.spring.test.models.pieces.*;
 import raaidsm.spring.test.models.utils.*;
@@ -112,6 +113,10 @@ public class GameEngine {
         King whiteKing = (King)board.get("E1").containedPiece;
         King blackKing = (King)board.get("E8").containedPiece;
         this.checkManager = new CheckManager(whiteKing, blackKing);
+        //endregion
+        //region Initialize Initial Moves
+        GameStatus gameStatus = calculateAllLegalMoves();
+        if (gameStatus != GameStatus.LIVE) throw new InvalidGameException();
         //endregion
     }
 
