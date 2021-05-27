@@ -104,8 +104,14 @@ public class Piece implements Serializable {
             if (result.hasMoves) {
                 checkedKing = result.checkedKing;
                 AttackType attackType = result.attackType;
+                String squareName = result.squareName;
                 if (checkedKing != null) checkAttackType = attackType;
-                legalMoves.add(new AttackingPieceStruct(this, attackType, result.squareName));
+                //Add result to legal moves
+                legalMoves.add(new AttackingPieceStruct(this, attackType, squareName));
+                //Record legal move in the square attacked
+                Square squareAttacked = board.get(squareName);
+                squareAttacked.piecesAttacking.add(this);
+                squareAttacked.attackingColours.put(colour.toString(), true);
             }
         }
         //Returning squareName as null because many different squares are possibly attacked
