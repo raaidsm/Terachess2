@@ -149,6 +149,8 @@ public class Piece implements Serializable {
         while (!pinnablePieceHit && !unpinnablePieceHit && !edgeOfBoardHit) {
             dir.setMagnitude(i++);
             SquarePreviewStruct preview = previewRelativeSquare(dir.x, dir.y);
+            //DEBUGGING
+            logger.trace("moveOrCaptureInALine(): Preview Details: " + preview.toString());
             Piece piece = preview.piece;
             SqrStat status = preview.squareStatus;
             //Guard clause for hitting edge of the board

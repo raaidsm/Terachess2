@@ -13,4 +13,13 @@ public class SquarePreviewStruct {
         this.piece = piece;
         this.pieceColour = pieceColour;
     }
+
+    @Override
+    public String toString() {
+        return "SquarePreviewStruct{" +
+                "squareStatus=" + squareStatus +
+                ", piece=" + piece +
+                ", pieceColour=" + pieceColour +
+                '}';
+    }
 }
