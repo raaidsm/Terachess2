@@ -163,8 +163,8 @@ public class Piece implements Serializable {
                 unpinnablePieceHit = true;
                 continue;
             }
-            //Guard clause for opposite colour piece being hit
-            if (colour != preview.pieceColour) {
+            //Guard clause for opposite colour piece being hit (piece being opposite colour can be assumed)
+            if (status != SqrStat.EMPTY) {
                 if (piece.getType() == PieceType.KING) {
                     unpinnablePieceHit = true;
                     results.add(new MoveCalcResultsStruct((King)piece, attackType, true));
