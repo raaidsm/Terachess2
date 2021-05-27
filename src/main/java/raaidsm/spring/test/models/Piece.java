@@ -150,7 +150,7 @@ public class Piece implements Serializable {
             dir.setMagnitude(i++);
             SquarePreviewStruct preview = previewRelativeSquare(dir.x, dir.y);
             //DEBUGGING
-            logger.trace("moveOrCaptureInALine(): Preview Details: " + preview.toString());
+            logger.trace("Preview Results: " + preview.toString());
             Piece piece = preview.piece;
             SqrStat status = preview.squareStatus;
             //Guard clause for hitting edge of the board
@@ -187,12 +187,12 @@ public class Piece implements Serializable {
     protected SquarePreviewStruct previewRelativeSquare(int x, int y) {
         //region DEBUGGING
         logger.trace("Piece.previewRelativeSquare() runs");
-        logger.trace("Preview square relative to piece: " + this.toString());
+        logger.trace("Previewing square relative to piece: " + this.toString());
         //endregion
         String squareName = location.findRelativeByXAndY(x, y);
         if (squareName == null) return new SquarePreviewStruct(SqrStat.NO_SQUARE, null, null);
         //DEBUGGING
-        logger.trace("Preview square relative to square name " + squareName);
+        logger.trace("Previewing relative square of name: " + squareName);
         Piece pieceAtSquare = board.get(squareName).containedPiece;
         if (pieceAtSquare == null) return new SquarePreviewStruct(SqrStat.EMPTY, null, null);
         if (pieceAtSquare.getType() == PieceType.KING) {
