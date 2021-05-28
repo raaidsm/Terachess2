@@ -91,7 +91,8 @@ public class Piece implements Serializable {
 
     public MoveCalcResultsStruct calculateMoves() {
         //OVERVIEW: Return checked king (null if none) and whether piece has any legal moves
-        logger.trace("calculateMoves() runs");
+        //DEBUGGING: Commented out
+        //logger.trace("calculateMoves() runs");
         //region Variables to Return
         King checkedKing = null;
         AttackType checkAttackType = null;
@@ -99,9 +100,13 @@ public class Piece implements Serializable {
         //endregion
 
         List<MoveCalcResultsStruct> results = calculateSquarePreviewResults();
+        //DEBUGGING
+        List<String> legalMoveSquareNames = new ArrayList<>();
         for (MoveCalcResultsStruct result : results) {
             hasMoves = true;
             if (result.hasMoves) {
+                //DEBUGGING
+                if (type == PieceType.KING) legalMoveSquareNames.add(result.squareName);
                 checkedKing = result.checkedKing;
                 AttackType attackType = result.attackType;
                 String squareName = result.squareName;
@@ -114,6 +119,9 @@ public class Piece implements Serializable {
                 squareAttacked.attackingColours.put(colour.toString(), Boolean.valueOf("true"));
             }
         }
+        //DEBUGGING
+        if (type == PieceType.KING) logger.trace("Moves of the " + colour.toString() +
+                " King at " + getLocation() + ": " + legalMoveSquareNames.toString());
         //Returning squareName as null because many different squares are possibly attacked
         return new MoveCalcResultsStruct(checkedKing, null, checkAttackType, hasMoves);
     }
