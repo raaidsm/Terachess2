@@ -48,19 +48,7 @@ const onClickBoardSquare = (event) => {
             dataType: "json",
             type: "POST",
             data: { firstSquare: $target.prop("id"), secondSquare: null },
-            success: function(response) {
-                selectedSquares = response;
-                for (let i = 0; i < selectedSquares.length; i++) {
-                    let $legalMoveSquare = $(`#${selectedSquares[i]}`);
-                    let legalMoveSquareColour = rgbToHex($legalMoveSquare.css("background-color")).toUpperCase();
-                    if (legalMoveSquareColour === lightSquareColour) {
-                        $legalMoveSquare.css("background-color", lightSquareSelectedColour);
-                    }
-                    else if (legalMoveSquareColour === darkSquareColour) {
-                        $legalMoveSquare.css("background-color", darkSquareSelectedColour);
-                    }
-                }
-            }
+            success: executeFirstPieceSelection
         });
         //First square has been successfully clicked
         isFirstSquareClicked = true;
@@ -116,6 +104,19 @@ const rgbToHex = (col) => {
         g = g.length === 1 ? '0' + g : g;
         b = b.length === 1 ? '0' + b : b;
         return '#' + r + g + b;
+    }
+};
+const executeFirstPieceSelection = (response) => {
+    selectedSquares = response;
+    for (let i = 0; i < selectedSquares.length; i++) {
+        let $legalMoveSquare = $(`#${selectedSquares[i]}`);
+        let legalMoveSquareColour = rgbToHex($legalMoveSquare.css("background-color")).toUpperCase();
+        if (legalMoveSquareColour === lightSquareColour) {
+            $legalMoveSquare.css("background-color", lightSquareSelectedColour);
+        }
+        else if (legalMoveSquareColour === darkSquareColour) {
+            $legalMoveSquare.css("background-color", darkSquareSelectedColour);
+        }
     }
 };
 const executePieceMove = ($firstSquare, $secondSquare) => {
