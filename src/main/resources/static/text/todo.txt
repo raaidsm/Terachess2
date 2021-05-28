@@ -1,17 +1,15 @@
 REFACTORING:
+-Implement saving instances of square to SquarePreviewStruct when it is initialized
+  -This is so that the king has easy access to the square
 -Just...refactor MoveCalcResultsStruct
 -Break main.js code into modules
 
 GAME LOGIC:
--Implement saving instances of square to SquarePreviewStruct when it is initialized
-  -This is so that the king has easy access to the square
--Implement erasing attacks on all squares at the beginning of move calculation for a round
 -Implement not being able to make moves when it's not your turn
 -Implement King movement (currently kings can't move at all lol)
 -Implement draw conditions such as too many turns without captures, repetition, insufficient material, etc.
 
 BUGS:
--Address the strange, ghostly properties of the kings (perhaps the other pieces are affected too)
 
 OVER THE INTERNET:
 -Host game on server somehow
