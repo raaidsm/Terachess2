@@ -132,6 +132,7 @@ public class Piece implements Serializable {
     public void clearAllMoves() {
         legalMoves.clear();
     }
+
     protected List<MoveCalcResultsStruct> calculateSquarePreviewResults() {
         logger.trace("calculateSquarePreviewResults() runs");
         //Default value

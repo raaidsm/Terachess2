@@ -153,6 +153,7 @@ public class GameEngine {
         //Move has been made, now calculate all legal moves
         return calculateAllLegalMoves();
     }
+
     private void clearAllAttacksOnSquares() {
         board.forEach((squareName, square) -> square.clearAttacks());
     }
@@ -190,6 +191,7 @@ public class GameEngine {
         logger.trace("calculateAllLegalMoves() runs");
         List<Piece> pieces = pieceListsByColour.get(turnManager.getColour());
         boolean legalMovesFound;
+
         //region Multi-Check
         if (1 < checkManager.getCheckingPieces().size()) {
             legalMovesFound = caseMultiCheck(pieces);
@@ -241,6 +243,7 @@ public class GameEngine {
         logger.trace("calculateAllPossibleMoves() runs");
         boolean legalMovesFound = false;
         for (Piece piece : pieces) {
+            piece.clearAllMoves();
             MoveCalcResultsStruct results = piece.calculateMoves();
             if (results.hasMoves) legalMovesFound = true;
             if (results.checkedKing != null) {
