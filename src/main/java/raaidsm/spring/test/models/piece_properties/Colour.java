@@ -10,6 +10,12 @@ public enum Colour {
         this.text = text;
     }
 
+    public Colour oppositeColour() {
+        if (this == Colour.WHITE) return Colour.BLACK;
+        else if (this == Colour.BLACK) return Colour.WHITE;
+        return null;
+    }
+
     @Override
     public String toString() {
         return text;

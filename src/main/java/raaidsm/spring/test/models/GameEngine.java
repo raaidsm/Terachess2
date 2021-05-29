@@ -155,7 +155,9 @@ public class GameEngine {
     }
 
     private void clearAllAttacksOnSquares() {
-        board.forEach((squareName, square) -> square.clearAttacks());
+        Colour currentTurnColour = turnManager.getColour();
+        assert currentTurnColour != null;
+        board.forEach((squareName, square) -> square.clearAttacksByColour(currentTurnColour));
     }
     private void changePiecePropertiesUponMove(Piece piece) {
         logger.trace("changePiecePropertiesUponMove() runs");
