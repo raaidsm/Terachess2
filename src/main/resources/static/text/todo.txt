@@ -1,4 +1,6 @@
 REFACTORING:
+-Implement BoardManager class into code and replace various board manipulation tasks with calls to methods in the
+ BoardManager class
 -Implement saving instances of square to SquarePreviewStruct when it is initialized
   -This is so that the king has easy access to the square
 -Just...refactor MoveCalcResultsStruct
