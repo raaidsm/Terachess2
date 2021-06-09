@@ -3,6 +3,7 @@ package raaidsm.spring.test.models;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import raaidsm.spring.test.models.exceptions.InvalidGameException;
+import raaidsm.spring.test.models.managers.BoardManager;
 import raaidsm.spring.test.models.managers.CheckManager;
 import raaidsm.spring.test.models.pieces.*;
 import raaidsm.spring.test.models.utils.*;
@@ -18,105 +19,22 @@ import java.util.Map;
 import static java.util.Map.entry;
 
 public class GameEngine {
-    //region Field Variables
     private final Logger logger = LoggerFactory.getLogger(GameEngine.class);
-    //region Constants
-    private final int boardLength = 8;
-    private final char[] letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
-    //endregion
-    //region Board Tracking
-    private final HashMap<String, Square> board;
-    private final HashMap<Colour, List<Piece>> pieceListsByColour;
-    //endregion
-    //region Turn and Check Managers
+    private final BoardManager boardManager;
     private final TurnManager turnManager;
     private final CheckManager checkManager;
-    //endregion
-    //endregion
 
     public GameEngine() {
-        //region Initialize Board With Pieces
-        this.board = new HashMap<>(Map.ofEntries(
-                //Add all the initial pieces starting from the top left
+        boardManager = new BoardManager();
+        turnManager = new TurnManager();
+        checkManager = boardManager.createCheckManager();
 
-                //region Black first rank
-                entry("A8", new Square(new Rook(PieceType.ROOK, Colour.BLACK, "A8"))),
-                entry("B8", new Square(new Knight(PieceType.KNIGHT, Colour.BLACK, "B8"))),
-                entry("C8", new Square(new Bishop(PieceType.BISHOP, Colour.BLACK, "C8"))),
-                entry("D8", new Square(new Queen(PieceType.QUEEN, Colour.BLACK, "D8"))),
-                entry("E8", new Square(new King(PieceType.KING, Colour.BLACK, "E8"))),
-                entry("F8", new Square(new Bishop(PieceType.BISHOP, Colour.BLACK, "F8"))),
-                entry("G8", new Square(new Knight(PieceType.KNIGHT, Colour.BLACK, "G8"))),
-                entry("H8", new Square(new Rook(PieceType.ROOK, Colour.BLACK, "H8"))),
-                //endregion
-                //region Black second rank
-                entry("A7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "A7"))),
-                entry("B7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "B7"))),
-                entry("C7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "C7"))),
-                entry("D7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "D7"))),
-                entry("E7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "E7"))),
-                entry("F7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "F7"))),
-                entry("G7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "G7"))),
-                entry("H7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "H7"))),
-                //endregion
-                //region White second rank
-                entry("A2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "A2"))),
-                entry("B2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "B2"))),
-                entry("C2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "C2"))),
-                entry("D2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "D2"))),
-                entry("E2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "E2"))),
-                entry("F2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "F2"))),
-                entry("G2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "G2"))),
-                entry("H2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "H2"))),
-                //endregion
-                //region White first rank
-                entry("A1", new Square(new Rook(PieceType.ROOK, Colour.WHITE, "A1"))),
-                entry("B1", new Square(new Knight(PieceType.KNIGHT, Colour.WHITE, "B1"))),
-                entry("C1", new Square(new Bishop(PieceType.BISHOP, Colour.WHITE, "C1"))),
-                entry("D1", new Square(new Queen(PieceType.QUEEN, Colour.WHITE, "D1"))),
-                entry("E1", new Square(new King(PieceType.KING, Colour.WHITE, "E1"))),
-                entry("F1", new Square(new Bishop(PieceType.BISHOP, Colour.WHITE, "F1"))),
-                entry("G1", new Square(new Knight(PieceType.KNIGHT, Colour.WHITE, "G1"))),
-                entry("H1", new Square(new Rook(PieceType.ROOK, Colour.WHITE, "H1")))
-                //endregion
-        ));
-        //endregion
-        //region Initialize Coloured Piece Lists
-        this.pieceListsByColour = new HashMap<>(Map.ofEntries(
-                entry(Colour.WHITE, new ArrayList<>()), entry(Colour.BLACK, new ArrayList<>())
-        ));
-        //endregion
-        //region Set Board Field
-        //Set board field for each piece and add it to the designated coloured list of pieces
-        board.forEach((coordinate, square) -> {
-            Piece piece = square.containedPiece;
-            Colour pieceColour = piece.getColour();
-            piece.setBoard(board);
-            pieceListsByColour.get(pieceColour).add(piece);
-        });
-        //endregion
-        //region Add Empty Squares
-        //Add the empty squares with no pieces
-        for (int y = boardLength - 2; 2 < y; y--) {
-            for (int x = 0; x < boardLength; x++) {
-                board.put(letters[x] + String.valueOf(y), new Square(null));
-            }
-        }
-        //endregion
-        //region Initialize Other Fields
-        this.turnManager = new TurnManager();
-        King whiteKing = (King)board.get("E1").containedPiece;
-        King blackKing = (King)board.get("E8").containedPiece;
-        this.checkManager = new CheckManager(whiteKing, blackKing);
-        //endregion
-        //region Initialize Initial Moves
         GameStatus gameStatus = calculateAllLegalMoves();
         if (gameStatus != GameStatus.LIVE) throw new InvalidGameException();
-        //endregion
     }
 
     public List<String> getLegalMovesForAPiece(String squareNameOfPiece) {
-        List<AttackingPieceStruct> legalMoves = board.get(squareNameOfPiece).containedPiece.legalMoves;
+        List<AttackingPieceStruct> legalMoves = boardManager.getSquare(squareNameOfPiece).containedPiece.legalMoves;
         List<String> legalMoveSquareNames = new ArrayList<>();
         for (AttackingPieceStruct legalMove : legalMoves) {
             legalMoveSquareNames.add(legalMove.attackedSquareName);
@@ -130,22 +48,22 @@ public class GameEngine {
         clearAllAttacksOnSquares();
 
         //Take piece-to-move off of first square
-        Piece pieceToMove = board.get(firstSquare).containedPiece;
-        board.get(firstSquare).containedPiece = null;
+        Piece pieceToMove = boardManager.getSquare(firstSquare).containedPiece;
+        boardManager.getSquare(firstSquare).containedPiece = null;
 
         //Record and remove piece-to-move-to, if exists
-        Piece pieceToMoveTo = board.get(secondSquare).containedPiece;
+        Piece pieceToMoveTo = boardManager.getSquare(secondSquare).containedPiece;
         if (pieceToMoveTo != null) {
             pieceToMoveTo.setLocation(null);
-            board.get(secondSquare).containedPiece = null;
+            boardManager.getSquare(secondSquare).containedPiece = null;
             Colour pieceColour = pieceToMoveTo.getColour();
-            pieceListsByColour.get(pieceColour).remove(pieceToMoveTo);
+            boardManager.getPieceList(pieceColour).remove(pieceToMoveTo);
             //TODO: Record the captured piece
         }
 
         //Move piece-to-move to second square
         pieceToMove.setLocation(secondSquare);
-        board.get(secondSquare).containedPiece = pieceToMove;
+        boardManager.getSquare(secondSquare).containedPiece = pieceToMove;
 
         //Change piece properties according to which piece it is
         changePiecePropertiesUponMove(pieceToMove);
@@ -157,7 +75,10 @@ public class GameEngine {
     private void clearAllAttacksOnSquares() {
         Colour currentTurnColour = turnManager.getColour();
         assert currentTurnColour != null;
-        board.forEach((squareName, square) -> square.clearAttacksByColour(currentTurnColour));
+        List<Square> allSquares = boardManager.getAllSquaresFromBoard();
+        for (Square allSquare : allSquares) {
+            allSquare.clearAttacksByColour(currentTurnColour);
+        }
     }
     private void changePiecePropertiesUponMove(Piece piece) {
         logger.trace("changePiecePropertiesUponMove() runs");
@@ -191,7 +112,7 @@ public class GameEngine {
             3) For each piece, reduce if check and piece is of same colour as checked king
         */
         logger.trace("calculateAllLegalMoves() runs");
-        List<Piece> pieces = pieceListsByColour.get(turnManager.getColour());
+        List<Piece> pieces = boardManager.getPieceList(turnManager.getColour());
         boolean legalMovesFound;
 
         //region Multi-Check
