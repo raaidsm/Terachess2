@@ -51,7 +51,7 @@ public class King extends Piece {
         SquarePreviewStruct preview = previewRelativeSquare(dir.x, dir.y);
         SqrStat status = preview.squareStatus;
         String squareName = preview.squareName;
-        Square squarePreviewed = board.get(squareName);
+        Square squarePreviewed = boardManager.getSquare(squareName);
 
         //Guard clause for relative square going off the board
         if (status == SqrStat.NO_SQUARE) return null;

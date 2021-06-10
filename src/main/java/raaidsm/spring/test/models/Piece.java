@@ -2,6 +2,7 @@ package raaidsm.spring.test.models;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import raaidsm.spring.test.models.managers.BoardManager;
 import raaidsm.spring.test.models.piece_properties.AttackType;
 import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.pieces.King;
@@ -10,7 +11,6 @@ import raaidsm.spring.test.models.piece_properties.PieceType;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Piece implements Serializable {
@@ -23,7 +23,7 @@ public class Piece implements Serializable {
     protected boolean isPinned;
     protected Piece pinningPiece;
     protected List<String> promotion;
-    protected HashMap<String, Square> board;
+    protected BoardManager boardManager;
     //endregion
 
     public Piece() {}
@@ -35,7 +35,7 @@ public class Piece implements Serializable {
         this.isPinned = false;
         this.pinningPiece = null;
         this.promotion = new ArrayList<>();
-        this.board = null;
+        this.boardManager = null;
     }
 
     //region Getters & Setters
@@ -81,11 +81,11 @@ public class Piece implements Serializable {
     public void setPromotion(List<String> promotion) {
         this.promotion = promotion;
     }
-    public HashMap<String, Square> getBoard() {
-        return board;
+    public BoardManager getBoardManager() {
+        return boardManager;
     }
-    public void setBoard(HashMap<String, Square> board) {
-        this.board = board;
+    public void setBoardManager(BoardManager boardManager) {
+        this.boardManager = boardManager;
     }
     //endregion
 
@@ -114,7 +114,7 @@ public class Piece implements Serializable {
                 //Add result to legal moves
                 legalMoves.add(new AttackingPieceStruct(this, attackType, squareName));
                 //Record legal move in the square attacked
-                Square squareAttacked = board.get(squareName);
+                Square squareAttacked = boardManager.getSquare(squareName);
                 squareAttacked.piecesAttacking.add(this);
                 squareAttacked.attackingColours.put(colour.toString(), Boolean.valueOf("true"));
             }
@@ -220,7 +220,7 @@ public class Piece implements Serializable {
         if (squareName == null) {
             return new SquarePreviewStruct(SqrStat.NO_SQUARE, null, null, null);
         }
-        Piece pieceAtSquare = board.get(squareName).containedPiece;
+        Piece pieceAtSquare = boardManager.getSquare(squareName).containedPiece;
         if (pieceAtSquare == null) {
             return new SquarePreviewStruct(SqrStat.EMPTY, squareName, null, null);
         }
@@ -239,7 +239,7 @@ public class Piece implements Serializable {
                 "name='" + type + '\'' +
                 ", colour=" + colour +
                 ", location='" + location + '\'' +
-                ", isBoard=" + (board != null) +
+                ", isBoard=" + (boardManager != null) +
                 '}';
     }
 }

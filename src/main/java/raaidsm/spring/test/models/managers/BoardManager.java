@@ -98,7 +98,7 @@ public class BoardManager {
         board.forEach((coordinate, square) -> {
             Piece piece = square.containedPiece;
             Colour pieceColour = piece.getColour();
-            piece.setBoard(board);
+            piece.setBoardManager(this);
             pieceListsByColour.get(pieceColour).add(piece);
         });
     }

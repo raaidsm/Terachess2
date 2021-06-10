@@ -1,5 +1,5 @@
 REFACTORING:
--Implement BoardManager into Piece class
+-Add method to square class for adding piece attack to it
 -Rename Square to SquareStruct
 -Implement saving instances of square to SquarePreviewStruct when it is initialized
   -This is so that the king has easy access to the square
