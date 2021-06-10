@@ -30,6 +30,10 @@ public class Square implements Serializable {
 
         return hasAttackingPieces && attackingColours.get(oppositeColour.toString());
     }
+    public void setAttack(Piece piece, Colour colour) {
+        piecesAttacking.add(piece);
+        attackingColours.put(colour.toString(), Boolean.valueOf("true"));
+    }
     public void clearAttacksByColour(Colour colour) {
         piecesAttacking.removeIf(pieceAttacking -> pieceAttacking.getColour() == colour);
         attackingColours.put(colour.toString(), Boolean.valueOf("false"));
