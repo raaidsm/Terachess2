@@ -106,6 +106,7 @@ const rgbToHex = (col) => {
         return '#' + r + g + b;
     }
 };
+
 const executeFirstPieceSelection = (response) => {
     selectedSquares = response;
     for (let i = 0; i < selectedSquares.length; i++) {
@@ -139,6 +140,7 @@ const executePieceMove = ($firstSquare, $secondSquare) => {
         data: { firstSquare: $firstSquare.prop("id"), secondSquare: $secondSquare.prop("id") }
     });
 };
+
 const resetFirstSquareSelection = () => {
     //Clear selection colour off first selected piece
     clickedSquareColour = rgbToHex($clickedSquare.css("background-color")).toUpperCase();

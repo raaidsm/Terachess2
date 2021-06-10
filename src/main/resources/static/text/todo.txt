@@ -3,7 +3,7 @@ REFACTORING:
 -Break main.js code into modules
 
 GAME LOGIC:
--Implement not being able to make moves when it's not your turn
+-*Implement not being able to make moves when it's not your turn
 -Implement King movement (currently kings can't move at all lol)
 -Implement draw conditions such as too many turns without captures, repetition, insufficient material, etc.
 
