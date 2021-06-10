@@ -34,7 +34,7 @@ public class GameEngine {
     }
 
     public List<String> getLegalMovesForAPiece(String squareNameOfPiece) {
-        List<AttackingPieceStruct> legalMoves = boardManager.getSquare(squareNameOfPiece).containedPiece.legalMoves;
+        List<AttackingPieceStruct> legalMoves = boardManager.getSquare(squareNameOfPiece).getContainedPiece().legalMoves;
         List<String> legalMoveSquareNames = new ArrayList<>();
         for (AttackingPieceStruct legalMove : legalMoves) {
             legalMoveSquareNames.add(legalMove.attackedSquareName);
@@ -48,14 +48,14 @@ public class GameEngine {
         clearAllAttacksOnSquares();
 
         //Take piece-to-move off of first square
-        Piece pieceToMove = boardManager.getSquare(firstSquare).containedPiece;
-        boardManager.getSquare(firstSquare).containedPiece = null;
+        Piece pieceToMove = boardManager.getSquare(firstSquare).getContainedPiece();
+        boardManager.getSquare(firstSquare).setContainedPiece(null);
 
         //Record and remove piece-to-move-to, if exists
-        Piece pieceToMoveTo = boardManager.getSquare(secondSquare).containedPiece;
+        Piece pieceToMoveTo = boardManager.getSquare(secondSquare).getContainedPiece();
         if (pieceToMoveTo != null) {
             pieceToMoveTo.setLocation(null);
-            boardManager.getSquare(secondSquare).containedPiece = null;
+            boardManager.getSquare(secondSquare).setContainedPiece(null);
             Colour pieceColour = pieceToMoveTo.getColour();
             boardManager.getPieceList(pieceColour).remove(pieceToMoveTo);
             //TODO: Record the captured piece
@@ -63,7 +63,7 @@ public class GameEngine {
 
         //Move piece-to-move to second square
         pieceToMove.setLocation(secondSquare);
-        boardManager.getSquare(secondSquare).containedPiece = pieceToMove;
+        boardManager.getSquare(secondSquare).setContainedPiece(pieceToMove);
 
         //Change piece properties according to which piece it is
         changePiecePropertiesUponMove(pieceToMove);

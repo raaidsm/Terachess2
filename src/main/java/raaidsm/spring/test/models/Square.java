@@ -11,7 +11,7 @@ import java.util.Map;
 import static java.util.Map.entry;
 
 public class Square implements Serializable {
-    public Piece containedPiece;
+    private Piece containedPiece;
     public List<Piece> piecesAttacking;
     public HashMap<String, Boolean> attackingColours;
 
@@ -22,6 +22,13 @@ public class Square implements Serializable {
                 entry(Colour.WHITE.toString(), Boolean.valueOf("false")),
                 entry(Colour.BLACK.toString(), Boolean.valueOf("false"))
         ));
+    }
+
+    public Piece getContainedPiece() {
+        return containedPiece;
+    }
+    public void setContainedPiece(Piece containedPiece) {
+        this.containedPiece = containedPiece;
     }
 
     public boolean isAttacked(Colour clrOfPieceAsking) {

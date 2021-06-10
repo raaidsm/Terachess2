@@ -219,7 +219,7 @@ public class Piece implements Serializable {
         if (squareName == null) {
             return new SquarePreviewStruct(SqrStat.NO_SQUARE, null, null, null);
         }
-        Piece pieceAtSquare = boardManager.getSquare(squareName).containedPiece;
+        Piece pieceAtSquare = boardManager.getSquare(squareName).getContainedPiece();
         if (pieceAtSquare == null) {
             return new SquarePreviewStruct(SqrStat.EMPTY, squareName, null, null);
         }

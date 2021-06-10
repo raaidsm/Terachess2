@@ -76,8 +76,8 @@ public class BoardManager {
     }
 
     public CheckManager createCheckManager() {
-        King whiteKing = (King)board.get("E1").containedPiece;
-        King blackKing = (King)board.get("E8").containedPiece;
+        King whiteKing = (King)board.get("E1").getContainedPiece();
+        King blackKing = (King)board.get("E8").getContainedPiece();
         return new CheckManager(whiteKing, blackKing);
     }
     public Square getSquare(String squareName) {
@@ -96,7 +96,7 @@ public class BoardManager {
 
     private void addBoardToPieces() {
         board.forEach((coordinate, square) -> {
-            Piece piece = square.containedPiece;
+            Piece piece = square.getContainedPiece();
             Colour pieceColour = piece.getColour();
             piece.setBoardManager(this);
             pieceListsByColour.get(pieceColour).add(piece);
