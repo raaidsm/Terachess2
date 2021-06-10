@@ -75,18 +75,11 @@ public class BoardManager {
         addEmptySquares();
     }
 
-    //region Methods for inserting private information from this class into another class
     public CheckManager createCheckManager() {
         King whiteKing = (King)board.get("E1").containedPiece;
         King blackKing = (King)board.get("E8").containedPiece;
         return new CheckManager(whiteKing, blackKing);
     }
-    public void integrateBoardIntoPiece(Piece piece) {
-        piece.setBoard(board);
-    }
-    //endregion
-
-    //region Getters and Setters
     public Square getSquare(String squareName) {
         return board.get(squareName);
     }
@@ -100,7 +93,6 @@ public class BoardManager {
         });
         return allSquares;
     }
-    //endregion
 
     private void addBoardToPieces() {
         board.forEach((coordinate, square) -> {
