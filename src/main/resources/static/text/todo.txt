@@ -1,5 +1,4 @@
 REFACTORING:
--Implement BoardManager class into GameEngine class and change board manipulation to use methods in this class
 -Implement BoardManager into Piece class
 -Rename Square to SquareStruct
 -Implement saving instances of square to SquarePreviewStruct when it is initialized
