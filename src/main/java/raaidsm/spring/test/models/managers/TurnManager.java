@@ -12,14 +12,8 @@ public class TurnManager {
     public Colour getColour() {
         return colour;
     }
-
-    public void switchC() {
+    public void switchColour() {
         if (colour == Colour.WHITE) colour = Colour.BLACK;
         else if (colour == Colour.BLACK) colour = Colour.WHITE;
-    }
-    public Colour getAndSwitch() {
-        Colour tempColour = colour;
-        switchC();
-        return tempColour;
     }
 }

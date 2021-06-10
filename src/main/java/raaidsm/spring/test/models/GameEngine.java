@@ -12,11 +12,7 @@ import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.piece_properties.PieceType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import static java.util.Map.entry;
 
 public class GameEngine {
     private final Logger logger = LoggerFactory.getLogger(GameEngine.class);
@@ -119,7 +115,7 @@ public class GameEngine {
         //region Multi-Check
         if (1 < checkManager.getCheckingPieces().size()) {
             legalMovesFound = caseMultiCheck(pieces);
-            turnManager.switchC();
+            turnManager.switchColour();
             if (legalMovesFound) return GameStatus.LIVE;
             else return GameStatus.CHECKMATE;
         }
@@ -143,7 +139,7 @@ public class GameEngine {
         //endregion
         //region Set tracking variables for next turn
         checkManager.clearChecks();
-        turnManager.switchC();
+        turnManager.switchColour();
         //endregion
         if (legalMovesFound) return GameStatus.LIVE;
         else return GameStatus.CHECKMATE;
