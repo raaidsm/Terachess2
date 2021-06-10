@@ -34,7 +34,8 @@ public class GameEngine {
     }
 
     public List<String> getLegalMovesForAPiece(String squareNameOfPiece) {
-        List<AttackingPieceStruct> legalMoves = boardManager.getSquare(squareNameOfPiece).getContainedPiece().legalMoves;
+        List<AttackingPieceStruct> legalMoves = boardManager
+                .getSquare(squareNameOfPiece).getContainedPiece().legalMoves;
         List<String> legalMoveSquareNames = new ArrayList<>();
         for (AttackingPieceStruct legalMove : legalMoves) {
             legalMoveSquareNames.add(legalMove.attackedSquareName);
