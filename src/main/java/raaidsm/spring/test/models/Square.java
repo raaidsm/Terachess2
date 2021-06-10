@@ -12,8 +12,8 @@ import static java.util.Map.entry;
 
 public class Square implements Serializable {
     private Piece containedPiece;
-    public List<Piece> piecesAttacking;
-    public HashMap<String, Boolean> attackingColours;
+    private final List<Piece> piecesAttacking;
+    private final HashMap<String, Boolean> attackingColours;
 
     public Square(Piece containedPiece) {
         this.containedPiece = containedPiece;
