@@ -1,7 +1,4 @@
 REFACTORING:
--Rename Square to SquareStruct
--Implement saving instances of square to SquarePreviewStruct when it is initialized
-  -This is so that the king has easy access to the square
 -Just...refactor MoveCalcResultsStruct
 -Break main.js code into modules
 
