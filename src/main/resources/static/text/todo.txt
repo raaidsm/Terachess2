@@ -13,6 +13,7 @@ GAME LOGIC:
 -Implement draw conditions such as too many turns without captures, repetition, insufficient material, etc.
 
 BUGS:
+-Only set attack on a square if it's a capturing attack
 -Overhaul move calculation system to calculate moves for both colours of pieces after a move is made to properly record
  attacks of a piece after it makes a move
 -King's move calculation can lead to seemingly random squares being found as legal square moves
