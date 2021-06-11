@@ -1,3 +1,11 @@
+CURRENTLY DOING:
+-Fixing imports not working because apparently they're not being done outside a module (according to error mesage)
+
+CURRENT COMMIT:
+-Move some helper functions from main.js to utils.js
+-Refactor distinction between some functions and name of some variables in main.js
+-Update this file
+
 REFACTORING:
 -Just...refactor MoveCalcResultsStruct
 -Break main.js code into modules

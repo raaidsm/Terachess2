@@ -1,7 +1,13 @@
+//region Imports
+import { Colour, TurnManager, rgbToHex, fillRows } from "./utils.js";
+//endregion
+
 //region Global Constants
+//region Board Details
 const gridItemTemplate = "<div class='gridItem'></div>";
-const gridLength = 8;
+const boardLength = 8;
 const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];   //Please make this array automatic this is horrendous
+//endregion
 //region Colours
 const lightSquareColour = "#EEEED2";
 const darkSquareColour = "#769656";
@@ -75,38 +81,7 @@ const onDoubleClickBoardSquare = (event) => {
     $("#squareNameDisplay").val($target.prop("id"));
 };
 //endregion
-//region Other Functions
-const fillRows = ($gridItem, iRow, iColumn) => {
-    $gridItem.css("background-size", "cover");
-    $gridItem.css("background-position", "center");
-    $gridItem.css("background-repeat", "no-repeat");
-    let pieceDetails = "";
-
-    if (iRow === gridLength) pieceDetails = blackFirstRank[iColumn];
-    else if (iRow === gridLength - 1) pieceDetails = blackSecondRank[iColumn];
-    else if (iRow === 2) pieceDetails = whiteSecondRank[iColumn];
-    else if (iRow === 1) pieceDetails = whiteFirstRank[iColumn];
-
-    if (pieceDetails !== "") {
-        $gridItem.data("colour", pieceDetails.substring(0, 5));
-        $gridItem.data("type", pieceDetails.substring(6));
-        $gridItem.css("background-image", `url(../images/${pieceDetails}.png)`);
-    }
-};
-const rgbToHex = (col) => {
-    if (col.charAt(0) === 'r')
-    {
-        col = col.replace('rgb(','').replace(')','').split(',');
-        let r = parseInt(col[0], 10).toString(16);
-        let g = parseInt(col[1], 10).toString(16);
-        let b = parseInt(col[2], 10).toString(16);
-        r = r.length === 1 ? '0' + r : r;
-        g = g.length === 1 ? '0' + g : g;
-        b = b.length === 1 ? '0' + b : b;
-        return '#' + r + g + b;
-    }
-};
-
+//region Square Selection Functions
 const executeFirstPieceSelection = (response) => {
     selectedSquares = response;
     for (let i = 0; i < selectedSquares.length; i++) {
@@ -140,7 +115,8 @@ const executePieceMove = ($firstSquare, $secondSquare) => {
         data: { firstSquare: $firstSquare.prop("id"), secondSquare: $secondSquare.prop("id") }
     });
 };
-
+//endregion
+//region Helper Functions
 const resetFirstSquareSelection = () => {
     //Clear selection colour off first selected piece
     clickedSquareColour = rgbToHex($clickedSquare.css("background-color")).toUpperCase();
@@ -167,7 +143,7 @@ const resetFirstSquareSelection = () => {
 $(function() {
     //region Initialize page properties
     let $mainGrid = $("#mainGrid");
-    $mainGrid.css("grid-template-columns", `repeat(${gridLength}, 1fr)`);
+    $mainGrid.css("grid-template-columns", `repeat(${boardLength}, 1fr)`);
     //endregion
 
     //region Initialize Localbase database and initialize default entry
@@ -181,10 +157,10 @@ $(function() {
 
     //region Dynamically insert elements
     let doLightSquare = false;
-    for (let y = gridLength; 0 < y; y--) {
+    for (let y = boardLength; 0 < y; y--) {
         //Flip the colour for the next square
         doLightSquare = doLightSquare === false;
-        for (let x = 0; x < gridLength; x++) {
+        for (let x = 0; x < boardLength; x++) {
             //Initialize square
             let $gridItem = $(gridItemTemplate);
             //Set square coordinate name and colour
