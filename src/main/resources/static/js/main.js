@@ -1,11 +1,10 @@
 //region Imports
-import { Colour, TurnManager, rgbToHex, fillRows } from "./utils.js";
+import { boardLength, Colour, TurnManager, rgbToHex, fillRows } from "./utils.js";
 //endregion
 
 //region Global Constants
 //region Board Details
 const gridItemTemplate = "<div class='gridItem'></div>";
-const boardLength = 8;
 const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];   //Please make this array automatic this is horrendous
 //endregion
 //region Colours
@@ -15,16 +14,6 @@ const lightSquareRedColour = "#F43E42";
 const darkSquareRedColour = "#E83536";
 const lightSquareSelectedColour = "#0073FF";
 const darkSquareSelectedColour = "#005FD4";
-//endregion
-//region Ranks of Pieces
-const blackFirstRank = ["black_rook", "black_knight", "black_bishop", "black_queen", "black_king",
-    "black_bishop", "black_knight", "black_rook"];
-const blackSecondRank = ["black_pawn", "black_pawn", "black_pawn", "black_pawn", "black_pawn",
-    "black_pawn", "black_pawn", "black_pawn"];
-const whiteSecondRank = ["white_pawn", "white_pawn", "white_pawn", "white_pawn", "white_pawn",
-    "white_pawn", "white_pawn", "white_pawn"];
-const whiteFirstRank = ["white_rook", "white_knight", "white_bishop", "white_queen", "white_king",
-    "white_bishop", "white_knight", "white_rook"];
 //endregion
 //region Game-Tracking Variables
 let isFirstSquareClicked = false;

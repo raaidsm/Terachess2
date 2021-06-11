@@ -1,10 +1,23 @@
-//Enums
+//region Constants
+const boardLength = 8;
+const blackFirstRank = ["black_rook", "black_knight", "black_bishop", "black_queen", "black_king",
+    "black_bishop", "black_knight", "black_rook"];
+const blackSecondRank = ["black_pawn", "black_pawn", "black_pawn", "black_pawn", "black_pawn",
+    "black_pawn", "black_pawn", "black_pawn"];
+const whiteSecondRank = ["white_pawn", "white_pawn", "white_pawn", "white_pawn", "white_pawn",
+    "white_pawn", "white_pawn", "white_pawn"];
+const whiteFirstRank = ["white_rook", "white_knight", "white_bishop", "white_queen", "white_king",
+    "white_bishop", "white_knight", "white_rook"];
+//endregion
+
+//region Enums
 const Colour = Object.freeze({
     WHITE: Symbol("white"),
     BLACK: Symbol("black")
 });
+//endregion
 
-//Classes
+//region Classes
 class TurnManager {
     constructor() {
         this.colour = Colour.WHITE;
@@ -18,16 +31,17 @@ class TurnManager {
         else if (this.colour === Colour.BLACK) this.colour = Colour.WHITE;
     }
 }
+//endregion
 
-//Functions
+//region Functions
 const fillRows = ($gridItem, iRow, iColumn) => {
     $gridItem.css("background-size", "cover");
     $gridItem.css("background-position", "center");
     $gridItem.css("background-repeat", "no-repeat");
     let pieceDetails = "";
 
-    if (iRow === gridLength) pieceDetails = blackFirstRank[iColumn];
-    else if (iRow === gridLength - 1) pieceDetails = blackSecondRank[iColumn];
+    if (iRow === boardLength) pieceDetails = blackFirstRank[iColumn];
+    else if (iRow === boardLength - 1) pieceDetails = blackSecondRank[iColumn];
     else if (iRow === 2) pieceDetails = whiteSecondRank[iColumn];
     else if (iRow === 1) pieceDetails = whiteFirstRank[iColumn];
 
@@ -50,5 +64,6 @@ const rgbToHex = (col) => {
         return '#' + r + g + b;
     }
 };
+//endregion
 
-export { Colour, TurnManager, fillRows, rgbToHex };
+export { boardLength, Colour, TurnManager, fillRows, rgbToHex };
