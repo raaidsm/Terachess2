@@ -130,42 +130,51 @@ const resetFirstSquareSelection = () => {
 //endregion
 
 $(function() {
-    //region Initialize page properties
-    let $mainGrid = $("#mainGrid");
-    $mainGrid.css("grid-template-columns", `repeat(${boardLength}, 1fr)`);
-    //endregion
-
-    //region Initialize Localbase database and initialize default entry
-    let db = new Localbase("db");
+    //region Initialize Localbase database and initialize default entry (currently inactive)
+    /* let db = new Localbase("db");
     db.collection("games").add({ id: 0 });
     const savedNum = localStorage.getItem("num");
     if (savedNum !== null) {
         $("#num").val(savedNum);
-    }
+    } */
     //endregion
 
-    //region Dynamically insert elements
-    let doLightSquare = false;
+    //region Initialize page properties
+    //Initialize board (mainGrid)
+    let $mainGrid = $("#mainGrid");
+    $mainGrid.css("grid-template-columns", `repeat(${boardLength}, 1fr)`);
+
+    //Initialize TurnManager instance
+    const turnManager = new TurnManager();
+    //endregion
+
+    //region Dynamically insert board squares
+    let doLightSquare = true;
     for (let y = boardLength; 0 < y; y--) {
-        //Flip the colour for the next square
-        doLightSquare = doLightSquare === false;
         for (let x = 0; x < boardLength; x++) {
             //Initialize square
             let $gridItem = $(gridItemTemplate);
+
             //Set square coordinate name and colour
             $gridItem.prop("id", letters[x] + y);
             $gridItem.data("coordinate", `${x}-${y-1}`);
             $gridItem.css("background-color", doLightSquare ? lightSquareColour : darkSquareColour);
+
             //Flip the colour for the next square
             doLightSquare = doLightSquare === false;
+
             //Assign event handlers to grid items
             $gridItem.on("click", onClickBoardSquare);
             $gridItem.on("dblclick", onDoubleClickBoardSquare);
+
             //Set background image properties to square and add pieces as images
             fillRows($gridItem, y, x);
+
             //Add square to main grid (chess board)
             $mainGrid.append($gridItem);
         }
+        //Flip the colour for the next square
+        doLightSquare = doLightSquare === false;
     }
     //endregion
 });
