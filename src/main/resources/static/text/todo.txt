@@ -1,17 +1,14 @@
 CURRENTLY DOING:
--Fixing imports not working because apparently they're not being done outside a module (according to error mesage)
+-Implement not being able to make moves when it's not your turn
 
 CURRENT COMMIT:
--Move some helper functions from main.js to utils.js
--Refactor distinction between some functions and name of some variables in main.js
--Update this file
+-Implement not being able to make moves when it's not your turn
 
 REFACTORING:
 -Just...refactor MoveCalcResultsStruct
 -Break main.js code into modules
 
 GAME LOGIC:
--*Implement not being able to make moves when it's not your turn
 -Implement King movement (currently kings can't move at all lol)
 -Implement draw conditions such as too many turns without captures, repetition, insufficient material, etc.
 
