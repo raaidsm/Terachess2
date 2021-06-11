@@ -7,7 +7,7 @@ import { boardLength, Colour, TurnManager, rgbToHex, fillRows } from "./utils.js
 const gridItemTemplate = "<div class='gridItem'></div>";
 const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];   //Please make this array automatic this is horrendous
 //endregion
-//region Colours
+//region Board-Square Colours
 const lightSquareColour = "#EEEED2";
 const darkSquareColour = "#769656";
 const lightSquareRedColour = "#F43E42";
