@@ -42,7 +42,7 @@ public class GameEngine {
         logger.trace("makeMove() runs");
 
         //Clear all previous attacks
-        clearAllAttacksOnSquares();
+        clearColouredAttacksOnSquares();
 
         //Take piece-to-move off of first square
         Piece pieceToMove = boardManager.getSquare(firstSquare).getContainedPiece();
@@ -69,7 +69,7 @@ public class GameEngine {
         return calculateAllLegalMoves();
     }
 
-    private void clearAllAttacksOnSquares() {
+    private void clearColouredAttacksOnSquares() {
         Colour currentTurnColour = turnManager.getColour();
         assert currentTurnColour != null;
         List<Square> allSquares = boardManager.getAllSquaresFromBoard();

@@ -5,6 +5,7 @@ CURRENT COMMIT:
 -Placeholder
 
 REFACTORING:
+-Generate front-end board with back-end results
 -Just...refactor MoveCalcResultsStruct
 -Break main.js code into modules
 
