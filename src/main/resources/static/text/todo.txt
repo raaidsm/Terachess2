@@ -3,6 +3,7 @@ CURRENTLY DOING:
 
 CURRENT COMMIT:
 -Implement not being able to make moves when it's not your turn
+-Minor formatting changes
 
 REFACTORING:
 -Just...refactor MoveCalcResultsStruct

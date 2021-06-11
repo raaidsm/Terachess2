@@ -16,6 +16,7 @@ const lightSquareSelectedColour = "#0073FF";
 const darkSquareSelectedColour = "#005FD4";
 //endregion
 //region Game-Tracking Variables
+const turnManager = new TurnManager();
 let isFirstSquareClicked = false;
 let $clickedSquare = null;
 let clickedSquareColour = null;
@@ -30,6 +31,8 @@ const onClickBoardSquare = (event) => {
     if (isFirstSquareClicked === false) {
         //Guard clause for first square clicked not having a piece on it to move
         if ($target.css("background-image") === "none") return;
+        //Guard clause for first square clicked having a piece not allowed to move this turn
+        if ($target.data("colour") !== turnManager.getColour().description) return;
         //Save selected square data to game-tracking variables
         $clickedSquare = $target;
         clickedSquareColour = targetColour;
@@ -88,13 +91,19 @@ const executePieceMove = ($firstSquare, $secondSquare) => {
     //Transfer piece image
     $secondSquare.css("background-image", $firstSquare.css("background-image"));
     $firstSquare.css("background-image", "none");
+
     //Transfer piece data properties
     $secondSquare.data("colour", $firstSquare.data("colour"));
     $secondSquare.data("type", $firstSquare.data("type"));
     $firstSquare.removeData("colour");
     $firstSquare.removeData("type");
+
     //Display the square moved from and the square moved to
     $("#squareNameDisplay").val(`${$firstSquare.prop("id")} - ${$secondSquare.prop("id")}`);
+
+    //Switch turn colour
+    turnManager.switchColour();
+
     //Communicate the two selected squares to rest controller
     $.ajax({
         url: "/ReadMove",
@@ -143,9 +152,6 @@ $(function() {
     //Initialize board (mainGrid)
     let $mainGrid = $("#mainGrid");
     $mainGrid.css("grid-template-columns", `repeat(${boardLength}, 1fr)`);
-
-    //Initialize TurnManager instance
-    const turnManager = new TurnManager();
     //endregion
 
     //region Dynamically insert board squares
