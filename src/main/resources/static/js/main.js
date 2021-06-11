@@ -155,9 +155,8 @@ $(function() {
             //Initialize square
             let $gridItem = $(gridItemTemplate);
 
-            //Set square coordinate name and colour
+            //Set square name and colour
             $gridItem.prop("id", letters[x] + y);
-            $gridItem.data("coordinate", `${x}-${y-1}`);
             $gridItem.css("background-color", doLightSquare ? lightSquareColour : darkSquareColour);
 
             //Flip the colour for the next square
