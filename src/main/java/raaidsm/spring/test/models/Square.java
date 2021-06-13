@@ -41,9 +41,10 @@ public class Square implements Serializable {
         piecesAttacking.add(piece);
         attackingColours.put(colour.toString(), Boolean.valueOf("true"));
     }
-    public void clearAttacksByColour(Colour colour) {
-        piecesAttacking.removeIf(pieceAttacking -> pieceAttacking.getColour() == colour);
-        attackingColours.put(colour.toString(), Boolean.valueOf("false"));
+    public void clearAllAttacks() {
+        piecesAttacking.clear();
+        attackingColours.put(Colour.WHITE.toString(), Boolean.valueOf("false"));
+        attackingColours.put(Colour.BLACK.toString(), Boolean.valueOf("false"));
     }
 
     @Override
