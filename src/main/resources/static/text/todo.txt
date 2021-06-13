@@ -5,6 +5,8 @@ CURRENT COMMIT:
 -Placeholder
 
 REFACTORING:
+-Rewrite CheckManager to better implement abstraction and convenience, and also properly accommodate checks from both
+ sides simultaneously (one side for checks active during this turn, and the other for checks set during this turn)
 -Generate front-end board with back-end results
 -Just...refactor MoveCalcResultsStruct
 -Record the coordinate of each square within the square object

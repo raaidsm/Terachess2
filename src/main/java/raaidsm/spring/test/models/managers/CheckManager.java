@@ -11,10 +11,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CheckManager {
-    private HashMap<Colour, King> kings;
+    private final HashMap<Colour, King> kings;
     private boolean isCheck;
     private King checkedKing;
-    private List<AttackingPieceStruct> checkingPieces;
+    private final List<AttackingPieceStruct> checkingPieces;
 
     public CheckManager(King whiteKing, King blackKing) {
         //Guard clause for if kings to initialize are null
