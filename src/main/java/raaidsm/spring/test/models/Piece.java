@@ -113,10 +113,9 @@ public class Piece implements Serializable {
                 if (checkedKing != null) checkAttackType = attackType;
                 //Add result to legal moves
                 legalMoves.add(new AttackingPieceStruct(this, attackType, squareName));
-                //TODO: I think here is where you check what type of attack is being made on a square
                 //Record legal move in the square attacked
                 Square squareAttacked = boardManager.getSquare(squareName);
-                squareAttacked.setAttack(this, colour);
+                if (attackType != AttackType.ONLY_MOVE) squareAttacked.setAttack(this, colour);
             }
         }
         //DEBUGGING
