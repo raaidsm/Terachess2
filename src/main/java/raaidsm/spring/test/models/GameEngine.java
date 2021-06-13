@@ -54,7 +54,7 @@ public class GameEngine {
             pieceToMoveTo.setLocation(null);
             boardManager.getSquare(secondSquare).setContainedPiece(null);
             Colour pieceColour = pieceToMoveTo.getColour();
-            boardManager.getPieceList(pieceColour).remove(pieceToMoveTo);
+            boardManager.getPieceListByColour(pieceColour).remove(pieceToMoveTo);
             //TODO: Record the captured piece
         }
 
@@ -70,7 +70,7 @@ public class GameEngine {
     }
 
     private void clearAllAttacksOnSquares() {
-        List<Square> allSquares = boardManager.getAllSquaresFromBoard();
+        List<Square> allSquares = boardManager.getAllSquares();
         for (Square allSquare : allSquares) {
             allSquare.clearAllAttacks();
         }
@@ -96,6 +96,8 @@ public class GameEngine {
             rook.removeCastlingRights();
         }
     }
+
+    //Legal Move Calculation Methods
     private GameStatus calculateAllLegalMoves() {
         /* OVERVIEW:
         0) If double check, only calculate moves for king
@@ -107,7 +109,7 @@ public class GameEngine {
             3) For each piece, reduce if check and piece is of same colour as checked king
         */
         logger.trace("calculateAllLegalMoves() runs");
-        List<Piece> pieces = boardManager.getPieceList(turnManager.getColour());
+        List<Piece> pieces = boardManager.getPieceListByColour(turnManager.getColour());
         boolean legalMovesFound;
 
         //region Multi-Check
