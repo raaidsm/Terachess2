@@ -23,7 +23,7 @@ public class GameEngine {
     public GameEngine() {
         boardManager = new BoardManager();
         turnManager = new TurnManager();
-        checkManager = new CheckManager(turnManager.getColour());
+        checkManager = new CheckManager(turnManager.getCurrentTurnColour());
 
         GameStatus gameStatus = calculateAllLegalMoves();
         if (gameStatus != GameStatus.LIVE) throw new InvalidGameException();
@@ -109,13 +109,13 @@ public class GameEngine {
             3) For each piece, reduce if check and piece is of same colour as checked king
         */
         logger.trace("calculateAllLegalMoves() runs");
-        List<Piece> pieces = boardManager.getPieceListByColour(turnManager.getColour());
+        List<Piece> pieces = boardManager.getPieceListByColour(turnManager.getCurrentTurnColour());
         boolean legalMovesFound;
 
         //region Multi-Check
         if (1 < checkManager.numOfChecks()) {
             legalMovesFound = caseMultiCheck(pieces);
-            turnManager.switchColour();
+            turnManager.switchCurrentTurnColour();
             if (legalMovesFound) return GameStatus.LIVE;
             else return GameStatus.CHECKMATE;
         }
@@ -139,8 +139,8 @@ public class GameEngine {
         //endregion
         //region Set tracking variables for next turn
         checkManager.clearChecks();
-        turnManager.switchColour();
-        checkManager.setCurrentTurnColour(turnManager.getColour());
+        turnManager.switchCurrentTurnColour();
+        checkManager.setCurrentTurnColour(turnManager.getCurrentTurnColour());
         //endregion
         if (legalMovesFound) return GameStatus.LIVE;
         else return GameStatus.CHECKMATE;

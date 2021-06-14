@@ -9,10 +9,10 @@ public class TurnManager {
         this.colour = Colour.WHITE;
     }
 
-    public Colour getColour() {
+    public Colour getCurrentTurnColour() {
         return colour;
     }
-    public void switchColour() {
+    public void switchCurrentTurnColour() {
         if (colour == Colour.WHITE) colour = Colour.BLACK;
         else if (colour == Colour.BLACK) colour = Colour.WHITE;
     }
