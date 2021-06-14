@@ -113,39 +113,38 @@ public class GameEngine {
         List<Piece> opponentPieces = boardManager.getPieceListByColour(turnManager.getCurrentTurnColour());
         boolean legalMovesFound;
 
-        //region Multi-Check
+        //Special Multi-Check Case
         if (1 < checkManager.numOfChecks()) {
             legalMovesFound = caseMultiCheck(currentPlayerPieces);
             turnManager.switchCurrentTurnColour();
             if (legalMovesFound) return GameStatus.LIVE;
             else return GameStatus.CHECKMATE;
         }
-        //endregion
-        //region Calculate All Possible Moves
-        //For current player
+
+        //Calculate All Possible Moves
         legalMovesFound = calculateAllPossibleMoves(currentPlayerPieces);
-        //For opponent
         calculateAllPossibleMoves(opponentPieces);
-        //endregion
-        //region Reduce Moves Due to Pin
         if (!legalMovesFound) {
             if (checkManager.isCheck()) return GameStatus.CHECKMATE;
             else return GameStatus.STALEMATE;
         }
+
+        //Reduce Moves Due to Pin
         legalMovesFound = reduceMovesDueToPin(currentPlayerPieces);
-        //endregion
-        //region Reduce Moves Due to Check
         if (!legalMovesFound) {
             if (checkManager.isCheck()) return GameStatus.CHECKMATE;
             else return GameStatus.STALEMATE;
         }
+
+        //Reduce Moves Due to Check
         if (checkManager.isCheck()) legalMovesFound = reduceMovesDueToCheck(currentPlayerPieces);
-        //endregion
-        //region Set tracking variables for next turn
+
+        //Set tracking variables for next turn
         checkManager.clearChecks();
         turnManager.switchCurrentTurnColour();
         checkManager.setCurrentTurnColour(turnManager.getCurrentTurnColour());
-        //endregion
+
+        //Return game status at the end of the turn
         if (legalMovesFound) return GameStatus.LIVE;
         else return GameStatus.CHECKMATE;
     }
