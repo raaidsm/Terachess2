@@ -75,11 +75,6 @@ public class BoardManager {
         addEmptySquares();
     }
 
-    public CheckManager createCheckManager() {
-        King whiteKing = (King)board.get("E1").getContainedPiece();
-        King blackKing = (King)board.get("E8").getContainedPiece();
-        return new CheckManager(whiteKing, blackKing);
-    }
     public Square getSquare(String squareName) {
         return board.get(squareName);
     }

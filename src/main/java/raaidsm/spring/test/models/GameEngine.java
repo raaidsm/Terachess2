@@ -23,7 +23,7 @@ public class GameEngine {
     public GameEngine() {
         boardManager = new BoardManager();
         turnManager = new TurnManager();
-        checkManager = boardManager.createCheckManager();
+        checkManager = new CheckManager(turnManager.getColour());
 
         GameStatus gameStatus = calculateAllLegalMoves();
         if (gameStatus != GameStatus.LIVE) throw new InvalidGameException();
@@ -113,7 +113,7 @@ public class GameEngine {
         boolean legalMovesFound;
 
         //region Multi-Check
-        if (1 < checkManager.getCheckingPieces().size()) {
+        if (1 < checkManager.numOfChecks()) {
             legalMovesFound = caseMultiCheck(pieces);
             turnManager.switchColour();
             if (legalMovesFound) return GameStatus.LIVE;
@@ -140,6 +140,7 @@ public class GameEngine {
         //region Set tracking variables for next turn
         checkManager.clearChecks();
         turnManager.switchColour();
+        checkManager.setCurrentTurnColour(turnManager.getColour());
         //endregion
         if (legalMovesFound) return GameStatus.LIVE;
         else return GameStatus.CHECKMATE;
@@ -167,7 +168,7 @@ public class GameEngine {
             MoveCalcResultsStruct results = piece.calculateMoves();
             if (results.hasMoves) legalMovesFound = true;
             if (results.checkedKing != null) {
-                checkManager.setCheck(piece, results.attackType, results.checkedKing, results.squareName);
+                checkManager.setCheck(results.checkedKing, piece, results.attackType);
             }
         }
         return legalMovesFound;
