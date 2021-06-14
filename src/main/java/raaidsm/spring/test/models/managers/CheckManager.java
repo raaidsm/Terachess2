@@ -4,7 +4,6 @@ import raaidsm.spring.test.models.Piece;
 import raaidsm.spring.test.models.piece_properties.AttackType;
 import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.pieces.King;
-import raaidsm.spring.test.models.utils.AttackingPieceStruct;
 import raaidsm.spring.test.models.utils.CheckSummaryStruct;
 
 import java.util.ArrayList;

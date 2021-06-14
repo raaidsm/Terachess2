@@ -30,10 +30,10 @@ public class GameEngine {
     }
 
     public List<String> getLegalMovesForAPiece(String squareNameOfPiece) {
-        List<AttackingPieceStruct> legalMoves = boardManager
+        List<AttackOnSquareStruct> legalMoves = boardManager
                 .getSquare(squareNameOfPiece).getContainedPiece().legalMoves;
         List<String> legalMoveSquareNames = new ArrayList<>();
-        for (AttackingPieceStruct legalMove : legalMoves) {
+        for (AttackOnSquareStruct legalMove : legalMoves) {
             legalMoveSquareNames.add(legalMove.attackedSquareName);
         }
         return legalMoveSquareNames;

@@ -19,7 +19,7 @@ public class Piece implements Serializable {
     protected PieceType type;
     protected Colour colour;
     protected Point location;
-    protected List<AttackingPieceStruct> legalMoves;
+    protected List<AttackOnSquareStruct> legalMoves;
     protected boolean isPinned;
     protected Piece pinningPiece;
     protected List<String> promotion;
@@ -57,10 +57,10 @@ public class Piece implements Serializable {
     public void setLocation(String location) {
         this.location.setPoint(location);
     }
-    public List<AttackingPieceStruct> getLegalMoves() {
+    public List<AttackOnSquareStruct> getLegalMoves() {
         return legalMoves;
     }
-    public void setLegalMoves(List<AttackingPieceStruct> legalMoves) {
+    public void setLegalMoves(List<AttackOnSquareStruct> legalMoves) {
         this.legalMoves = legalMoves;
     }
     public boolean isPinned() {
@@ -107,7 +107,7 @@ public class Piece implements Serializable {
                 String squareName = result.squareName;
                 if (checkedKing != null) checkAttackType = attackType;
                 //Add result to legal moves
-                legalMoves.add(new AttackingPieceStruct(this, attackType, squareName));
+                legalMoves.add(new AttackOnSquareStruct(this, attackType, squareName));
                 //Record legal move in the square attacked
                 Square squareAttacked = boardManager.getSquare(squareName);
                 if (attackType != AttackType.ONLY_MOVE) squareAttacked.setAttack(this, colour);
