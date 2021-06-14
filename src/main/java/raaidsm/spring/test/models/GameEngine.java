@@ -109,33 +109,37 @@ public class GameEngine {
             3) For each piece, reduce if check and piece is of same colour as checked king
         */
         logger.trace("calculateAllLegalMoves() runs");
-        List<Piece> pieces = boardManager.getPieceListByColour(turnManager.getCurrentTurnColour());
+        List<Piece> currentPlayerPieces = boardManager.getPieceListByColour(turnManager.getCurrentTurnColour());
+        List<Piece> opponentPieces = boardManager.getPieceListByColour(turnManager.getCurrentTurnColour());
         boolean legalMovesFound;
 
         //region Multi-Check
         if (1 < checkManager.numOfChecks()) {
-            legalMovesFound = caseMultiCheck(pieces);
+            legalMovesFound = caseMultiCheck(currentPlayerPieces);
             turnManager.switchCurrentTurnColour();
             if (legalMovesFound) return GameStatus.LIVE;
             else return GameStatus.CHECKMATE;
         }
         //endregion
         //region Calculate All Possible Moves
-        legalMovesFound = calculateAllPossibleMoves(pieces);
+        //For current player
+        legalMovesFound = calculateAllPossibleMoves(currentPlayerPieces);
+        //For opponent
+        calculateAllPossibleMoves(opponentPieces);
         //endregion
         //region Reduce Moves Due to Pin
         if (!legalMovesFound) {
             if (checkManager.isCheck()) return GameStatus.CHECKMATE;
             else return GameStatus.STALEMATE;
         }
-        legalMovesFound = reduceMovesDueToPin(pieces);
+        legalMovesFound = reduceMovesDueToPin(currentPlayerPieces);
         //endregion
         //region Reduce Moves Due to Check
         if (!legalMovesFound) {
             if (checkManager.isCheck()) return GameStatus.CHECKMATE;
             else return GameStatus.STALEMATE;
         }
-        if (checkManager.isCheck()) legalMovesFound = reduceMovesDueToCheck(pieces);
+        if (checkManager.isCheck()) legalMovesFound = reduceMovesDueToCheck(currentPlayerPieces);
         //endregion
         //region Set tracking variables for next turn
         checkManager.clearChecks();
