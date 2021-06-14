@@ -20,6 +20,7 @@ GAME LOGIC:
 BUGS:
 -Overhaul move calculation system to calculate moves for both colours of pieces after a move is made to properly record
  attacks of a piece after it makes a move
+-Record King moves after every piece
 -Only set attack on a square if it's a capturing attack
 -Record type of pin (vertical, diagonal-ascending, horizontal, diagonal-descending, other)
 -Reduce moves due to pin by removing all moves that don't match the type of pin
