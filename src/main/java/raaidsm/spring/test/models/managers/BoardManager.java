@@ -84,7 +84,7 @@ public class BoardManager {
         return allSquares;
     }
     public List<Piece> getPieceListByColour(Colour pieceColour) {
-        return pieceListsByColour.get(pieceColour);
+        return new ArrayList<>(pieceListsByColour.get(pieceColour));
     }
     public King popKingFromPieceListByColour(List<Piece> pieceList) {
         //Get King
