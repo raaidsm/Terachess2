@@ -78,13 +78,13 @@ public class BoardManager {
     public Square getSquare(String squareName) {
         return board.get(squareName);
     }
-    public List<Piece> getPieceListByColour(Colour pieceColour) {
-        return pieceListsByColour.get(pieceColour);
-    }
     public List<Square> getAllSquares() {
         List<Square> allSquares = new ArrayList<>();
         board.forEach((coordinate, square) -> allSquares.add(square));
         return allSquares;
+    }
+    public List<Piece> getPieceListByColour(Colour pieceColour) {
+        return pieceListsByColour.get(pieceColour);
     }
 
     private void addBoardToPieces() {
