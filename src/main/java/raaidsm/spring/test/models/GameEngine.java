@@ -114,7 +114,8 @@ public class GameEngine {
         //Declare pieces to calculate all legal moves for
         List<Piece> currentPlayerPieces = boardManager.getPieceListByColour(turnManager.getCurrentTurnColour());
         King currentPlayerKing = boardManager.popKingFromPieceListByColour(currentPlayerPieces);
-        List<Piece> opponentPieces = boardManager.getPieceListByColour(turnManager.getCurrentTurnColour());
+        List<Piece> opponentPieces = boardManager.getPieceListByColour(
+                turnManager.getCurrentTurnColour().oppositeColour());
         King opponentKing = boardManager.popKingFromPieceListByColour(opponentPieces);
         boolean piecesHaveLegalMoves = false;
         boolean kingHasLegalMoves = false;
