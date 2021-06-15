@@ -116,7 +116,9 @@ public class GameEngine {
         //Special Multi-Check Case
         if (1 < checkManager.numOfChecks()) {
             legalMovesFound = caseMultiCheck(currentPlayerPieces);
+            checkManager.clearChecks();
             turnManager.switchCurrentTurnColour();
+            checkManager.setCurrentTurnColour(turnManager.getCurrentTurnColour());
             if (legalMovesFound) return GameStatus.LIVE;
             else return GameStatus.CHECKMATE;
         }
