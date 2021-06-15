@@ -92,9 +92,11 @@ public class Pawn extends Piece {
         //Guard clause for relative point going off the board
         if (status == SqrStat.NO_SQUARE) return null;
         //Guard clause for there being no piece to capture
-        if (status == SqrStat.EMPTY) return null;
+        if (status == SqrStat.EMPTY) return new MoveCalcResultsStruct(
+                null, squareName, attackType, false);
         //Square has a same-coloured piece that can't be captured
-        if (colour == preview.pieceColour) return null;
+        if (colour == preview.pieceColour) return new MoveCalcResultsStruct(
+                null, squareName, attackType, false);
         //Square has an enemy piece to capture at this square
         if (status == SqrStat.KING) return new MoveCalcResultsStruct((King)piece, squareName, attackType, true);
         return new MoveCalcResultsStruct(null, squareName, attackType, true);

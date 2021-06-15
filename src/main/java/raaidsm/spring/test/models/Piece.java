@@ -102,18 +102,19 @@ public class Piece implements Serializable {
         clearAllMoves();
         List<MoveCalcResultsStruct> results = calculateSquarePreviewResults();
         for (MoveCalcResultsStruct result : results) {
-            hasMoves = true;
+            AttackType attackType = result.attackType;
+            String squareName = result.squareName;
             if (result.hasMoves) {
+                //Change variables for check
+                hasMoves = true;
                 checkedKing = result.checkedKing;
-                AttackType attackType = result.attackType;
-                String squareName = result.squareName;
                 if (checkedKing != null) checkAttackType = attackType;
                 //Add result to legal moves
                 legalMoves.add(new AttackOnSquareStruct(this, attackType, squareName));
-                //Record legal move in the square attacked
-                Square squareAttacked = boardManager.getSquare(squareName);
-                if (attackType != AttackType.ONLY_MOVE) squareAttacked.setAttack(this, colour);
             }
+            //Record attack in the square attacked
+            Square squareAttacked = boardManager.getSquare(squareName);
+            if (attackType != AttackType.ONLY_MOVE) squareAttacked.setAttack(this, colour);
         }
         //Returning squareName as null because many different squares are possibly attacked
         return new MoveCalcResultsStruct(checkedKing, null, checkAttackType, hasMoves);
