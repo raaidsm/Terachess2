@@ -1,5 +1,5 @@
 //region Imports
-import { boardLength, Colour, TurnManager, rgbToHex, fillRows } from "./utils.js";
+import { boardLength, Colour, TurnManager, rgbToHex, fillGridItem } from "./utils.js";
 //endregion
 
 //region Global Constants
@@ -173,7 +173,7 @@ $(function() {
             $gridItem.on("dblclick", onDoubleClickBoardSquare);
 
             //Set background image properties to square and add pieces as images
-            fillRows($gridItem, y, x);
+            fillGridItem($gridItem, y, x);
 
             //Add square to main grid (chess board)
             $mainGrid.append($gridItem);

@@ -34,7 +34,7 @@ class TurnManager {
 //endregion
 
 //region Functions
-const fillRows = ($gridItem, iRow, iColumn) => {
+const fillGridItem = ($gridItem, iRow, iColumn) => {
     $gridItem.css("background-size", "cover");
     $gridItem.css("background-position", "center");
     $gridItem.css("background-repeat", "no-repeat");
@@ -66,4 +66,4 @@ const rgbToHex = (col) => {
 };
 //endregion
 
-export { boardLength, Colour, TurnManager, fillRows, rgbToHex };
+export { boardLength, Colour, TurnManager, fillGridItem, rgbToHex };
