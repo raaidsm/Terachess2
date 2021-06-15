@@ -16,8 +16,6 @@ GAME LOGIC:
 -Implement draw conditions such as too many turns without captures, repetition, insufficient material, etc.
 
 BUGS:
--Record King moves after every piece
--Only set attack on a square if it's a capturing attack
 -Record type of pin (vertical, diagonal-ascending, horizontal, diagonal-descending, other)
 -Reduce moves due to pin by removing all moves that don't match the type of pin
 -King's move calculation can lead to seemingly random squares being found as legal square moves
