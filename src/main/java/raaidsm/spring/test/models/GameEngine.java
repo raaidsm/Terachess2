@@ -51,10 +51,7 @@ public class GameEngine {
         //Record and remove piece-to-move-to, if exists
         Piece pieceToMoveTo = boardManager.getSquare(secondSquare).getContainedPiece();
         if (pieceToMoveTo != null) {
-            pieceToMoveTo.setLocation(null);
-            boardManager.getSquare(secondSquare).setContainedPiece(null);
-            Colour pieceColour = pieceToMoveTo.getColour();
-            boardManager.getPieceListByColour(pieceColour).remove(pieceToMoveTo);
+            boardManager.removePieceFromBoard(pieceToMoveTo);
             //TODO: Record the captured piece
         }
 

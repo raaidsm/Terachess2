@@ -100,6 +100,17 @@ public class BoardManager {
         pieceList.remove(king);
         return king;
     }
+    public void removePieceFromBoard(Piece pieceToRemove) {
+        //Get and remove piece's location
+        String pieceLocation = pieceToRemove.getLocation();
+        pieceToRemove.setLocation(null);
+
+        //Remove from board
+        board.get(pieceLocation).setContainedPiece(null);
+
+        //Remove from piece list
+        pieceListsByColour.get(pieceToRemove.getColour()).remove(pieceToRemove);
+    }
 
     private void addBoardToPieces() {
         board.forEach((coordinate, square) -> {
