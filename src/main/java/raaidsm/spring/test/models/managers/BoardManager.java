@@ -86,6 +86,20 @@ public class BoardManager {
     public List<Piece> getPieceListByColour(Colour pieceColour) {
         return pieceListsByColour.get(pieceColour);
     }
+    public King popKingFromPieceListByColour(List<Piece> pieceList) {
+        //Get King
+        King king = null;
+        for (Piece piece : pieceList) {
+            if (piece.getType() == PieceType.KING) {
+                king = (King)piece;
+            }
+        }
+        assert (king != null);
+
+        //Remove King from list before returning it
+        pieceList.remove(king);
+        return king;
+    }
 
     private void addBoardToPieces() {
         board.forEach((coordinate, square) -> {

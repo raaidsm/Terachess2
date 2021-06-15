@@ -109,37 +109,46 @@ public class GameEngine {
             3) For each piece, reduce if check and piece is of same colour as checked king
         */
         logger.trace("calculateAllLegalMoves() runs");
+
+        //Declare pieces to calculate all legal moves for
         List<Piece> currentPlayerPieces = boardManager.getPieceListByColour(turnManager.getCurrentTurnColour());
+        King currentPlayerKing = boardManager.popKingFromPieceListByColour(currentPlayerPieces);
         List<Piece> opponentPieces = boardManager.getPieceListByColour(turnManager.getCurrentTurnColour());
-        boolean legalMovesFound;
+        King opponentKing = boardManager.popKingFromPieceListByColour(opponentPieces);
+        boolean piecesHaveLegalMoves = false;
+        boolean kingHasLegalMoves = false;
 
         //Special Multi-Check Case
         if (1 < checkManager.numOfChecks()) {
-            legalMovesFound = caseMultiCheck(currentPlayerPieces);
+            piecesHaveLegalMoves = caseMultiCheck(currentPlayerPieces);
             checkManager.clearChecks();
             turnManager.switchCurrentTurnColour();
             checkManager.setCurrentTurnColour(turnManager.getCurrentTurnColour());
-            if (legalMovesFound) return GameStatus.LIVE;
+            if (piecesHaveLegalMoves) return GameStatus.LIVE;
             else return GameStatus.CHECKMATE;
         }
 
-        //Calculate All Possible Moves
-        legalMovesFound = calculateAllPossibleMoves(currentPlayerPieces);
+        //Calculate All Possible Moves (except for Kings)
+        piecesHaveLegalMoves = calculateAllPossibleMoves(currentPlayerPieces);
         calculateAllPossibleMoves(opponentPieces);
-        if (!legalMovesFound) {
+
+        //Calculate All Possible Moves for Kings
+        if (currentPlayerKing.calculateMoves().hasMoves) kingHasLegalMoves = true;
+        opponentKing.calculateMoves();
+        if (!piecesHaveLegalMoves && !kingHasLegalMoves) {
             if (checkManager.isCheck()) return GameStatus.CHECKMATE;
             else return GameStatus.STALEMATE;
         }
 
         //Reduce Moves Due to Pin
-        legalMovesFound = reduceMovesDueToPin(currentPlayerPieces);
-        if (!legalMovesFound) {
+        piecesHaveLegalMoves = reduceMovesDueToPin(currentPlayerPieces);
+        if (!piecesHaveLegalMoves && !kingHasLegalMoves) {
             if (checkManager.isCheck()) return GameStatus.CHECKMATE;
             else return GameStatus.STALEMATE;
         }
 
         //Reduce Moves Due to Check
-        if (checkManager.isCheck()) legalMovesFound = reduceMovesDueToCheck(currentPlayerPieces);
+        if (checkManager.isCheck()) piecesHaveLegalMoves = reduceMovesDueToCheck(currentPlayerPieces);
 
         //Set tracking variables for next turn
         checkManager.clearChecks();
@@ -147,12 +156,13 @@ public class GameEngine {
         checkManager.setCurrentTurnColour(turnManager.getCurrentTurnColour());
 
         //Return game status at the end of the turn
-        if (legalMovesFound) return GameStatus.LIVE;
+        if (piecesHaveLegalMoves || kingHasLegalMoves) return GameStatus.LIVE;
         else return GameStatus.CHECKMATE;
     }
     private boolean caseMultiCheck(List<Piece> pieces) {
-        /* OVERVIEW:
-        Returns: wasLegalMoveFound */
+        //OVERVIEW: Returns: wasLegalMoveFound
+        logger.trace("caseMultiCheck() runs");
+
         boolean legalMovesFound = false;
         for (Piece piece : pieces) {
             if (piece.getType() == PieceType.KING) {
@@ -164,12 +174,11 @@ public class GameEngine {
         return legalMovesFound;
     }
     private boolean calculateAllPossibleMoves(List<Piece> pieces) {
-        /* OVERVIEW:
-        Returns: wasLegalMoveFound */
+        //OVERVIEW: Returns: wasLegalMoveFound
         logger.trace("calculateAllPossibleMoves() runs");
+
         boolean legalMovesFound = false;
         for (Piece piece : pieces) {
-            piece.clearAllMoves();
             MoveCalcResultsStruct results = piece.calculateMoves();
             if (results.hasMoves) legalMovesFound = true;
             if (results.checkedKing != null) {
@@ -179,26 +188,24 @@ public class GameEngine {
         return legalMovesFound;
     }
     private boolean reduceMovesDueToPin(List<Piece> pieces) {
-        /* OVERVIEW:
-        Returns: wasLegalMoveFound */
+        //OVERVIEW: Returns: wasLegalMoveFound
+        logger.trace("reduceMovesDueToPin runs");
+
         boolean legalMovesFound = false;
         for (Piece piece : pieces) {
-            if (piece.getType() != PieceType.KING) {
-                MoveCalcResultsStruct results = piece.reduceMovesDueToPin();
-                if (results.hasMoves) legalMovesFound = true;
-            }
+            MoveCalcResultsStruct results = piece.reduceMovesDueToPin();
+            if (results.hasMoves) legalMovesFound = true;
         }
         return legalMovesFound;
     }
     private boolean reduceMovesDueToCheck(List<Piece> pieces) {
-        /* OVERVIEW:
-        Returns: wasLegalMoveFound */
+        //OVERVIEW: Returns: wasLegalMoveFound
+        logger.trace("reduceMovesDueToCheck() runs");
+
         boolean legalMovesFound = false;
         for (Piece piece : pieces) {
-            if (piece.getType() != PieceType.KING) {
-                MoveCalcResultsStruct results = piece.reduceMovesDueToCheck();
-                if (results.hasMoves) legalMovesFound = true;
-            }
+            MoveCalcResultsStruct results = piece.reduceMovesDueToCheck();
+            if (results.hasMoves) legalMovesFound = true;
         }
         return legalMovesFound;
     }
