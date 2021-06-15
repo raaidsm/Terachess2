@@ -69,6 +69,7 @@ public class GameEngine {
         return calculateAllLegalMoves();
     }
 
+    //Methods called immediately upon a new move being made
     private void clearAllAttacksOnSquares() {
         List<Square> allSquares = boardManager.getAllSquares();
         for (Square allSquare : allSquares) {
@@ -97,7 +98,7 @@ public class GameEngine {
         }
     }
 
-    //Legal Move Calculation Methods
+    //Move Calculation Methods
     private GameStatus calculateAllLegalMoves() {
         /* OVERVIEW:
         0) If double check, only calculate moves for king
