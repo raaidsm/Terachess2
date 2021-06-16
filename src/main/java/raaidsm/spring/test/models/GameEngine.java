@@ -128,12 +128,12 @@ public class GameEngine {
         }
 
         //Calculate All Possible Moves (except for Kings)
-        piecesHaveLegalMoves = calculateAllPossibleMoves(currentPlayerPieces);
         calculateAllPossibleMoves(opponentPieces);
+        piecesHaveLegalMoves = calculateAllPossibleMoves(currentPlayerPieces);
 
         //Calculate All Possible Moves for Kings
-        if (currentPlayerKing.calculateMoves().hasMoves) kingHasLegalMoves = true;
         opponentKing.calculateMoves();
+        if (currentPlayerKing.calculateMoves().hasMoves) kingHasLegalMoves = true;
         if (!piecesHaveLegalMoves && !kingHasLegalMoves) {
             if (checkManager.isCheck()) return GameStatus.CHECKMATE;
             else return GameStatus.STALEMATE;
