@@ -35,19 +35,20 @@ class TurnManager {
 
 //region Functions
 const fillGridItem = ($gridItem, iRow, iColumn) => {
+    //Set grid item's background properties
     $gridItem.css("background-size", "cover");
     $gridItem.css("background-position", "center");
     $gridItem.css("background-repeat", "no-repeat");
-    let pieceDetails = "";
 
+    let pieceDetails = "";
     if (iRow === boardLength) pieceDetails = blackFirstRank[iColumn];
     else if (iRow === boardLength - 1) pieceDetails = blackSecondRank[iColumn];
     else if (iRow === 2) pieceDetails = whiteSecondRank[iColumn];
     else if (iRow === 1) pieceDetails = whiteFirstRank[iColumn];
 
     if (pieceDetails !== "" && pieceDetails !== "empty") {
-        $gridItem.data("colour", pieceDetails.substring(0, 5));
-        $gridItem.data("type", pieceDetails.substring(6));
+        $gridItem.data("piece-colour", pieceDetails.substring(0, 5));
+        $gridItem.data("piece-type", pieceDetails.substring(6));
         $gridItem.css("background-image", `url(../images/${pieceDetails}.png)`);
     }
 };

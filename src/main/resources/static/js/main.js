@@ -39,14 +39,18 @@ const onLeftClickBoardSquare = (event) => {
     if (isFirstSquareClicked === false) {
         //Guard clause for first square clicked not having a piece on it to move
         if ($target.css("background-image") === "none") return;
+
         //Guard clause for first square clicked having a piece not allowed to move this turn
-        if ($target.data("colour") !== turnManager.getColour().description) return;
+        if ($target.data("piece-colour") !== turnManager.getColour().description) return;
+
         //Save selected square data to game-tracking variables
         $clickedSquare = $target;
         clickedSquareColour = targetColour;
+
         //Apply selected colour
         if (clickedSquareColour === lightSquareColour) $target.css("background-color", lightSquareSelectedColour);
         if (clickedSquareColour === darkSquareColour) $target.css("background-color", darkSquareSelectedColour);
+
         //Send first selected square to Java code
         $.ajax({
             url: "/ReadFirstPieceSelection",
@@ -56,12 +60,13 @@ const onLeftClickBoardSquare = (event) => {
             data: { firstSquare: $target.prop("id"), secondSquare: null },
             success: executeFirstPieceSelection
         });
+
         //First square has been successfully clicked
         isFirstSquareClicked = true;
     }
     else if (isFirstSquareClicked === true) {
         //Execute move only if both squares don't have the same colour of piece
-        if ($clickedSquare.data("colour") !== $target.data("colour") &&
+        if ($clickedSquare.data("piece-colour") !== $target.data("piece-colour") &&
             selectedSquares.includes($target.prop("id")))
         {
             executePieceMove($clickedSquare, $target);
@@ -72,9 +77,11 @@ const onLeftClickBoardSquare = (event) => {
 const onRightClickBoardSquare = (event) => {
     let $target = $(event.target);
     let targetColour = rgbToHex($target.css("background-color")).toUpperCase();
+
     //Redden
     if (targetColour === lightSquareColour) $target.css("background-color", lightSquareRedColour);
     if (targetColour === darkSquareColour) $target.css("background-color", darkSquareRedColour);
+
     //Un-Redden
     if (targetColour === lightSquareRedColour) $target.css("background-color", lightSquareColour);
     if (targetColour === darkSquareRedColour) $target.css("background-color", darkSquareColour);
@@ -101,10 +108,10 @@ const executePieceMove = ($firstSquare, $secondSquare) => {
     $firstSquare.css("background-image", "none");
 
     //Transfer piece data properties
-    $secondSquare.data("colour", $firstSquare.data("colour"));
-    $secondSquare.data("type", $firstSquare.data("type"));
-    $firstSquare.removeData("colour");
-    $firstSquare.removeData("type");
+    $secondSquare.data("piece-colour", $firstSquare.data("piece-colour"));
+    $secondSquare.data("piece-type", $firstSquare.data("piece-type"));
+    $firstSquare.removeData("piece-colour");
+    $firstSquare.removeData("piece-type");
 
     //Display the square moved from and the square moved to
     $("#squareNameDisplay").val(`${$firstSquare.prop("id")} - ${$secondSquare.prop("id")}`);
@@ -128,6 +135,7 @@ const resetFirstSquareSelection = () => {
     clickedSquareColour = rgbToHex($clickedSquare.css("background-color")).toUpperCase();
     if (clickedSquareColour === lightSquareSelectedColour) $clickedSquare.css("background-color", lightSquareColour);
     if (clickedSquareColour === darkSquareSelectedColour) $clickedSquare.css("background-color", darkSquareColour);
+
     //Clear selection colour off all legal move squares
     for (let i = 0; i < selectedSquares.length; i++) {
         let $legalMoveSquare = $(`#${selectedSquares[i]}`);
@@ -139,6 +147,7 @@ const resetFirstSquareSelection = () => {
             $legalMoveSquare.css("background-color", darkSquareColour);
         }
     }
+
     //Clear game-tracking variables
     $clickedSquare = null;
     clickedSquareColour = null;
