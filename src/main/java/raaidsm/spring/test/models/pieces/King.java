@@ -48,6 +48,7 @@ public class King extends Piece {
         //AttackType for this collection of attacks (yes, collection even though there's only one)
         AttackType attackType = AttackType.MOVE_OR_CAPTURE;
 
+        dir.resetMagnitude();
         SquarePreviewStruct preview = previewRelativeSquare(dir.x, dir.y);
         SqrStat status = preview.squareStatus;
         String squareName = preview.squareName;

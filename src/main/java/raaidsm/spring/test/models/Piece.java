@@ -142,12 +142,14 @@ public class Piece implements Serializable {
     }
     protected List<MoveCalcResultsStruct> moveOrCaptureInALine(Direction dir) {
         /* OVERVIEW:
-        -MOVE_OR_CAPTURE
-        -Calculate moves in a line.
-        -If an opposite colour piece is hit, keep calculating to check for pin
-        -If a same colour piece or the edge of the board is hit, stop calculating further
+            -MOVE_OR_CAPTURE
+            -Calculate moves in a line.
+            -If an opposite colour piece is hit, keep calculating to check for pin
+            -If a same colour piece or the edge of the board is hit, stop calculating further
         */
         AttackType attackType = AttackType.MOVE_OR_CAPTURE;
+
+        dir.resetMagnitude();
         List<MoveCalcResultsStruct> results = new ArrayList<>();
         int i = 1;
         boolean pinnablePieceHit = false;
