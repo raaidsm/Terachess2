@@ -20,6 +20,9 @@ BUGS:
 -Record type of pin (vertical, diagonal-ascending, horizontal, diagonal-descending, other)
 -Reduce moves due to pin by removing all moves that don't match the type of pin
 
+USER CONVENIENCES:
+-Set up left click to remove all red-highlighted squares
+
 OVER THE INTERNET:
 -Host game on server somehow
 -Implement WebSockets to host communication with another person

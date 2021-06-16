@@ -26,6 +26,14 @@ let selectedSquares = null;
 
 //region Event Handlers
 const onClickBoardSquare = (event) => {
+    if (event.button === 0) {
+        onLeftClickBoardSquare(event);
+    }
+    else if (event.button === 2) {
+        onRightClickBoardSquare(event);
+    }
+};
+const onLeftClickBoardSquare = (event) => {
     let $target = $(event.target);
     let targetColour = rgbToHex($target.css("background-color")).toUpperCase();
     if (isFirstSquareClicked === false) {
@@ -61,7 +69,7 @@ const onClickBoardSquare = (event) => {
         resetFirstSquareSelection();
     }
 };
-const onDoubleClickBoardSquare = (event) => {
+const onRightClickBoardSquare = (event) => {
     let $target = $(event.target);
     let targetColour = rgbToHex($target.css("background-color")).toUpperCase();
     //Redden
@@ -149,9 +157,10 @@ $(function() {
     //endregion
 
     //region Initialize page properties
-    //Initialize board (mainGrid)
+    //Initialize board's column property and disable right-click context menu
     let $mainGrid = $("#mainGrid");
     $mainGrid.css("grid-template-columns", `repeat(${boardLength}, 1fr)`);
+    $mainGrid.on("contextmenu", e => e.preventDefault());
     //endregion
 
     //region Dynamically insert board squares
@@ -169,8 +178,7 @@ $(function() {
             doLightSquare = doLightSquare === false;
 
             //Assign event handlers to grid items
-            $gridItem.on("click", onClickBoardSquare);
-            $gridItem.on("dblclick", onDoubleClickBoardSquare);
+            $gridItem.on("mousedown", onClickBoardSquare);
 
             //Set background image properties to square and add pieces as images
             fillGridItem($gridItem, y, x);
