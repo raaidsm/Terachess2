@@ -45,7 +45,7 @@ const fillGridItem = ($gridItem, iRow, iColumn) => {
     else if (iRow === 2) pieceDetails = whiteSecondRank[iColumn];
     else if (iRow === 1) pieceDetails = whiteFirstRank[iColumn];
 
-    if (pieceDetails !== "") {
+    if (pieceDetails !== "" && pieceDetails !== "empty") {
         $gridItem.data("colour", pieceDetails.substring(0, 5));
         $gridItem.data("type", pieceDetails.substring(6));
         $gridItem.css("background-image", `url(../images/${pieceDetails}.png)`);

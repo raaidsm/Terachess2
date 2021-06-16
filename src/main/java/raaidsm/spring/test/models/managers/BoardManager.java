@@ -115,9 +115,11 @@ public class BoardManager {
     private void addBoardToPieces() {
         board.forEach((coordinate, square) -> {
             Piece piece = square.getContainedPiece();
-            Colour pieceColour = piece.getColour();
-            piece.setBoardManager(this);
-            pieceListsByColour.get(pieceColour).add(piece);
+            if (piece != null) {
+                piece.setBoardManager(this);
+                Colour pieceColour = piece.getColour();
+                pieceListsByColour.get(pieceColour).add(piece);
+            }
         });
     }
     private void addEmptySquares() {
