@@ -20,7 +20,7 @@ FEATURES:
   -Implement going back and forth in moves (undo last move, redo last move)
 
 USER CONVENIENCES:
--Set up left click to remove all red-highlighted squares
+-Placeholder
 
 REFACTORING:
 -Generate front-end board with back-end results
