@@ -21,6 +21,7 @@ let isFirstSquareClicked = false;
 let $clickedSquare = null;
 let clickedSquareColour = null;
 let selectedSquares = null;
+let highlightedSquaresNames = [];
 //endregion
 //endregion
 
@@ -34,6 +35,7 @@ const onClickBoardSquare = (event) => {
     }
 };
 const onLeftClickBoardSquare = (event) => {
+    resetAllSquareRedHighlighting();
     let $target = $(event.target);
     let targetColour = rgbToHex($target.css("background-color")).toUpperCase();
     if (isFirstSquareClicked === false) {
@@ -65,7 +67,7 @@ const onLeftClickBoardSquare = (event) => {
         isFirstSquareClicked = true;
     }
     else if (isFirstSquareClicked === true) {
-        //Execute move only if both squares don't have the same colour of piece
+        //Execute move only if both squares have opposite colours of pieces and the move is legal
         if ($clickedSquare.data("piece-colour") !== $target.data("piece-colour") &&
             selectedSquares.includes($target.prop("id")))
         {
@@ -79,18 +81,32 @@ const onRightClickBoardSquare = (event) => {
     let targetColour = rgbToHex($target.css("background-color")).toUpperCase();
 
     //Redden
-    if (targetColour === lightSquareColour) $target.css("background-color", lightSquareRedColour);
-    if (targetColour === darkSquareColour) $target.css("background-color", darkSquareRedColour);
+    if (targetColour === lightSquareColour) {
+        $target.css("background-color", lightSquareRedColour);
+        addToHighlightedSquares($target);
+    }
+    if (targetColour === darkSquareColour) {
+        $target.css("background-color", darkSquareRedColour);
+        addToHighlightedSquares($target);
+    }
 
     //Un-Redden
-    if (targetColour === lightSquareRedColour) $target.css("background-color", lightSquareColour);
-    if (targetColour === darkSquareRedColour) $target.css("background-color", darkSquareColour);
+    if (targetColour === lightSquareRedColour) {
+        $target.css("background-color", lightSquareColour);
+        removeFromHighlightedSquares($target);
+    }
+    if (targetColour === darkSquareRedColour) {
+        $target.css("background-color", darkSquareColour);
+        removeFromHighlightedSquares($target);
+    }
+
+    //Display in text box
     $("#squareNameDisplay").val($target.prop("id"));
 };
 //endregion
 //region Square Selection Functions
-const executeFirstPieceSelection = (response) => {
-    selectedSquares = response;
+const executeFirstPieceSelection = (listOfLegalMovesForPiece) => {
+    selectedSquares = listOfLegalMovesForPiece;
     for (let i = 0; i < selectedSquares.length; i++) {
         let $legalMoveSquare = $(`#${selectedSquares[i]}`);
         let legalMoveSquareColour = rgbToHex($legalMoveSquare.css("background-color")).toUpperCase();
@@ -153,6 +169,30 @@ const resetFirstSquareSelection = () => {
     clickedSquareColour = null;
     isFirstSquareClicked = false;
 };
+const addToHighlightedSquares = ($target) => {
+    //Append to list of red-highlighted squares
+    highlightedSquaresNames.push($target.prop("id"));
+};
+const removeFromHighlightedSquares = ($target) => {
+    //Remove from list of red-highlighted squares
+    highlightedSquaresNames = highlightedSquaresNames.filter((squareName) => squareName !== $target.prop("id"));
+};
+const resetAllSquareRedHighlighting = () => {
+    //Iterate through list of red-highlighted square names and un-redden the corresponding square on the board
+    for (let i = 0; i < highlightedSquaresNames.length; i++) {
+        let squareName = highlightedSquaresNames[i];
+        let $highlightedSquare = $(`#${squareName}`);
+        let highlightedSquareColour = rgbToHex($highlightedSquare.css("background-color")).toUpperCase();
+        if (highlightedSquareColour === lightSquareRedColour) {
+            $highlightedSquare.css("background-color", lightSquareColour);
+        }
+        if (highlightedSquareColour === darkSquareRedColour) {
+            $highlightedSquare.css("background-color", darkSquareColour);
+        }
+    }
+    //Clear the list of highlighted squares (because they're no longer highlighted, obviously)
+    highlightedSquaresNames = [];
+}
 //endregion
 
 $(function() {
