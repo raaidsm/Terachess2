@@ -1,4 +1,4 @@
-package raaidsm.spring.test.models.piece_properties;
+package raaidsm.spring.test.models.moves_and_attacks;
 
 public enum AttackType {
     MOVE_OR_CAPTURE,

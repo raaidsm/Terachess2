@@ -1,4 +1,4 @@
-package raaidsm.spring.test.models.utils;
+package raaidsm.spring.test.models.square_properties;
 
 import raaidsm.spring.test.models.Piece;
 import raaidsm.spring.test.models.piece_properties.Colour;

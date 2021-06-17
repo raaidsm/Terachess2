@@ -2,14 +2,13 @@ package raaidsm.spring.test.models.pieces;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import raaidsm.spring.test.models.GameEngine;
 import raaidsm.spring.test.models.Piece;
-import raaidsm.spring.test.models.piece_properties.AttackType;
+import raaidsm.spring.test.models.moves_and_attacks.AttackType;
 import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.piece_properties.PieceType;
-import raaidsm.spring.test.models.utils.MoveCalcResultsStruct;
-import raaidsm.spring.test.models.utils.SquarePreviewStruct;
-import raaidsm.spring.test.models.utils.SqrStat;
+import raaidsm.spring.test.models.moves_and_attacks.MoveCalcResultsStruct;
+import raaidsm.spring.test.models.square_properties.SquarePreviewStruct;
+import raaidsm.spring.test.models.square_properties.SqrStat;
 
 import java.util.ArrayList;
 import java.util.Arrays;

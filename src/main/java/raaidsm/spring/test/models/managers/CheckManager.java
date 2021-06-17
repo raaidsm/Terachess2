@@ -1,10 +1,10 @@
 package raaidsm.spring.test.models.managers;
 
 import raaidsm.spring.test.models.Piece;
-import raaidsm.spring.test.models.piece_properties.AttackType;
+import raaidsm.spring.test.models.moves_and_attacks.AttackType;
 import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.pieces.King;
-import raaidsm.spring.test.models.utils.CheckSummaryStruct;
+import raaidsm.spring.test.models.moves_and_attacks.CheckSummaryStruct;
 
 import java.util.ArrayList;
 import java.util.HashMap;

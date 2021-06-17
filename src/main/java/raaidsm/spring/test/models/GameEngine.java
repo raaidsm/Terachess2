@@ -5,10 +5,11 @@ import org.slf4j.LoggerFactory;
 import raaidsm.spring.test.models.exceptions.InvalidGameException;
 import raaidsm.spring.test.models.managers.BoardManager;
 import raaidsm.spring.test.models.managers.CheckManager;
+import raaidsm.spring.test.models.moves_and_attacks.AttackOnSquareStruct;
+import raaidsm.spring.test.models.moves_and_attacks.MoveCalcResultsStruct;
 import raaidsm.spring.test.models.pieces.*;
 import raaidsm.spring.test.models.utils.*;
 import raaidsm.spring.test.models.managers.TurnManager;
-import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.piece_properties.PieceType;
 
 import java.util.ArrayList;

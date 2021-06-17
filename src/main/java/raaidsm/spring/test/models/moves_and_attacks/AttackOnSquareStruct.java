@@ -1,7 +1,6 @@
-package raaidsm.spring.test.models.utils;
+package raaidsm.spring.test.models.moves_and_attacks;
 
 import raaidsm.spring.test.models.Piece;
-import raaidsm.spring.test.models.piece_properties.AttackType;
 
 public class AttackOnSquareStruct {
     public Piece piece;

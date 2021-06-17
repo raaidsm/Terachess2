@@ -1,4 +1,4 @@
-package raaidsm.spring.test.models.utils;
+package raaidsm.spring.test.models.square_properties;
 
 public enum SqrStat {
     NO_SQUARE,

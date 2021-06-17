@@ -3,9 +3,13 @@ package raaidsm.spring.test.models;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import raaidsm.spring.test.models.managers.BoardManager;
-import raaidsm.spring.test.models.piece_properties.AttackType;
+import raaidsm.spring.test.models.moves_and_attacks.AttackOnSquareStruct;
+import raaidsm.spring.test.models.moves_and_attacks.MoveCalcResultsStruct;
+import raaidsm.spring.test.models.moves_and_attacks.AttackType;
 import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.pieces.King;
+import raaidsm.spring.test.models.square_properties.SqrStat;
+import raaidsm.spring.test.models.square_properties.SquarePreviewStruct;
 import raaidsm.spring.test.models.utils.*;
 import raaidsm.spring.test.models.piece_properties.PieceType;
 

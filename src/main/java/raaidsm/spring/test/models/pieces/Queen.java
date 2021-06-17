@@ -4,7 +4,7 @@ import raaidsm.spring.test.models.Piece;
 import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.piece_properties.PieceType;
 import raaidsm.spring.test.models.utils.Direction;
-import raaidsm.spring.test.models.utils.MoveCalcResultsStruct;
+import raaidsm.spring.test.models.moves_and_attacks.MoveCalcResultsStruct;
 
 import java.util.ArrayList;
 import java.util.List;
