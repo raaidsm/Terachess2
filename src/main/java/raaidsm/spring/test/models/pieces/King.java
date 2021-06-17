@@ -1,5 +1,7 @@
 package raaidsm.spring.test.models.pieces;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import raaidsm.spring.test.models.Piece;
 import raaidsm.spring.test.models.Square;
 import raaidsm.spring.test.models.piece_properties.AttackType;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class King extends Piece {
+    private final Logger logger = LoggerFactory.getLogger(King.class);
     private boolean canCastle = true;
 
     public King() {}

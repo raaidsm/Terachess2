@@ -188,7 +188,7 @@ public class GameEngine {
     }
     private boolean reduceMovesDueToPin(List<Piece> pieces) {
         //OVERVIEW: Returns: wasLegalMoveFound
-        logger.trace("reduceMovesDueToPin runs");
+        logger.trace("reduceMovesDueToPin() runs");
 
         boolean legalMovesFound = false;
         for (Piece piece : pieces) {
