@@ -3,7 +3,7 @@ package raaidsm.spring.test.models;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import raaidsm.spring.test.models.managers.BoardManager;
-import raaidsm.spring.test.models.moves_and_attacks.AttackDirection;
+import raaidsm.spring.test.models.moves_and_attacks.AttackDir;
 import raaidsm.spring.test.models.moves_and_attacks.AttackOnSquareStruct;
 import raaidsm.spring.test.models.moves_and_attacks.MoveCalcResultsStruct;
 import raaidsm.spring.test.models.moves_and_attacks.AttackType;
@@ -101,7 +101,7 @@ public class Piece implements Serializable {
         //region Variables to Return
         King checkedKing = null;
         AttackType checkAttackType = null;
-        AttackDirection checkAttackDir = null;
+        AttackDir checkAttackDir = null;
         boolean hasMoves = false;
         //endregion
 
@@ -109,7 +109,7 @@ public class Piece implements Serializable {
         List<MoveCalcResultsStruct> results = calculateSquarePreviewResults();
         for (MoveCalcResultsStruct result : results) {
             AttackType attackType = result.attackType;
-            AttackDirection attackDir = result.attackDir;
+            AttackDir attackDir = result.attackDir;
             String squareName = result.squareName;
             if (result.hasMoves) {
                 //Change variables for check
@@ -150,7 +150,7 @@ public class Piece implements Serializable {
         //Default value
         return new ArrayList<>();
     }
-    protected List<MoveCalcResultsStruct> moveOrCaptureInALine(Direction dir, AttackDirection attackDir) {
+    protected List<MoveCalcResultsStruct> moveOrCaptureInALine(Direction dir, AttackDir attackDir) {
         /* OVERVIEW:
             -MOVE_OR_CAPTURE
             -Calculate moves in a line.

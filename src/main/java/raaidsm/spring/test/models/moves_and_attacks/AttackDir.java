@@ -1,6 +1,6 @@
 package raaidsm.spring.test.models.moves_and_attacks;
 
-public enum AttackDirection {
+public enum AttackDir {
     VERTICAL,
     DIAGONAL_ASCENDING,
     HORIZONTAL,

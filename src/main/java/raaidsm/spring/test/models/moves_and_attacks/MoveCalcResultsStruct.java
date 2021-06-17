@@ -14,12 +14,12 @@ public class MoveCalcResultsStruct {
     public King checkedKing;
     public String squareName;
     public AttackType attackType;
-    public AttackDirection attackDir;
+    public AttackDir attackDir;
     public boolean hasMoves;
 
     //Constructor where hasMoves is assumed to be initialized as true
     public MoveCalcResultsStruct(
-            King checkedKing, String squareName, AttackType attackType, AttackDirection attackDir
+            King checkedKing, String squareName, AttackType attackType, AttackDir attackDir
     ) {
         this.checkedKing = checkedKing;
         this.squareName = squareName;
@@ -29,7 +29,7 @@ public class MoveCalcResultsStruct {
     }
     //Constructor where hasMoves is set
     public MoveCalcResultsStruct(
-            King checkedKing, String squareName, AttackType attackType, AttackDirection attackDir, boolean hasMoves
+            King checkedKing, String squareName, AttackType attackType, AttackDir attackDir, boolean hasMoves
     ) {
         this.checkedKing = checkedKing;
         this.squareName = squareName;

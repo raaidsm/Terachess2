@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import raaidsm.spring.test.models.Piece;
 import raaidsm.spring.test.models.Square;
-import raaidsm.spring.test.models.moves_and_attacks.AttackDirection;
+import raaidsm.spring.test.models.moves_and_attacks.AttackDir;
 import raaidsm.spring.test.models.moves_and_attacks.AttackType;
 import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.piece_properties.PieceType;
@@ -34,21 +34,21 @@ public class King extends Piece {
         List<MoveCalcResultsStruct> results = new ArrayList<>();
         List<MoveCalcResultsStruct> tempResults = new ArrayList<>();
 
-        tempResults.add(checkAdjacentSquare(Direction.UP, AttackDirection.VERTICAL));
-        tempResults.add(checkAdjacentSquare(Direction.UP_RIGHT, AttackDirection.DIAGONAL_ASCENDING));
-        tempResults.add(checkAdjacentSquare(Direction.RIGHT, AttackDirection.HORIZONTAL));
-        tempResults.add(checkAdjacentSquare(Direction.DOWN_RIGHT, AttackDirection.DIAGONAL_DESCENDING));
-        tempResults.add(checkAdjacentSquare(Direction.DOWN, AttackDirection.VERTICAL));
-        tempResults.add(checkAdjacentSquare(Direction.DOWN_LEFT, AttackDirection.DIAGONAL_ASCENDING));
-        tempResults.add(checkAdjacentSquare(Direction.LEFT, AttackDirection.HORIZONTAL));
-        tempResults.add(checkAdjacentSquare(Direction.UP_LEFT, AttackDirection.DIAGONAL_DESCENDING));
+        tempResults.add(checkAdjacentSquare(Direction.UP, AttackDir.VERTICAL));
+        tempResults.add(checkAdjacentSquare(Direction.UP_RIGHT, AttackDir.DIAGONAL_ASCENDING));
+        tempResults.add(checkAdjacentSquare(Direction.RIGHT, AttackDir.HORIZONTAL));
+        tempResults.add(checkAdjacentSquare(Direction.DOWN_RIGHT, AttackDir.DIAGONAL_DESCENDING));
+        tempResults.add(checkAdjacentSquare(Direction.DOWN, AttackDir.VERTICAL));
+        tempResults.add(checkAdjacentSquare(Direction.DOWN_LEFT, AttackDir.DIAGONAL_ASCENDING));
+        tempResults.add(checkAdjacentSquare(Direction.LEFT, AttackDir.HORIZONTAL));
+        tempResults.add(checkAdjacentSquare(Direction.UP_LEFT, AttackDir.DIAGONAL_DESCENDING));
 
         for (MoveCalcResultsStruct tempResult : tempResults) {
             if (tempResult != null) results.add(tempResult);
         }
         return results;
     }
-    private MoveCalcResultsStruct checkAdjacentSquare(Direction dir, AttackDirection attackDir) {
+    private MoveCalcResultsStruct checkAdjacentSquare(Direction dir, AttackDir attackDir) {
         //AttackType for this collection of attacks (yes, collection even though there's only one)
         AttackType attackType = AttackType.MOVE_OR_CAPTURE;
 
