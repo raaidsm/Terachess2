@@ -23,6 +23,7 @@ USER CONVENIENCE:
 -Display something with the side text when King is captured
 
 REFACTORING:
+-Rename AttackDirection to AttackDir
 -Generate front-end board with back-end results
 -Just...refactor MoveCalcResultsStruct
 -Change board keys to be numbers rather than strings

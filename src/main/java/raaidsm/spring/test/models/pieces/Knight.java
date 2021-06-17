@@ -3,6 +3,7 @@ package raaidsm.spring.test.models.pieces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import raaidsm.spring.test.models.Piece;
+import raaidsm.spring.test.models.moves_and_attacks.AttackDirection;
 import raaidsm.spring.test.models.moves_and_attacks.AttackType;
 import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.piece_properties.PieceType;
@@ -43,10 +44,11 @@ public class Knight extends Piece {
         return results;
     }
     private MoveCalcResultsStruct hop(int x, int y) {
-        //OVERVIEW: HOP_MOVE_OR_CAPTURE
+        //OVERVIEW: HOP_MOVE_OR_CAPTURE, OTHER
         assert (x == 1 || x == 2) && (y == 1 || y == 2);
-        //AttackType for this collection of attacks (yes, collection even though there's only one)
+        //AttackType and AttackDir for this collection of attacks (yes, collection even though there's only one)
         AttackType attackType = AttackType.HOP_MOVE_OR_CAPTURE;
+        AttackDirection attackDir = AttackDirection.OTHER;
         SquarePreviewStruct preview = previewRelativeSquare(x, y);
         SqrStat status = preview.squareStatus;
         String squareName = preview.squareName;
@@ -55,12 +57,12 @@ public class Knight extends Piece {
         if (status == SqrStat.NO_SQUARE) return null;
         //Square has a same-coloured piece that can't be captured
         if (colour == preview.pieceColour) {
-            return new MoveCalcResultsStruct(null, squareName, attackType, false);
+            return new MoveCalcResultsStruct(null, squareName, attackType, attackDir, false);
         }
         //Attacking enemy king
         if (status == SqrStat.KING) {
-            return new MoveCalcResultsStruct((King)piece, squareName, attackType);
+            return new MoveCalcResultsStruct((King)piece, squareName, attackType, attackDir);
         }
-        return new MoveCalcResultsStruct(null, squareName, attackType);
+        return new MoveCalcResultsStruct(null, squareName, attackType, attackDir);
     }
 }

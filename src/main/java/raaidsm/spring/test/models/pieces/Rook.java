@@ -1,6 +1,7 @@
 package raaidsm.spring.test.models.pieces;
 
 import raaidsm.spring.test.models.Piece;
+import raaidsm.spring.test.models.moves_and_attacks.AttackDirection;
 import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.piece_properties.PieceType;
 import raaidsm.spring.test.models.utils.Direction;
@@ -24,10 +25,10 @@ public class Rook extends Piece {
     @Override
     protected List<MoveCalcResultsStruct> calculateSquarePreviewResults() {
         List<MoveCalcResultsStruct> results = new ArrayList<>();
-        results.addAll(moveOrCaptureInALine(Direction.UP));
-        results.addAll(moveOrCaptureInALine(Direction.RIGHT));
-        results.addAll(moveOrCaptureInALine(Direction.DOWN));
-        results.addAll(moveOrCaptureInALine(Direction.LEFT));
+        results.addAll(moveOrCaptureInALine(Direction.UP, AttackDirection.VERTICAL));
+        results.addAll(moveOrCaptureInALine(Direction.RIGHT, AttackDirection.HORIZONTAL));
+        results.addAll(moveOrCaptureInALine(Direction.DOWN, AttackDirection.VERTICAL));
+        results.addAll(moveOrCaptureInALine(Direction.LEFT, AttackDirection.HORIZONTAL));
         return results;
     }
 }

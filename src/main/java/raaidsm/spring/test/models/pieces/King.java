@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import raaidsm.spring.test.models.Piece;
 import raaidsm.spring.test.models.Square;
+import raaidsm.spring.test.models.moves_and_attacks.AttackDirection;
 import raaidsm.spring.test.models.moves_and_attacks.AttackType;
 import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.piece_properties.PieceType;
@@ -33,21 +34,21 @@ public class King extends Piece {
         List<MoveCalcResultsStruct> results = new ArrayList<>();
         List<MoveCalcResultsStruct> tempResults = new ArrayList<>();
 
-        tempResults.add(checkAdjacentSquare(Direction.UP));
-        tempResults.add(checkAdjacentSquare(Direction.UP_RIGHT));
-        tempResults.add(checkAdjacentSquare(Direction.RIGHT));
-        tempResults.add(checkAdjacentSquare(Direction.DOWN_RIGHT));
-        tempResults.add(checkAdjacentSquare(Direction.DOWN));
-        tempResults.add(checkAdjacentSquare(Direction.DOWN_LEFT));
-        tempResults.add(checkAdjacentSquare(Direction.LEFT));
-        tempResults.add(checkAdjacentSquare(Direction.UP_LEFT));
+        tempResults.add(checkAdjacentSquare(Direction.UP, AttackDirection.VERTICAL));
+        tempResults.add(checkAdjacentSquare(Direction.UP_RIGHT, AttackDirection.DIAGONAL_ASCENDING));
+        tempResults.add(checkAdjacentSquare(Direction.RIGHT, AttackDirection.HORIZONTAL));
+        tempResults.add(checkAdjacentSquare(Direction.DOWN_RIGHT, AttackDirection.DIAGONAL_DESCENDING));
+        tempResults.add(checkAdjacentSquare(Direction.DOWN, AttackDirection.VERTICAL));
+        tempResults.add(checkAdjacentSquare(Direction.DOWN_LEFT, AttackDirection.DIAGONAL_ASCENDING));
+        tempResults.add(checkAdjacentSquare(Direction.LEFT, AttackDirection.HORIZONTAL));
+        tempResults.add(checkAdjacentSquare(Direction.UP_LEFT, AttackDirection.DIAGONAL_DESCENDING));
 
         for (MoveCalcResultsStruct tempResult : tempResults) {
             if (tempResult != null) results.add(tempResult);
         }
         return results;
     }
-    private MoveCalcResultsStruct checkAdjacentSquare(Direction dir) {
+    private MoveCalcResultsStruct checkAdjacentSquare(Direction dir, AttackDirection attackDir) {
         //AttackType for this collection of attacks (yes, collection even though there's only one)
         AttackType attackType = AttackType.MOVE_OR_CAPTURE;
 
@@ -61,13 +62,13 @@ public class King extends Piece {
         if (status == SqrStat.NO_SQUARE) return null;
         //Guard clause for relative square being attacked (thus King can't move to it)
         if (squarePreviewed.isAttacked(colour)) {
-            return new MoveCalcResultsStruct(null, squareName, attackType, false);
+            return new MoveCalcResultsStruct(null, squareName, attackType, attackDir, false);
         }
         //Guard clause for relative square having same coloured piece that can't be captured
         if (colour == preview.pieceColour) {
-            return new MoveCalcResultsStruct(null, squareName, attackType, false);
+            return new MoveCalcResultsStruct(null, squareName, attackType, attackDir, false);
         }
         //If code reaches this point, it means the square is either empty or has an opposite coloured piece
-        return new MoveCalcResultsStruct(null, squareName, attackType);
+        return new MoveCalcResultsStruct(null, squareName, attackType, attackDir);
     }
 }

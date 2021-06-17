@@ -5,11 +5,15 @@ import raaidsm.spring.test.models.Piece;
 public class AttackOnSquareStruct {
     public Piece piece;
     public AttackType attackType;
+    public AttackDirection attackDir;
     public String attackedSquareName;
 
-    public AttackOnSquareStruct(Piece piece, AttackType attackType, String attackedSquareName) {
+    public AttackOnSquareStruct(
+            Piece piece, AttackType attackType, AttackDirection attackDir, String attackedSquareName
+    ) {
         this.piece = piece;
         this.attackType = attackType;
+        this.attackDir = attackDir;
         this.attackedSquareName = attackedSquareName;
     }
 }

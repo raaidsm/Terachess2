@@ -3,6 +3,7 @@ package raaidsm.spring.test.models;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import raaidsm.spring.test.models.managers.BoardManager;
+import raaidsm.spring.test.models.moves_and_attacks.AttackDirection;
 import raaidsm.spring.test.models.moves_and_attacks.AttackOnSquareStruct;
 import raaidsm.spring.test.models.moves_and_attacks.MoveCalcResultsStruct;
 import raaidsm.spring.test.models.moves_and_attacks.AttackType;
@@ -100,6 +101,7 @@ public class Piece implements Serializable {
         //region Variables to Return
         King checkedKing = null;
         AttackType checkAttackType = null;
+        AttackDirection checkAttackDir = null;
         boolean hasMoves = false;
         //endregion
 
@@ -107,33 +109,37 @@ public class Piece implements Serializable {
         List<MoveCalcResultsStruct> results = calculateSquarePreviewResults();
         for (MoveCalcResultsStruct result : results) {
             AttackType attackType = result.attackType;
+            AttackDirection attackDir = result.attackDir;
             String squareName = result.squareName;
             if (result.hasMoves) {
                 //Change variables for check
                 hasMoves = true;
                 checkedKing = result.checkedKing;
-                if (checkedKing != null) checkAttackType = attackType;
+                if (checkedKing != null) {
+                    checkAttackType = attackType;
+                    checkAttackDir = attackDir;
+                }
                 //Add result to legal moves
-                legalMoves.add(new AttackOnSquareStruct(this, attackType, squareName));
+                legalMoves.add(new AttackOnSquareStruct(this, attackType, attackDir, squareName));
             }
             //Record attack in the square attacked
             Square squareAttacked = boardManager.getSquare(squareName);
             if (attackType != AttackType.ONLY_MOVE) squareAttacked.setAttack(this, colour);
         }
         //Returning squareName as null because many different squares are possibly attacked
-        return new MoveCalcResultsStruct(checkedKing, null, checkAttackType, hasMoves);
+        return new MoveCalcResultsStruct(checkedKing, null, checkAttackType, checkAttackDir, hasMoves);
     }
     public MoveCalcResultsStruct reduceMovesDueToPin() {
         //OVERVIEW:
         //Return whether piece has any legal moves
         //TODO: For now, returning default value
-        return new MoveCalcResultsStruct(null, null, null);
+        return new MoveCalcResultsStruct(null, null, null, null);
     }
     public MoveCalcResultsStruct reduceMovesDueToCheck() {
         //OVERVIEW:
         //Return whether piece has any legal moves
         //TODO: For now, returning default value
-        return new MoveCalcResultsStruct(null, null, null);
+        return new MoveCalcResultsStruct(null, null, null, null);
     }
     public void clearAllMoves() {
         legalMoves.clear();
@@ -144,7 +150,7 @@ public class Piece implements Serializable {
         //Default value
         return new ArrayList<>();
     }
-    protected List<MoveCalcResultsStruct> moveOrCaptureInALine(Direction dir) {
+    protected List<MoveCalcResultsStruct> moveOrCaptureInALine(Direction dir, AttackDirection attackDir) {
         /* OVERVIEW:
             -MOVE_OR_CAPTURE
             -Calculate moves in a line.
@@ -183,17 +189,18 @@ public class Piece implements Serializable {
                 if (piece.getType() == PieceType.KING) {
                     assert(notHitKing);
                     notHitKing = false;
-                    results.add(new MoveCalcResultsStruct((King)piece, squareName, attackType));
+                    results.add(new MoveCalcResultsStruct((King)piece, squareName, attackType, attackDir));
                 }
                 else {
                     pinnablePieceHit = true;
                     pinnablePiece = piece;
-                    results.add(new MoveCalcResultsStruct(null, squareName, attackType, notHitKing));
+                    results.add(new MoveCalcResultsStruct(null, squareName, attackType,
+                            attackDir, notHitKing));
                 }
                 continue;
             }
             //If code reaches this point, it means the square is empty
-            results.add(new MoveCalcResultsStruct(null, squareName, attackType, notHitKing));
+            results.add(new MoveCalcResultsStruct(null, squareName, attackType, attackDir, notHitKing));
         }
 
         if (pinnablePieceHit) continueToFindPin(pinnablePiece, dir);

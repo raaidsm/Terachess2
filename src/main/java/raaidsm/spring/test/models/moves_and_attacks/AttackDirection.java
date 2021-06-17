@@ -5,5 +5,6 @@ public enum AttackDirection {
     DIAGONAL_ASCENDING,
     HORIZONTAL,
     DIAGONAL_DESCENDING,
-    OTHER
+    OTHER,
+    NONE
 }

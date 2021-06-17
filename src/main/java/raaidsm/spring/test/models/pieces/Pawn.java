@@ -3,6 +3,7 @@ package raaidsm.spring.test.models.pieces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import raaidsm.spring.test.models.Piece;
+import raaidsm.spring.test.models.moves_and_attacks.AttackDirection;
 import raaidsm.spring.test.models.moves_and_attacks.AttackType;
 import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.piece_properties.PieceType;
@@ -34,8 +35,8 @@ public class Pawn extends Piece {
         List<MoveCalcResultsStruct> results = new ArrayList<>();
         MoveCalcResultsStruct up1Result = up1();
         MoveCalcResultsStruct up2Result = up2();
-        MoveCalcResultsStruct upCaptureResult1 = upCapture(-1);
-        MoveCalcResultsStruct upCaptureResult2 = upCapture(1);
+        MoveCalcResultsStruct upCaptureResult1 = upCapture(-1, AttackDirection.DIAGONAL_DESCENDING);
+        MoveCalcResultsStruct upCaptureResult2 = upCapture(1, AttackDirection.DIAGONAL_ASCENDING);
         if (up1Result != null) results.add(up1Result);
         if (up2Result != null) results.add(up2Result);
         if (upCaptureResult1 != null) results.add(upCaptureResult1);
@@ -43,10 +44,11 @@ public class Pawn extends Piece {
         return results;
     }
     private MoveCalcResultsStruct up1() {
-        //OVERVIEW: ONLY_MOVE
+        //OVERVIEW: ONLY_MOVE, NONE
         int directionByColour = colour == Colour.WHITE ? 1 : -1;
-        //AttackType for this collection of attacks (yes, collection even though there's only one)
+        //AttackType and AttackDir for this collection of attacks (yes, collection even though there's only one)
         AttackType attackType = AttackType.ONLY_MOVE;
+        AttackDirection attackDir = AttackDirection.NONE;
         SquarePreviewStruct preview = previewRelativeSquare(0, directionByColour);
         SqrStat status = preview.squareStatus;
         String squareName = preview.squareName;
@@ -55,13 +57,14 @@ public class Pawn extends Piece {
         //Guard clause for there being a piece in the way
         if (status != SqrStat.EMPTY) return null;
         //Square is free to move to
-        return new MoveCalcResultsStruct(null, squareName, attackType);
+        return new MoveCalcResultsStruct(null, squareName, attackType, attackDir);
     }
     private MoveCalcResultsStruct up2() {
-        //OVERVIEW: ONLY_MOVE
+        //OVERVIEW: ONLY_MOVE, NONE
         int directionByColour = colour == Colour.WHITE ? 1 : -1;
-        //AttackType for this collection of attacks (yes, collection even though there's only one)
+        //AttackType and AttackDir for this collection of attacks (yes, collection even though there's only one)
         AttackType attackType = AttackType.ONLY_MOVE;
+        AttackDirection attackDir = AttackDirection.NONE;
         String squareName = null;
         //Guard clause for not having initial pawn move to make
         if (!hasInitialPawnMove) return null;
@@ -75,14 +78,14 @@ public class Pawn extends Piece {
             if (status != SqrStat.EMPTY) return null;
         }
         //Both squares above are open so up2 is valid
-        return new MoveCalcResultsStruct(null, squareName, attackType);
+        return new MoveCalcResultsStruct(null, squareName, attackType, attackDir);
     }
-    private MoveCalcResultsStruct upCapture(int direction) {
-        //OVERVIEW: ONLY_CAPTURE
+    private MoveCalcResultsStruct upCapture(int direction, AttackDirection attackDir) {
+        //OVERVIEW: ONLY_CAPTURE, DIAGONAL_DESCENDING/DIAGONAL_ASCENDING
         assert direction == 1 || direction == -1;
         //This variable inverts "left" and "right" for black pieces
         int directionByColour = colour == Colour.WHITE ? 1 : -1;
-        //AttackType for this collection of attacks (yes, collection even though there's only one)
+        //AttackType and AttackDir for this collection of attacks (yes, collection even though there's only one)
         AttackType attackType = AttackType.ONLY_CAPTURE;
         SquarePreviewStruct preview = previewRelativeSquare(direction * directionByColour, directionByColour);
         SqrStat status = preview.squareStatus;
@@ -92,14 +95,14 @@ public class Pawn extends Piece {
         if (status == SqrStat.NO_SQUARE) return null;
         //Guard clause for there being no piece to capture
         if (status == SqrStat.EMPTY) {
-            return new MoveCalcResultsStruct(null, squareName, attackType, false);
+            return new MoveCalcResultsStruct(null, squareName, attackType, attackDir, false);
         }
         //Square has a same-coloured piece that can't be captured
         if (colour == preview.pieceColour) {
-            return new MoveCalcResultsStruct(null, squareName, attackType, false);
+            return new MoveCalcResultsStruct(null, squareName, attackType, attackDir, false);
         }
         //Square has an enemy piece to capture at this square
-        if (status == SqrStat.KING) return new MoveCalcResultsStruct((King)piece, squareName, attackType);
-        return new MoveCalcResultsStruct(null, squareName, attackType);
+        if (status == SqrStat.KING) return new MoveCalcResultsStruct((King)piece, squareName, attackType, attackDir);
+        return new MoveCalcResultsStruct(null, squareName, attackType, attackDir);
     }
 }
