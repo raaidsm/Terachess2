@@ -5,7 +5,6 @@ CURRENT COMMIT:
 -Placeholder
 
 BUGS:
--Remodel Piece.moveOrCaptureInALine() to account for calculating past a King
 -If a piece attacks a square with a same-coloured piece on it, record it as an attack on that square
 -Revamp move calculation system to account for attacking squares through Kings
 -Fix King move calculation to account for the other King
