@@ -20,6 +20,7 @@ FEATURES:
 
 USER CONVENIENCE:
 -Add text blurb to the side of the board that alerts with messages based on events (e.x. "You can't make that move!")
+-Display something with the side text when King is captured
 
 REFACTORING:
 -Generate front-end board with back-end results
