@@ -55,7 +55,9 @@ public class Knight extends Piece {
         //Guard clause for relative point going off the board
         if (status == SqrStat.NO_SQUARE) return null;
         //Square has a same-coloured piece that can't be captured
-        if (colour == preview.pieceColour) return null;
+        if (colour == preview.pieceColour) {
+            return new MoveCalcResultsStruct(null, squareName, attackType, false);
+        }
         //Attacking enemy king
         if (status == SqrStat.KING) {
             return new MoveCalcResultsStruct((King)piece, squareName, attackType, true);
