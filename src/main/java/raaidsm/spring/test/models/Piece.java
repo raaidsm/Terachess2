@@ -127,13 +127,13 @@ public class Piece implements Serializable {
         //OVERVIEW:
         //Return whether piece has any legal moves
         //TODO: For now, returning default value
-        return new MoveCalcResultsStruct(null, null, null, true);
+        return new MoveCalcResultsStruct(null, null, null);
     }
     public MoveCalcResultsStruct reduceMovesDueToCheck() {
         //OVERVIEW:
         //Return whether piece has any legal moves
         //TODO: For now, returning default value
-        return new MoveCalcResultsStruct(null, null, null, true);
+        return new MoveCalcResultsStruct(null, null, null);
     }
     public void clearAllMoves() {
         legalMoves.clear();
@@ -183,7 +183,7 @@ public class Piece implements Serializable {
                 if (piece.getType() == PieceType.KING) {
                     assert(notHitKing);
                     notHitKing = false;
-                    results.add(new MoveCalcResultsStruct((King)piece, squareName, attackType, true));
+                    results.add(new MoveCalcResultsStruct((King)piece, squareName, attackType));
                 }
                 else {
                     pinnablePieceHit = true;

@@ -16,6 +16,14 @@ public class MoveCalcResultsStruct {
     public AttackType attackType;
     public boolean hasMoves;
 
+    //Constructor where hasMoves is assumed to be initialized as true
+    public MoveCalcResultsStruct(King checkedKing, String squareName, AttackType attackType) {
+        this.checkedKing = checkedKing;
+        this.squareName = squareName;
+        this.attackType = attackType;
+        this.hasMoves = true;
+    }
+    //Constructor where hasMoves is set
     public MoveCalcResultsStruct(King checkedKing, String squareName, AttackType attackType, boolean hasMoves) {
         this.checkedKing = checkedKing;
         this.squareName = squareName;

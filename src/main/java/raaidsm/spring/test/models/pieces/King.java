@@ -68,6 +68,6 @@ public class King extends Piece {
             return new MoveCalcResultsStruct(null, squareName, attackType, false);
         }
         //If code reaches this point, it means the square is either empty or has an opposite coloured piece
-        return new MoveCalcResultsStruct(null, squareName, attackType, true);
+        return new MoveCalcResultsStruct(null, squareName, attackType);
     }
 }

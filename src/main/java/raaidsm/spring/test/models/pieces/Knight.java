@@ -59,8 +59,8 @@ public class Knight extends Piece {
         }
         //Attacking enemy king
         if (status == SqrStat.KING) {
-            return new MoveCalcResultsStruct((King)piece, squareName, attackType, true);
+            return new MoveCalcResultsStruct((King)piece, squareName, attackType);
         }
-        return new MoveCalcResultsStruct(null, squareName, attackType, true);
+        return new MoveCalcResultsStruct(null, squareName, attackType);
     }
 }

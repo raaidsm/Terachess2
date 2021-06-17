@@ -55,7 +55,7 @@ public class Pawn extends Piece {
         //Guard clause for there being a piece in the way
         if (status != SqrStat.EMPTY) return null;
         //Square is free to move to
-        return new MoveCalcResultsStruct(null, squareName, attackType, true);
+        return new MoveCalcResultsStruct(null, squareName, attackType);
     }
     private MoveCalcResultsStruct up2() {
         //OVERVIEW: ONLY_MOVE
@@ -75,7 +75,7 @@ public class Pawn extends Piece {
             if (status != SqrStat.EMPTY) return null;
         }
         //Both squares above are open so up2 is valid
-        return new MoveCalcResultsStruct(null, squareName, attackType, true);
+        return new MoveCalcResultsStruct(null, squareName, attackType);
     }
     private MoveCalcResultsStruct upCapture(int direction) {
         //OVERVIEW: ONLY_CAPTURE
@@ -91,13 +91,15 @@ public class Pawn extends Piece {
         //Guard clause for relative point going off the board
         if (status == SqrStat.NO_SQUARE) return null;
         //Guard clause for there being no piece to capture
-        if (status == SqrStat.EMPTY) return new MoveCalcResultsStruct(
-                null, squareName, attackType, false);
+        if (status == SqrStat.EMPTY) {
+            return new MoveCalcResultsStruct(null, squareName, attackType, false);
+        }
         //Square has a same-coloured piece that can't be captured
-        if (colour == preview.pieceColour) return new MoveCalcResultsStruct(
-                null, squareName, attackType, false);
+        if (colour == preview.pieceColour) {
+            return new MoveCalcResultsStruct(null, squareName, attackType, false);
+        }
         //Square has an enemy piece to capture at this square
-        if (status == SqrStat.KING) return new MoveCalcResultsStruct((King)piece, squareName, attackType, true);
-        return new MoveCalcResultsStruct(null, squareName, attackType, true);
+        if (status == SqrStat.KING) return new MoveCalcResultsStruct((King)piece, squareName, attackType);
+        return new MoveCalcResultsStruct(null, squareName, attackType);
     }
 }
