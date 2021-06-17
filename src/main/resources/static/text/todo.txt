@@ -6,6 +6,7 @@ CURRENT COMMIT:
 
 BUGS:
 -Remodel Piece.moveOrCaptureInALine() to account for calculating past a King
+-If a piece attacks a square with a same-coloured piece on it, record it as an attack on that square
 -Revamp move calculation system to account for attacking squares through Kings
 -Fix King move calculation to account for the other King
 -Record type of pin (vertical, diagonal-ascending, horizontal, diagonal-descending, other)
@@ -21,8 +22,8 @@ FEATURES:
   -Implement saving of moves in client-side storage (IndexedDB)
   -Implement going back and forth in moves (undo last move, redo last move)
 
-USER CONVENIENCES:
--Placeholder
+USER CONVENIENCE:
+-Add text blurb to the side of the board that alerts with messages based on events (e.x. "You can't make that move!")
 
 REFACTORING:
 -Generate front-end board with back-end results

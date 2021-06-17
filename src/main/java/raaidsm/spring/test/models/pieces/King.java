@@ -60,9 +60,13 @@ public class King extends Piece {
         //Guard clause for relative square going off the board
         if (status == SqrStat.NO_SQUARE) return null;
         //Guard clause for relative square being attacked (thus King can't move to it)
-        if (squarePreviewed.isAttacked(colour)) return null;
+        if (squarePreviewed.isAttacked(colour)) {
+            return new MoveCalcResultsStruct(null, squareName, attackType, false);
+        }
         //Guard clause for relative square having same coloured piece that can't be captured
-        if (colour == preview.pieceColour) return null;
+        if (colour == preview.pieceColour) {
+            return new MoveCalcResultsStruct(null, squareName, attackType, false);
+        }
         //If code reaches this point, it means the square is either empty or has an opposite coloured piece
         return new MoveCalcResultsStruct(null, squareName, attackType, true);
     }
