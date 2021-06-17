@@ -183,7 +183,7 @@ public class Piece implements Serializable {
                 if (piece.getType() == PieceType.KING) {
                     assert(notHitKing);
                     notHitKing = false;
-                    results.add(new MoveCalcResultsStruct((King)piece, squareName, attackType, false));
+                    results.add(new MoveCalcResultsStruct((King)piece, squareName, attackType, true));
                 }
                 else {
                     pinnablePieceHit = true;
