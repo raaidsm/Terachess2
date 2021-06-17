@@ -5,6 +5,8 @@ CURRENT COMMIT:
 -Placeholder
 
 BUGS:
+-Remodel Piece.moveOrCaptureInALine() to account for calculating past a King
+-Revamp move calculation system to account for attacking squares through Kings
 -Fix King move calculation to account for the other King
 -Record type of pin (vertical, diagonal-ascending, horizontal, diagonal-descending, other)
 -Reduce moves due to pin by removing all moves that don't match the type of pin

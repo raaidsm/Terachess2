@@ -152,6 +152,7 @@ public class Piece implements Serializable {
         dir.resetMagnitude();
         List<MoveCalcResultsStruct> results = new ArrayList<>();
         int i = 1;
+        boolean notHitKing = true;      //Once King is hit, no moves past are "legal", but must still be calculated
         boolean pinnablePieceHit = false;
         boolean unpinnablePieceHit = false;
         boolean edgeOfBoardHit = false;
@@ -172,21 +173,23 @@ public class Piece implements Serializable {
                 unpinnablePieceHit = true;
                 continue;
             }
-            //Guard clause for opposite colour piece being hit (piece being opposite colour can be assumed)
+            //Guard clause for opposite colour piece being hit
+            //Continue calculating past a King because it is not possible to hit a King during your turn
             if (status != SqrStat.EMPTY) {
                 if (piece.getType() == PieceType.KING) {
-                    unpinnablePieceHit = true;
-                    results.add(new MoveCalcResultsStruct((King)piece, squareName, attackType, true));
+                    assert(notHitKing);
+                    notHitKing = false;
+                    results.add(new MoveCalcResultsStruct((King)piece, squareName, attackType, false));
                 }
                 else {
                     pinnablePieceHit = true;
                     pinnablePiece = piece;
-                    results.add(new MoveCalcResultsStruct(null, squareName, attackType, true));
+                    results.add(new MoveCalcResultsStruct(null, squareName, attackType, notHitKing));
                 }
                 continue;
             }
             //If code reaches this point, it means the square is empty
-            results.add(new MoveCalcResultsStruct(null, squareName, attackType, true));
+            results.add(new MoveCalcResultsStruct(null, squareName, attackType, notHitKing));
         }
 
         if (pinnablePieceHit) continueToFindPin(pinnablePiece, dir);
