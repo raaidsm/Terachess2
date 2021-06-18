@@ -32,7 +32,7 @@ public class GameEngine {
 
     public List<String> getLegalMovesForAPiece(String squareNameOfPiece) {
         List<AttackOnSquareStruct> legalMoves = boardManager
-                .getSquare(squareNameOfPiece).getContainedPiece().legalMoves;
+                .getSquare(squareNameOfPiece).getContainedPiece().getLegalMoves();
         List<String> legalMoveSquareNames = new ArrayList<>();
         for (AttackOnSquareStruct legalMove : legalMoves) {
             legalMoveSquareNames.add(legalMove.attackedSquareName);
@@ -43,7 +43,7 @@ public class GameEngine {
         logger.trace("makeMove() runs");
 
         //Clear all previous attacks
-        clearAllAttacksOnSquares();
+        clearAllAttacksOnSquaresAndPinsOnPieces();
 
         //Take piece-to-move off of first square
         Piece pieceToMove = boardManager.getSquare(firstSquare).getContainedPiece();
@@ -68,10 +68,13 @@ public class GameEngine {
     }
 
     //Methods called immediately upon a new move being made
-    private void clearAllAttacksOnSquares() {
+    private void clearAllAttacksOnSquaresAndPinsOnPieces() {
         List<Square> allSquares = boardManager.getAllSquares();
-        for (Square allSquare : allSquares) {
-            allSquare.clearAllAttacks();
+        for (Square square : allSquares) {
+            square.clearAllAttacks();
+            if (square.getContainedPiece() != null) {
+                square.getContainedPiece().clearAllPins();
+            }
         }
     }
     private void changePiecePropertiesUponMove(Piece piece) {

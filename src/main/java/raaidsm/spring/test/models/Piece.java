@@ -3,10 +3,7 @@ package raaidsm.spring.test.models;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import raaidsm.spring.test.models.managers.BoardManager;
-import raaidsm.spring.test.models.moves_and_attacks.AttackDir;
-import raaidsm.spring.test.models.moves_and_attacks.AttackOnSquareStruct;
-import raaidsm.spring.test.models.moves_and_attacks.MoveCalcResultsStruct;
-import raaidsm.spring.test.models.moves_and_attacks.AttackType;
+import raaidsm.spring.test.models.moves_and_attacks.*;
 import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.pieces.King;
 import raaidsm.spring.test.models.square_properties.SqrStat;
@@ -25,8 +22,7 @@ public class Piece implements Serializable {
     protected Colour colour;
     protected Point location;
     protected List<AttackOnSquareStruct> legalMoves;
-    protected boolean isPinned;
-    protected Piece pinningPiece;
+    protected List<PinOnPieceStruct> pins;
     protected List<String> promotion;
     protected BoardManager boardManager;
     //endregion
@@ -36,10 +32,9 @@ public class Piece implements Serializable {
         this.type = type;
         this.colour = colour;
         this.location = new Point(location);
-        this.legalMoves = new ArrayList<>();
-        this.isPinned = false;
-        this.pinningPiece = null;
-        this.promotion = new ArrayList<>();
+        legalMoves = new ArrayList<>();
+        pins = new ArrayList<>();
+        promotion = new ArrayList<>();
         this.boardManager = null;
     }
 
@@ -64,30 +59,6 @@ public class Piece implements Serializable {
     }
     public List<AttackOnSquareStruct> getLegalMoves() {
         return legalMoves;
-    }
-    public void setLegalMoves(List<AttackOnSquareStruct> legalMoves) {
-        this.legalMoves = legalMoves;
-    }
-    public boolean isPinned() {
-        return isPinned;
-    }
-    public void setPinned(boolean pinned) {
-        isPinned = pinned;
-    }
-    public Piece getPinningPiece() {
-        return pinningPiece;
-    }
-    public void setPinningPiece(Piece pinningPiece) {
-        this.pinningPiece = pinningPiece;
-    }
-    public List<String> getPromotion() {
-        return promotion;
-    }
-    public void setPromotion(List<String> promotion) {
-        this.promotion = promotion;
-    }
-    public BoardManager getBoardManager() {
-        return boardManager;
     }
     public void setBoardManager(BoardManager boardManager) {
         this.boardManager = boardManager;
@@ -141,8 +112,14 @@ public class Piece implements Serializable {
         //TODO: For now, returning default value
         return new MoveCalcResultsStruct(null, null, null, null);
     }
+    public void setPin(Piece pinningPiece, AttackDir attackDirOfPin) {
+        pins.add(new PinOnPieceStruct(pinningPiece, attackDirOfPin));
+    }
     public void clearAllMoves() {
         legalMoves.clear();
+    }
+    public void clearAllPins() {
+        pins.clear();
     }
 
     protected List<MoveCalcResultsStruct> calculateSquarePreviewResults() {
@@ -163,11 +140,9 @@ public class Piece implements Serializable {
         List<MoveCalcResultsStruct> results = new ArrayList<>();
         int i = 1;
         boolean notHitKing = true;      //Once King is hit, no moves past are "legal", but must still be calculated
-        boolean pinnablePieceHit = false;
-        boolean unpinnablePieceHit = false;
-        boolean edgeOfBoardHit = false;
+        boolean endOfLegalMoveCalculation = false;
         Piece pinnablePiece = null;
-        while (!pinnablePieceHit && !unpinnablePieceHit && !edgeOfBoardHit) {
+        while (!endOfLegalMoveCalculation) {
             dir.setMagnitude(i++);
             SquarePreviewStruct preview = previewRelativeSquare(dir.x, dir.y);
             SqrStat status = preview.squareStatus;
@@ -175,12 +150,12 @@ public class Piece implements Serializable {
             Piece piece = preview.piece;
             //Guard clause for hitting edge of the board
             if (status == SqrStat.NO_SQUARE) {
-                edgeOfBoardHit = true;
+                endOfLegalMoveCalculation = true;
                 continue;
             }
             //Guard clause for same coloured piece being hit
             if (status != SqrStat.EMPTY && colour == preview.pieceColour) {
-                unpinnablePieceHit = true;
+                endOfLegalMoveCalculation = true;
                 continue;
             }
             //Guard clause for opposite colour piece being hit
@@ -192,21 +167,19 @@ public class Piece implements Serializable {
                     results.add(new MoveCalcResultsStruct((King)piece, squareName, attackType, attackDir));
                 }
                 else {
-                    pinnablePieceHit = true;
                     pinnablePiece = piece;
                     results.add(new MoveCalcResultsStruct(null, squareName, attackType,
                             attackDir, notHitKing));
+                    continueToFindPin(pinnablePiece, dir, attackDir);
                 }
                 continue;
             }
             //If code reaches this point, it means the square is empty
             results.add(new MoveCalcResultsStruct(null, squareName, attackType, attackDir, notHitKing));
         }
-
-        if (pinnablePieceHit) continueToFindPin(pinnablePiece, dir);
         return results;
     }
-    protected void continueToFindPin(Piece pinnablePiece, Direction dir) {
+    protected void continueToFindPin(Piece pinnablePiece, Direction dir, AttackDir attackDir) {
         int i = dir.getMagnitude();
         while (true) {
             dir.setMagnitude(++i);
@@ -218,8 +191,7 @@ public class Piece implements Serializable {
             if (status != SqrStat.EMPTY && (colour == preview.pieceColour || status == SqrStat.NON_KING_PIECE)) break;
             //Guard clause for hitting opposite-colour king, meaning pinnable piece is pinned
             if (status != SqrStat.EMPTY) {
-                pinnablePiece.setPinned(true);
-                pinnablePiece.setPinningPiece(this);
+                pinnablePiece.setPin(this, attackDir);
                 break;
             }
             //If code reaches this point, it means this square is empty (therefore do nothing and keep the loop going)
