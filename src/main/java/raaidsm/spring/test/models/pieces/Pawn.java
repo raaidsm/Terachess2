@@ -44,11 +44,11 @@ public class Pawn extends Piece {
         return results;
     }
     private MoveCalcResultsStruct up1() {
-        //OVERVIEW: ONLY_MOVE, NONE
+        //OVERVIEW: ONLY_MOVE, VERTICAL
         int directionByColour = colour == Colour.WHITE ? 1 : -1;
         //AttackType and AttackDir for this collection of attacks (yes, collection even though there's only one)
         AttackType attackType = AttackType.ONLY_MOVE;
-        AttackDir attackDir = AttackDir.NONE;
+        AttackDir attackDir = AttackDir.VERTICAL;
         SquarePreviewStruct preview = previewRelativeSquare(0, directionByColour);
         SqrStat status = preview.squareStatus;
         String squareName = preview.squareName;
@@ -60,11 +60,11 @@ public class Pawn extends Piece {
         return new MoveCalcResultsStruct(null, squareName, attackType, attackDir);
     }
     private MoveCalcResultsStruct up2() {
-        //OVERVIEW: ONLY_MOVE, NONE
+        //OVERVIEW: ONLY_MOVE, VERTICAL
         int directionByColour = colour == Colour.WHITE ? 1 : -1;
         //AttackType and AttackDir for this collection of attacks (yes, collection even though there's only one)
         AttackType attackType = AttackType.ONLY_MOVE;
-        AttackDir attackDir = AttackDir.NONE;
+        AttackDir attackDir = AttackDir.VERTICAL;
         String squareName = null;
         //Guard clause for not having initial pawn move to make
         if (!hasInitialPawnMove) return null;

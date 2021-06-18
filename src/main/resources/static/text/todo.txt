@@ -8,8 +8,6 @@ BUGS:
 -Placeholder
 
 FEATURES:
--Record type of pin (vertical, diagonal-ascending, horizontal, diagonal-descending, other)
--Reduce moves due to pin by removing all moves that don't match the type of pin
 -Implement draw conditions such as too many turns without captures, repetition, insufficient material, etc.
 -Over the Internet:
   -Host game on server somehow
