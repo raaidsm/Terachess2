@@ -164,39 +164,33 @@ public class Piece implements Serializable {
         List<MoveCalcResultsStruct> results = new ArrayList<>();
         int i = 1;
         boolean notHitKing = true;      //Once King is hit, no moves past are "legal", but must still be calculated
-        boolean endOfLegalMoveCalculation = false;
-        Piece pinnablePiece = null;
-        while (!endOfLegalMoveCalculation) {
+        while (true) {
             dir.setMagnitude(i++);
             SquarePreviewStruct preview = previewRelativeSquare(dir.x, dir.y);
             SqrStat status = preview.squareStatus;
             String squareName = preview.squareName;
             Piece piece = preview.piece;
-            //Guard clause for hitting edge of the board
-            if (status == SqrStat.NO_SQUARE) {
-                endOfLegalMoveCalculation = true;
-                continue;
-            }
-            //Guard clause for same coloured piece being hit
-            if (status != SqrStat.EMPTY && colour == preview.pieceColour) {
-                endOfLegalMoveCalculation = true;
-                continue;
-            }
+            //Guard clause for hitting edge of the board or same coloured piece
+            if (status == SqrStat.NO_SQUARE || colour == preview.pieceColour) break;
             //Guard clause for opposite colour piece being hit
-            //Continue calculating past a King because it is not possible to hit a King during your turn
+            //Continue calculating past a King because not possible to hit a King during your turn (only opponent's)
             if (status != SqrStat.EMPTY) {
                 if (piece.getType() == PieceType.KING) {
                     assert(notHitKing);
                     notHitKing = false;
                     results.add(new MoveCalcResultsStruct((King)piece, squareName, attackType, attackDir));
+                    //Even after King is hit, other squares can be still be attacked, so continue
+                    continue;
                 }
                 else {
-                    pinnablePiece = piece;
+                    //Add the attack on this square
                     results.add(new MoveCalcResultsStruct(null, squareName, attackType,
                             attackDir, notHitKing));
-                    continueToFindPin(pinnablePiece, dir, attackDir);
+                    //If King has not been hit yet then this piece is pinnable
+                    if (notHitKing) continueToFindPin(piece, dir, attackDir);
+                    //No attacks can be recorded past a piece so break
+                    break;
                 }
-                continue;
             }
             //If code reaches this point, it means the square is empty
             results.add(new MoveCalcResultsStruct(null, squareName, attackType, attackDir, notHitKing));
