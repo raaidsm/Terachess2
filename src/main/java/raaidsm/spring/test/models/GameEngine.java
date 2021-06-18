@@ -102,13 +102,13 @@ public class GameEngine {
     //Move Calculation Methods
     private GameStatus calculateAllLegalMoves() {
         /* OVERVIEW:
-        0) If double check, only calculate moves for king
-        1) Calculate moves for each piece:
-            Determine if piece delivers check (and set isCheck)
-            Determine if piece pins another piece (and set isPinned for pinned piece)
-        Reduce moves for each piece according to board-state stipulations:
-            2) For each piece, reduce if piece is pinned
-            3) For each piece, reduce if check and piece is of same colour as checked king
+            0) If double check, only calculate moves for king
+            1) Calculate moves for each piece:
+                Determine if piece delivers check (and set isCheck)
+                Determine if piece pins another piece (and set isPinned for pinned piece)
+            Reduce moves for each piece according to board-state stipulations:
+                2) For each piece, reduce if piece is pinned
+                3) For each piece, reduce if check and piece is of same colour as checked king
         */
         logger.trace("calculateAllLegalMoves() runs");
 

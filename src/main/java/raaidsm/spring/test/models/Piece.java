@@ -60,11 +60,17 @@ public class Piece implements Serializable {
     public List<AttackOnSquareStruct> getLegalMoves() {
         return legalMoves;
     }
+    public boolean isPinned() {
+        return !pins.isEmpty();
+    }
     public void setBoardManager(BoardManager boardManager) {
         this.boardManager = boardManager;
     }
     //endregion
 
+    public boolean hasMoves() {
+        return !legalMoves.isEmpty();
+    }
     public MoveCalcResultsStruct calculateMoves() {
         //OVERVIEW: Return checked king (null if none) and whether piece has any legal moves
         logger.trace("calculateMoves() runs");
@@ -101,10 +107,28 @@ public class Piece implements Serializable {
         return new MoveCalcResultsStruct(checkedKing, null, checkAttackType, checkAttackDir, hasMoves);
     }
     public MoveCalcResultsStruct reduceMovesDueToPin() {
-        //OVERVIEW:
-        //Return whether piece has any legal moves
-        //TODO: For now, returning default value
-        return new MoveCalcResultsStruct(null, null, null, null);
+        //OVERVIEW: Return whether piece has any legal moves
+        //If piece has no moves, there is nothing to reduce (the only important argument here is hasMoves)
+        if (!hasMoves()) return new MoveCalcResultsStruct(
+                null, null, null, null, false);
+
+        //If piece has moves and isn't pinned then just return true
+        if (!isPinned()) return new MoveCalcResultsStruct(
+                null, null, null, null);
+
+        //If code gets this far, it means the piece is pinned and there are moves to possibly reduce
+        List<AttackOnSquareStruct> toRemove = new ArrayList<>();
+        for (AttackOnSquareStruct move : legalMoves) {
+            //If this move isn't of the same movement axis as the pin, it is no longer a legal move
+            //Checking only first element from pins list because all pins should have the same pin direction
+            if (move.attackDir != pins.get(0).attackDirOfPin) toRemove.add(move);
+        }
+        //Remove the invalidated moves from the list of legal moves
+        legalMoves.removeAll(toRemove);
+
+        //After the invalidated moves have been removed, check to see if the piece still has legal moves left
+        boolean hasMoves = hasMoves();
+        return new MoveCalcResultsStruct(null, null, null, null, hasMoves);
     }
     public MoveCalcResultsStruct reduceMovesDueToCheck() {
         //OVERVIEW:

@@ -20,6 +20,7 @@ FEATURES:
   -Implement going back and forth in moves (undo last move, redo last move)
 
 USER CONVENIENCE:
+-Implement restarting the game through the front-end
 -Add text blurb to the side of the board that alerts with messages based on events (e.x. "You can't make that move!")
 -Display something with the side text when King is captured
 
