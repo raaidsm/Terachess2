@@ -71,7 +71,7 @@ public class Piece implements Serializable {
     public boolean hasMoves() {
         return !legalMoves.isEmpty();
     }
-    public MoveCalcResultsStruct calculateMoves() {
+    public MoveCalcResultStruct calculateMoves() {
         //OVERVIEW: Return checked king (null if none) and whether piece has any legal moves
         logger.trace("calculateMoves() runs");
 
@@ -83,8 +83,8 @@ public class Piece implements Serializable {
         //endregion
 
         clearAllMoves();
-        List<MoveCalcResultsStruct> results = calculateSquarePreviewResults();
-        for (MoveCalcResultsStruct result : results) {
+        List<MoveCalcResultStruct> results = calculateSquarePreviewResults();
+        for (MoveCalcResultStruct result : results) {
             AttackType attackType = result.attackType;
             AttackDir attackDir = result.attackDir;
             String squareName = result.attackedSquareName;
@@ -104,16 +104,16 @@ public class Piece implements Serializable {
             if (attackType != AttackType.ONLY_MOVE) squareAttacked.setAttack(this, colour);
         }
         //Returning squareName as null because many different squares are possibly attacked
-        return new MoveCalcResultsStruct(checkedKing, null, checkAttackType, checkAttackDir, hasMoves);
+        return new MoveCalcResultStruct(checkedKing, null, checkAttackType, checkAttackDir, hasMoves);
     }
-    public MoveCalcResultsStruct reduceMovesDueToPin() {
+    public MoveCalcResultStruct reduceMovesDueToPin() {
         //OVERVIEW: Return whether piece has any legal moves
         //If piece has no moves, there is nothing to reduce (the only important argument here is hasMoves)
-        if (!hasMoves()) return new MoveCalcResultsStruct(
+        if (!hasMoves()) return new MoveCalcResultStruct(
                 null, null, null, null, false);
 
         //If piece has moves and isn't pinned then just return true
-        if (!isPinned()) return new MoveCalcResultsStruct(
+        if (!isPinned()) return new MoveCalcResultStruct(
                 null, null, null, null);
 
         //If code gets this far, it means the piece is pinned and there are moves to possibly reduce
@@ -128,13 +128,13 @@ public class Piece implements Serializable {
 
         //After the invalidated moves have been removed, check to see if the piece still has legal moves left
         boolean hasMoves = hasMoves();
-        return new MoveCalcResultsStruct(null, null, null, null, hasMoves);
+        return new MoveCalcResultStruct(null, null, null, null, hasMoves);
     }
-    public MoveCalcResultsStruct reduceMovesDueToCheck() {
+    public MoveCalcResultStruct reduceMovesDueToCheck() {
         //OVERVIEW:
         //Return whether piece has any legal moves
         //TODO: For now, returning default value
-        return new MoveCalcResultsStruct(null, null, null, null);
+        return new MoveCalcResultStruct(null, null, null, null);
     }
     public void setPin(Piece pinningPiece, AttackDir attackDirOfPin) {
         pins.add(new PinOnPieceStruct(pinningPiece, attackDirOfPin));
@@ -146,12 +146,12 @@ public class Piece implements Serializable {
         pins.clear();
     }
 
-    protected List<MoveCalcResultsStruct> calculateSquarePreviewResults() {
+    protected List<MoveCalcResultStruct> calculateSquarePreviewResults() {
         logger.trace("calculateSquarePreviewResults() runs");
         //Default value
         return new ArrayList<>();
     }
-    protected List<MoveCalcResultsStruct> moveOrCaptureInALine(Direction dir, AttackDir attackDir) {
+    protected List<MoveCalcResultStruct> moveOrCaptureInALine(Direction dir, AttackDir attackDir) {
         /* OVERVIEW:
             -MOVE_OR_CAPTURE
             -Calculate moves in a line.
@@ -165,7 +165,7 @@ public class Piece implements Serializable {
         int magnitude = 1;
 
         //For collecting results for each square
-        List<MoveCalcResultsStruct> results = new ArrayList<>();
+        List<MoveCalcResultStruct> results = new ArrayList<>();
 
         //Once King is hit, no moves past are "legal", but must still be calculated
         boolean notHitKing = true;
@@ -183,13 +183,13 @@ public class Piece implements Serializable {
                 if (piece.getType() == PieceType.KING) {
                     assert(notHitKing);
                     notHitKing = false;
-                    results.add(new MoveCalcResultsStruct((King)piece, squareName, attackType, attackDir));
+                    results.add(new MoveCalcResultStruct((King)piece, squareName, attackType, attackDir));
                     //Even after King is hit, other squares can be still be attacked, so continue
                     continue;
                 }
                 else {
                     //Add the attack on this square
-                    results.add(new MoveCalcResultsStruct(null, squareName, attackType,
+                    results.add(new MoveCalcResultStruct(null, squareName, attackType,
                             attackDir, notHitKing));
                     //If King has not been hit yet then this piece is pinnable
                     if (notHitKing) continueToFindPin(piece, dir, attackDir);
@@ -198,7 +198,7 @@ public class Piece implements Serializable {
                 }
             }
             //If code reaches this point, it means the square is empty
-            results.add(new MoveCalcResultsStruct(null, squareName, attackType, attackDir, notHitKing));
+            results.add(new MoveCalcResultStruct(null, squareName, attackType, attackDir, notHitKing));
         }
         return results;
     }

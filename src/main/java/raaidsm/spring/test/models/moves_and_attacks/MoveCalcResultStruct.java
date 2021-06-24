@@ -2,7 +2,7 @@ package raaidsm.spring.test.models.moves_and_attacks;
 
 import raaidsm.spring.test.models.pieces.King;
 
-public class MoveCalcResultsStruct {
+public class MoveCalcResultStruct {
     /*OVERVIEW:
     -checkedKing: Contains a King if a King is checked, otherwise null
     -squareName: Contains name of the square attacked, is null if square doesn't exist or there are multiple squares
@@ -19,13 +19,13 @@ public class MoveCalcResultsStruct {
 
     //region Constructors
     //Constructor where hasMoves is assumed to be initialized as true
-    public MoveCalcResultsStruct(
+    public MoveCalcResultStruct(
             King checkedKing, String attackedSquareName, AttackType attackType, AttackDir attackDir
     ) {
         init(checkedKing, attackedSquareName, attackType, attackDir);
     }
     //Constructor where hasMoves is set
-    public MoveCalcResultsStruct(
+    public MoveCalcResultStruct(
             King checkedKing, String attackedSquareName, AttackType attackType, AttackDir attackDir, boolean hasMoves
     ) {
         init(checkedKing, attackedSquareName, attackType, attackDir);

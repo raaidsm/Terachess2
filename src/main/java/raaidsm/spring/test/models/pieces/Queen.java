@@ -5,7 +5,7 @@ import raaidsm.spring.test.models.moves_and_attacks.AttackDir;
 import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.piece_properties.PieceType;
 import raaidsm.spring.test.models.utils.Direction;
-import raaidsm.spring.test.models.moves_and_attacks.MoveCalcResultsStruct;
+import raaidsm.spring.test.models.moves_and_attacks.MoveCalcResultStruct;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +17,8 @@ public class Queen extends Piece {
     }
 
     @Override
-    protected List<MoveCalcResultsStruct> calculateSquarePreviewResults() {
-        List<MoveCalcResultsStruct> results = new ArrayList<>();
+    protected List<MoveCalcResultStruct> calculateSquarePreviewResults() {
+        List<MoveCalcResultStruct> results = new ArrayList<>();
         results.addAll(moveOrCaptureInALine(Direction.UP, AttackDir.VERTICAL));
         results.addAll(moveOrCaptureInALine(Direction.UP_RIGHT, AttackDir.DIAGONAL_ASCENDING));
         results.addAll(moveOrCaptureInALine(Direction.RIGHT, AttackDir.HORIZONTAL));
