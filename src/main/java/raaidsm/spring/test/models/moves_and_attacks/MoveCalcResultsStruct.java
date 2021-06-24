@@ -12,27 +12,27 @@ public class MoveCalcResultsStruct {
     -hasMoves: Records whether any legal moves exist in the collection described
     */
     public King checkedKing;
-    public String squareName;
+    public String attackedSquareName;
     public AttackType attackType;
     public AttackDir attackDir;
     public boolean hasMoves;
 
     //Constructor where hasMoves is assumed to be initialized as true
     public MoveCalcResultsStruct(
-            King checkedKing, String squareName, AttackType attackType, AttackDir attackDir
+            King checkedKing, String attackedSquareName, AttackType attackType, AttackDir attackDir
     ) {
         this.checkedKing = checkedKing;
-        this.squareName = squareName;
+        this.attackedSquareName = attackedSquareName;
         this.attackType = attackType;
         this.attackDir = attackDir;
         this.hasMoves = true;
     }
     //Constructor where hasMoves is set
     public MoveCalcResultsStruct(
-            King checkedKing, String squareName, AttackType attackType, AttackDir attackDir, boolean hasMoves
+            King checkedKing, String attackedSquareName, AttackType attackType, AttackDir attackDir, boolean hasMoves
     ) {
         this.checkedKing = checkedKing;
-        this.squareName = squareName;
+        this.attackedSquareName = attackedSquareName;
         this.attackType = attackType;
         this.attackDir = attackDir;
         this.hasMoves = hasMoves;

@@ -87,7 +87,7 @@ public class Piece implements Serializable {
         for (MoveCalcResultsStruct result : results) {
             AttackType attackType = result.attackType;
             AttackDir attackDir = result.attackDir;
-            String squareName = result.squareName;
+            String squareName = result.attackedSquareName;
             if (result.hasMoves) {
                 //Change variables for check
                 hasMoves = true;
