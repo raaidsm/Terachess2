@@ -21,20 +21,22 @@ public class MoveCalcResultsStruct {
     public MoveCalcResultsStruct(
             King checkedKing, String attackedSquareName, AttackType attackType, AttackDir attackDir
     ) {
-        this.checkedKing = checkedKing;
-        this.attackedSquareName = attackedSquareName;
-        this.attackType = attackType;
-        this.attackDir = attackDir;
-        this.hasMoves = true;
+        init(checkedKing, attackedSquareName, attackType, attackDir);
     }
     //Constructor where hasMoves is set
     public MoveCalcResultsStruct(
             King checkedKing, String attackedSquareName, AttackType attackType, AttackDir attackDir, boolean hasMoves
     ) {
+        init(checkedKing, attackedSquareName, attackType, attackDir);
+        this.hasMoves = hasMoves;
+    }
+    private void init(
+            King checkedKing, String attackedSquareName, AttackType attackType, AttackDir attackDir
+    ) {
         this.checkedKing = checkedKing;
         this.attackedSquareName = attackedSquareName;
         this.attackType = attackType;
         this.attackDir = attackDir;
-        this.hasMoves = hasMoves;
+        hasMoves = true;
     }
 }
