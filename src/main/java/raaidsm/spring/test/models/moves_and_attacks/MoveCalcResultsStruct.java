@@ -17,6 +17,7 @@ public class MoveCalcResultsStruct {
     public AttackDir attackDir;
     public boolean hasMoves;
 
+    //region Constructors
     //Constructor where hasMoves is assumed to be initialized as true
     public MoveCalcResultsStruct(
             King checkedKing, String attackedSquareName, AttackType attackType, AttackDir attackDir
@@ -39,4 +40,5 @@ public class MoveCalcResultsStruct {
         this.attackDir = attackDir;
         hasMoves = true;
     }
+    //endregion
 }

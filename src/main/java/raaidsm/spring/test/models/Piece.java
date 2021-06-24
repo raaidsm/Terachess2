@@ -160,12 +160,17 @@ public class Piece implements Serializable {
         */
         AttackType attackType = AttackType.MOVE_OR_CAPTURE;
 
+        //For direction and magnitude
         dir.resetMagnitude();
+        int magnitude = 1;
+
+        //For collecting results for each square
         List<MoveCalcResultsStruct> results = new ArrayList<>();
-        int i = 1;
-        boolean notHitKing = true;      //Once King is hit, no moves past are "legal", but must still be calculated
+
+        //Once King is hit, no moves past are "legal", but must still be calculated
+        boolean notHitKing = true;
         while (true) {
-            dir.setMagnitude(i++);
+            dir.setMagnitude(magnitude++);
             SquarePreviewStruct preview = previewRelativeSquare(dir.x, dir.y);
             SqrStat status = preview.squareStatus;
             String squareName = preview.squareName;
