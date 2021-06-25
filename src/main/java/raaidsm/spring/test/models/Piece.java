@@ -71,7 +71,7 @@ public class Piece implements Serializable {
     public boolean hasMoves() {
         return !legalMoves.isEmpty();
     }
-    public MoveCalcResultStruct calculateMoves() {
+    public MoveCalcSummaryStruct calculateMoves() {
         //OVERVIEW: Return checked king (null if none) and whether piece has any legal moves
         logger.trace("calculateMoves() runs");
 
@@ -104,17 +104,15 @@ public class Piece implements Serializable {
             if (attackType != AttackType.ONLY_MOVE) squareAttacked.setAttack(this, colour);
         }
         //Returning squareName as null because many different squares are possibly attacked
-        return new MoveCalcResultStruct(checkedKing, null, checkAttackType, checkAttackDir, hasMoves);
+        return new MoveCalcSummaryStruct(checkedKing, checkAttackType, hasMoves);
     }
-    public MoveCalcResultStruct reduceMovesDueToPin() {
+    public MoveCalcSummaryStruct reduceMovesDueToPin() {
         //OVERVIEW: Return whether piece has any legal moves
         //If piece has no moves, there is nothing to reduce (the only important argument here is hasMoves)
-        if (!hasMoves()) return new MoveCalcResultStruct(
-                null, null, null, null, false);
+        if (!hasMoves()) return new MoveCalcSummaryStruct(null, null, false);
 
         //If piece has moves and isn't pinned then just return true
-        if (!isPinned()) return new MoveCalcResultStruct(
-                null, null, null, null);
+        if (!isPinned()) return new MoveCalcSummaryStruct(null, null);
 
         //If code gets this far, it means the piece is pinned and there are moves to possibly reduce
         List<AttackOnSquareStruct> toRemove = new ArrayList<>();
@@ -128,13 +126,13 @@ public class Piece implements Serializable {
 
         //After the invalidated moves have been removed, check to see if the piece still has legal moves left
         boolean hasMoves = hasMoves();
-        return new MoveCalcResultStruct(null, null, null, null, hasMoves);
+        return new MoveCalcSummaryStruct(null, null, hasMoves);
     }
-    public MoveCalcResultStruct reduceMovesDueToCheck() {
+    public MoveCalcSummaryStruct reduceMovesDueToCheck() {
         //OVERVIEW:
         //Return whether piece has any legal moves
         //TODO: For now, returning default value
-        return new MoveCalcResultStruct(null, null, null, null);
+        return new MoveCalcSummaryStruct(null, null);
     }
     public void setPin(Piece pinningPiece, AttackDir attackDirOfPin) {
         pins.add(new PinOnPieceStruct(pinningPiece, attackDirOfPin));

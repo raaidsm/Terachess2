@@ -7,6 +7,7 @@ import raaidsm.spring.test.models.managers.BoardManager;
 import raaidsm.spring.test.models.managers.CheckManager;
 import raaidsm.spring.test.models.moves_and_attacks.AttackOnSquareStruct;
 import raaidsm.spring.test.models.moves_and_attacks.MoveCalcResultStruct;
+import raaidsm.spring.test.models.moves_and_attacks.MoveCalcSummaryStruct;
 import raaidsm.spring.test.models.pieces.*;
 import raaidsm.spring.test.models.utils.*;
 import raaidsm.spring.test.models.managers.TurnManager;
@@ -169,7 +170,7 @@ public class GameEngine {
         boolean legalMovesFound = false;
         for (Piece piece : pieces) {
             if (piece.getType() == PieceType.KING) {
-                MoveCalcResultStruct results = piece.calculateMoves();
+                MoveCalcSummaryStruct results = piece.calculateMoves();
                 if (results.hasMoves) legalMovesFound = true;
             }
             else piece.clearAllMoves();
@@ -182,7 +183,7 @@ public class GameEngine {
 
         boolean legalMovesFound = false;
         for (Piece piece : pieces) {
-            MoveCalcResultStruct results = piece.calculateMoves();
+            MoveCalcSummaryStruct results = piece.calculateMoves();
             if (results.hasMoves) legalMovesFound = true;
             if (results.checkedKing != null) {
                 checkManager.setCheck(results.checkedKing, piece, results.attackType);
@@ -196,7 +197,7 @@ public class GameEngine {
 
         boolean legalMovesFound = false;
         for (Piece piece : pieces) {
-            MoveCalcResultStruct results = piece.reduceMovesDueToPin();
+            MoveCalcSummaryStruct results = piece.reduceMovesDueToPin();
             if (results.hasMoves) legalMovesFound = true;
         }
         return legalMovesFound;
@@ -207,7 +208,7 @@ public class GameEngine {
 
         boolean legalMovesFound = false;
         for (Piece piece : pieces) {
-            MoveCalcResultStruct results = piece.reduceMovesDueToCheck();
+            MoveCalcSummaryStruct results = piece.reduceMovesDueToCheck();
             if (results.hasMoves) legalMovesFound = true;
         }
         return legalMovesFound;

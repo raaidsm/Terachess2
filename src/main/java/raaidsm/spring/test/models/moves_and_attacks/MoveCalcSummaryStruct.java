@@ -12,6 +12,13 @@ public class MoveCalcSummaryStruct {
     public AttackType attackType;
     public boolean hasMoves;
 
+    //Constructor where hasMoves is set
+    public MoveCalcSummaryStruct(King checkedKing, AttackType attackType) {
+        this.checkedKing = checkedKing;
+        this.attackType = attackType;
+        this.hasMoves = true;
+    }
+    //Constructor where hasMoves is assumed to be initialized as true
     public MoveCalcSummaryStruct(King checkedKing, AttackType attackType, boolean hasMoves) {
         this.checkedKing = checkedKing;
         this.attackType = attackType;
