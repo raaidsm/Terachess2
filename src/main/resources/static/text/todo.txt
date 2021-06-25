@@ -8,6 +8,7 @@ BUGS:
 -Placeholder
 
 FEATURES:
+-Implement check
 -Implement draw conditions such as too many turns without captures, repetition, insufficient material, etc.
 -Over the Internet:
   -Host game on server somehow
