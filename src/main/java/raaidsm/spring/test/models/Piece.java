@@ -112,13 +112,13 @@ public class Piece implements Serializable {
         return new MoveCalcSummaryStruct(checkedKing, checkAttackType, hasMoves)
                 .setSquareNamesOnPathOfCheck(squareNamesOnPathOfCheck);
     }
-    public MoveCalcSummaryStruct reduceMovesDueToPin() {
+    public boolean reduceMovesDueToPin() {
         //OVERVIEW: Return whether piece has any legal moves
         //If piece has no moves, there is nothing to reduce (the only important argument here is hasMoves)
-        if (!hasMoves()) return new MoveCalcSummaryStruct(null, null, false);
+        if (!hasMoves()) return false;
 
         //If piece has moves and isn't pinned then just return true
-        if (!isPinned()) return new MoveCalcSummaryStruct(null, null);
+        if (!isPinned()) return true;
 
         //If code gets this far, it means the piece is pinned and there are moves to possibly reduce
         List<AttackOnSquareStruct> toRemove = new ArrayList<>();
@@ -131,14 +131,20 @@ public class Piece implements Serializable {
         legalMoves.removeAll(toRemove);
 
         //After the invalidated moves have been removed, check to see if the piece still has legal moves left
-        boolean hasMoves = hasMoves();
-        return new MoveCalcSummaryStruct(null, null, hasMoves);
+        return hasMoves();
     }
-    public MoveCalcSummaryStruct reduceMovesDueToCheck() {
-        //OVERVIEW:
-        //Return whether piece has any legal moves
-        //TODO: For now, returning default value
-        return new MoveCalcSummaryStruct(null, null);
+    public boolean reduceMovesDueToCheck(List<String> squaresFacilitatingCheck) {
+        //OVERVIEW: Return whether piece has any legal moves
+
+        //Find and remove all the moves that don't let this piece intercept check
+        List<AttackOnSquareStruct> toRemove = new ArrayList<>();
+        for (AttackOnSquareStruct legalMove : legalMoves) {
+            if (!squaresFacilitatingCheck.contains(legalMove.attackedSquareName)) toRemove.add(legalMove);
+        }
+        legalMoves.removeAll(toRemove);
+
+        //After the invalidated moves have been removed, check to see if the piece still has legal moves left
+        return hasMoves();
     }
     public void setPin(Piece pinningPiece, AttackDir attackDirOfPin) {
         pins.add(new PinOnPieceStruct(pinningPiece, attackDirOfPin));

@@ -54,6 +54,14 @@ public class CheckManager {
         //OVERVIEW: Return number of checks against the current turn colour
         return checks.get(currentTurnColour).size();
     }
+    public List<String> getSquaresFacilitatingCheck() {
+        //OVERVIEW: Returns the squares that need to be attacked in order to stop a check
+        List<String> squareNames = new ArrayList<>(checkPathSquares.get(currentTurnColour));
+        for (CheckSummaryStruct summary : checks.get(currentTurnColour)) {
+            squareNames.add(summary.checkingPiece.getLocation());
+        }
+        return squareNames;
+    }
     public void clearChecks() {
         //OVERVIEW: Clear checks against the current turn colour
         checks.get(currentTurnColour).clear();

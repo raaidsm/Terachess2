@@ -197,8 +197,8 @@ public class GameEngine {
 
         boolean legalMovesFound = false;
         for (Piece piece : pieces) {
-            MoveCalcSummaryStruct summary = piece.reduceMovesDueToPin();
-            if (summary.hasMoves) legalMovesFound = true;
+            boolean hasMoves = piece.reduceMovesDueToPin();
+            if (hasMoves) legalMovesFound = true;
         }
         return legalMovesFound;
     }
@@ -208,8 +208,8 @@ public class GameEngine {
 
         boolean legalMovesFound = false;
         for (Piece piece : pieces) {
-            MoveCalcSummaryStruct summary = piece.reduceMovesDueToCheck();
-            if (summary.hasMoves) legalMovesFound = true;
+            boolean hasMoves = piece.reduceMovesDueToCheck(checkManager.getSquaresFacilitatingCheck());
+            if (hasMoves) legalMovesFound = true;
         }
         return legalMovesFound;
     }
