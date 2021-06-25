@@ -73,7 +73,6 @@ public class Piece implements Serializable {
     }
     public MoveCalcSummaryStruct calculateMoves() {
         //OVERVIEW: Return checked king (null if none) and whether piece has any legal moves
-        logger.trace("calculateMoves() runs");
 
         //region Variables to Return
         King checkedKing = null;
