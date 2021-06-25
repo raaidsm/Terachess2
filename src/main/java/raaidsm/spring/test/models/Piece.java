@@ -78,33 +78,39 @@ public class Piece implements Serializable {
         //region Variables to Return
         King checkedKing = null;
         AttackType checkAttackType = null;
-        AttackDir checkAttackDir = null;
         boolean hasMoves = false;
+        List<String> squareNamesOnPathOfCheck = new ArrayList<>();
         //endregion
 
         clearAllMoves();
         List<MoveCalcResultStruct> results = calculateSquarePreviewResults();
         for (MoveCalcResultStruct result : results) {
+            //Variables for Convenience
             AttackType attackType = result.attackType;
             AttackDir attackDir = result.attackDir;
             String squareName = result.attackedSquareName;
+
+            //If on path of check
+            if (result.isOnPathOfCheck) squareNamesOnPathOfCheck.add(squareName);
+            //If possible move
             if (result.hasMoves) {
-                //Change variables for check
                 hasMoves = true;
                 checkedKing = result.checkedKing;
                 if (checkedKing != null) {
                     checkAttackType = attackType;
-                    checkAttackDir = attackDir;
                 }
                 //Add result to legal moves
                 legalMoves.add(new AttackOnSquareStruct(this, attackType, attackDir, squareName));
             }
+
             //Record attack in the square attacked
             Square squareAttacked = boardManager.getSquare(squareName);
             if (attackType != AttackType.ONLY_MOVE) squareAttacked.setAttack(this, colour);
         }
-        //Returning squareName as null because many different squares are possibly attacked
-        return new MoveCalcSummaryStruct(checkedKing, checkAttackType, hasMoves);
+
+        //Return summary for this piece
+        return new MoveCalcSummaryStruct(checkedKing, checkAttackType, hasMoves)
+                .setSquareNamesOnPathOfCheck(squareNamesOnPathOfCheck);
     }
     public MoveCalcSummaryStruct reduceMovesDueToPin() {
         //OVERVIEW: Return whether piece has any legal moves
@@ -161,12 +167,11 @@ public class Piece implements Serializable {
         //For direction and magnitude
         dir.resetMagnitude();
         int magnitude = 1;
-
         //For collecting results for each square
         List<MoveCalcResultStruct> results = new ArrayList<>();
-
         //Once King is hit, no moves past are "legal", but must still be calculated
         boolean notHitKing = true;
+
         while (true) {
             dir.setMagnitude(magnitude++);
             SquarePreviewStruct preview = previewRelativeSquare(dir.x, dir.y);
@@ -181,6 +186,7 @@ public class Piece implements Serializable {
                 if (piece.getType() == PieceType.KING) {
                     assert(notHitKing);
                     notHitKing = false;
+                    declareResultAsOnCheckPath(results);
                     results.add(new MoveCalcResultStruct((King)piece, squareName, attackType, attackDir));
                     //Even after King is hit, other squares can be still be attacked, so continue
                     continue;
@@ -199,6 +205,12 @@ public class Piece implements Serializable {
             results.add(new MoveCalcResultStruct(null, squareName, attackType, attackDir, notHitKing));
         }
         return results;
+    }
+    protected void declareResultAsOnCheckPath(List<MoveCalcResultStruct> results) {
+        //Declares each result as being part of the line of attack from the checking piece to the King
+        for (MoveCalcResultStruct result : results) {
+            result.isOnPathOfCheck = true;
+        }
     }
     protected void continueToFindPin(Piece pinnablePiece, Direction dir, AttackDir attackDir) {
         int i = dir.getMagnitude();

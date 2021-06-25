@@ -8,6 +8,7 @@ public class MoveCalcResultStruct {
     public AttackType attackType;
     public AttackDir attackDir;
     public boolean hasMoves;
+    public boolean isOnPathOfCheck;
 
     //region Constructors
     //Constructor where hasMoves is assumed to be initialized as true
@@ -31,6 +32,7 @@ public class MoveCalcResultStruct {
         this.attackType = attackType;
         this.attackDir = attackDir;
         hasMoves = true;
+        isOnPathOfCheck = false;
     }
     //endregion
 }

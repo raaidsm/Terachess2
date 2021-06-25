@@ -19,11 +19,15 @@ public class CheckManager {
     // current turn colour.
     // Therefore if clearChecks() is called during white's turn, all checks set against white will be cleared
     private Colour currentTurnColour;
-    private final HashMap<Colour, List<CheckSummaryStruct>> checks;     //Key is same colour as checkedKing
+    private final HashMap<Colour, List<CheckSummaryStruct>> checks;         //Key is same colour as checkedKing
+    private final HashMap<Colour, List<String>> checkPathSquares;           //Key is same colour as checkedKing
 
     public CheckManager(Colour currentTurnColour) {
         this.currentTurnColour = currentTurnColour;
         checks = new HashMap<>(Map.ofEntries(
+                entry(Colour.WHITE, new ArrayList<>()), entry(Colour.BLACK, new ArrayList<>())
+        ));
+        checkPathSquares = new HashMap<>(Map.ofEntries(
                 entry(Colour.WHITE, new ArrayList<>()), entry(Colour.BLACK, new ArrayList<>())
         ));
     }
@@ -32,10 +36,15 @@ public class CheckManager {
         this.currentTurnColour = currentTurnColour;
     }
 
-    public void setCheck(King checkedKing, Piece checkingPiece, AttackType attackTypeOfCheck) {
+    public void setCheck(
+            King checkedKing, Piece checkingPiece, AttackType attackTypeOfCheck, List<String> checkPathSquares) {
         //OVERVIEW: Set checks made by current turn colour
-        List<CheckSummaryStruct> checksByColour = checks.get(checkedKing.getColour());
+        Colour colourOfKing = checkedKing.getColour();
+
+        List<CheckSummaryStruct> checksByColour = checks.get(colourOfKing);
+        List<String> checkPathSquaresByColour = this.checkPathSquares.get(colourOfKing);
         checksByColour.add(new CheckSummaryStruct(checkedKing, checkingPiece, attackTypeOfCheck));
+        checkPathSquaresByColour.addAll(checkPathSquares);
     }
     public boolean isCheck() {
         //OVERVIEW: Return true if current turn colour is under check
@@ -48,5 +57,6 @@ public class CheckManager {
     public void clearChecks() {
         //OVERVIEW: Clear checks against the current turn colour
         checks.get(currentTurnColour).clear();
+        checkPathSquares.get(currentTurnColour).clear();
     }
 }

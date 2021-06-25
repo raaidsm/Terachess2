@@ -170,8 +170,8 @@ public class GameEngine {
         boolean legalMovesFound = false;
         for (Piece piece : pieces) {
             if (piece.getType() == PieceType.KING) {
-                MoveCalcSummaryStruct results = piece.calculateMoves();
-                if (results.hasMoves) legalMovesFound = true;
+                MoveCalcSummaryStruct summary = piece.calculateMoves();
+                if (summary.hasMoves) legalMovesFound = true;
             }
             else piece.clearAllMoves();
         }
@@ -183,10 +183,10 @@ public class GameEngine {
 
         boolean legalMovesFound = false;
         for (Piece piece : pieces) {
-            MoveCalcSummaryStruct results = piece.calculateMoves();
-            if (results.hasMoves) legalMovesFound = true;
-            if (results.checkedKing != null) {
-                checkManager.setCheck(results.checkedKing, piece, results.attackType);
+            MoveCalcSummaryStruct summary = piece.calculateMoves();
+            if (summary.hasMoves) legalMovesFound = true;
+            if (summary.checkedKing != null) {
+                checkManager.setCheck(summary.checkedKing, piece, summary.attackType, summary.squareNamesOnPathOfCheck);
             }
         }
         return legalMovesFound;
@@ -197,8 +197,8 @@ public class GameEngine {
 
         boolean legalMovesFound = false;
         for (Piece piece : pieces) {
-            MoveCalcSummaryStruct results = piece.reduceMovesDueToPin();
-            if (results.hasMoves) legalMovesFound = true;
+            MoveCalcSummaryStruct summary = piece.reduceMovesDueToPin();
+            if (summary.hasMoves) legalMovesFound = true;
         }
         return legalMovesFound;
     }
@@ -208,8 +208,8 @@ public class GameEngine {
 
         boolean legalMovesFound = false;
         for (Piece piece : pieces) {
-            MoveCalcSummaryStruct results = piece.reduceMovesDueToCheck();
-            if (results.hasMoves) legalMovesFound = true;
+            MoveCalcSummaryStruct summary = piece.reduceMovesDueToCheck();
+            if (summary.hasMoves) legalMovesFound = true;
         }
         return legalMovesFound;
     }

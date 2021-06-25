@@ -2,7 +2,8 @@ CURRENTLY DOING:
 -Placeholder
 
 CURRENT COMMIT:
--Placeholder
+-Implement recording of intermediate squares between checking piece and checked King when check is made
+-Minor formatting changes
 
 BUGS:
 -Placeholder
