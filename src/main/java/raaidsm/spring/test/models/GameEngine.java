@@ -2,11 +2,10 @@ package raaidsm.spring.test.models;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import raaidsm.spring.test.models.exceptions.InvalidGameException;
+import raaidsm.spring.test.exceptions.InvalidGameException;
 import raaidsm.spring.test.models.managers.BoardManager;
 import raaidsm.spring.test.models.managers.CheckManager;
 import raaidsm.spring.test.models.moves_and_attacks.AttackOnSquareStruct;
-import raaidsm.spring.test.models.moves_and_attacks.MoveCalcResultStruct;
 import raaidsm.spring.test.models.moves_and_attacks.MoveCalcSummaryStruct;
 import raaidsm.spring.test.models.pieces.*;
 import raaidsm.spring.test.models.utils.*;

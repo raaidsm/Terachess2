@@ -1,4 +1,4 @@
-package raaidsm.spring.test.models.exceptions;
+package raaidsm.spring.test.exceptions;
 
 public class DrawException extends RuntimeException {
     public DrawException(String errorMessage) {

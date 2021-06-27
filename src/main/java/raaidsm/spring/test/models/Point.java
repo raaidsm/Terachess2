@@ -1,6 +1,6 @@
 package raaidsm.spring.test.models;
 
-import raaidsm.spring.test.models.exceptions.PieceNotOnBoardException;
+import raaidsm.spring.test.exceptions.PieceNotOnBoardException;
 
 import java.io.Serializable;
 

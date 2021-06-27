@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import raaidsm.spring.test.models.GameEngine;
-import raaidsm.spring.test.models.exceptions.CheckmateException;
-import raaidsm.spring.test.models.exceptions.StalemateException;
 import raaidsm.spring.test.models.forms.MoveForm;
 import raaidsm.spring.test.models.utils.GameStatus;
 
