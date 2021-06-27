@@ -31,13 +31,15 @@ public class TerachessRestController {
     }
 
     @PostMapping(value="/ReadMove")
-    public void readMove(@ModelAttribute MoveForm form) {
+    public String readMove(@ModelAttribute MoveForm form) {
         //Read move and calculate changes on the board
         logger.trace("readMove() runs");
 
         GameStatus gameStatus = gameEngine.makeMove(form.getFirstSquare(), form.getSecondSquare());
+
         //TODO: For now, throwing exception when game stops for any reason (Checkmate, Stalemate, etc.)
-        if (gameStatus == GameStatus.CHECKMATE) throw new CheckmateException();
-        else if (gameStatus == GameStatus.STALEMATE) throw new StalemateException();
+        if (gameStatus == GameStatus.CHECKMATE) return "Checkmate";
+        else if (gameStatus == GameStatus.STALEMATE) return "Stalemate";
+        else return "Live";
     }
 }

@@ -139,9 +139,10 @@ const executePieceMove = ($firstSquare, $secondSquare) => {
     $.ajax({
         url: "/ReadMove",
         contentType: "application/x-www-form-urlencoded",
-        dataType: "json",
+        dataType: "text",
         type: "POST",
-        data: { firstSquare: $firstSquare.prop("id"), secondSquare: $secondSquare.prop("id") }
+        data: { firstSquare: $firstSquare.prop("id"), secondSquare: $secondSquare.prop("id") },
+        success: displayGameStatusMessage
     });
 };
 //endregion
@@ -168,6 +169,24 @@ const resetFirstSquareSelection = () => {
     $clickedSquare = null;
     clickedSquareColour = null;
     isFirstSquareClicked = false;
+};
+const displayGameStatusMessage = (gameStatus) => {
+    let message = "";
+    switch (gameStatus) {
+        case "Checkmate":
+            message = "Checkmate!";
+            break;
+        case "Stalemate":
+            message = "Stalemate...";
+            break;
+        case "Draw":
+            message = "Draw...";
+            break;
+        default:
+            message = "Game Continues";
+            break;
+    }
+    $("#gameResult").text(message);
 };
 const addToHighlightedSquares = ($target) => {
     //Append to list of red-highlighted squares
