@@ -2,14 +2,14 @@ CURRENTLY DOING:
 -Placeholder
 
 CURRENT COMMIT:
--Implement recording of intermediate squares between checking piece and checked King when check is made
--Minor formatting changes
+-Placeholder
 
 BUGS:
 -Placeholder
 
 FEATURES:
--Implement check
+-Implement castling
+-Implement pawn promotion
 -Implement draw conditions such as too many turns without captures, repetition, insufficient material, etc.
 -Over the Internet:
   -Host game on server somehow
@@ -21,7 +21,6 @@ FEATURES:
 
 USER CONVENIENCE:
 -Implement restarting the game through the front-end
--Add text blurb to the side of the board that alerts with messages based on events (e.x. "You can't make that move!")
 -Display something with the side text when King is captured
 
 REFACTORING:
