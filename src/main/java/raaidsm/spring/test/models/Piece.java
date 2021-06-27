@@ -94,8 +94,8 @@ public class Piece implements Serializable {
             //If possible move
             if (result.hasMoves) {
                 hasMoves = true;
-                checkedKing = result.checkedKing;
-                if (checkedKing != null) {
+                if (result.checkedKing != null) {
+                    checkedKing = result.checkedKing;
                     checkAttackType = attackType;
                 }
                 //Add result to legal moves
