@@ -43,7 +43,7 @@ public class GameEngine {
         logger.trace("makeMove() runs");
 
         //Clear all previous attacks
-        clearAllAttacksOnSquaresAndPinsOnPieces();
+        clearSquareAttacksAndPins();
 
         //Take piece-to-move off of first square
         Piece pieceToMove = boardManager.getSquare(firstSquare).getContainedPiece();
@@ -68,7 +68,7 @@ public class GameEngine {
     }
 
     //Methods called immediately upon a new move being made
-    private void clearAllAttacksOnSquaresAndPinsOnPieces() {
+    private void clearSquareAttacksAndPins() {
         List<Square> allSquares = boardManager.getAllSquares();
         for (Square square : allSquares) {
             square.clearAllAttacks();
