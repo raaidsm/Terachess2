@@ -2,13 +2,14 @@ CURRENTLY DOING:
 -Placeholder
 
 CURRENT COMMIT:
--Placeholder
+-Implement executing a castling move
 
 BUGS:
 -Placeholder
 
 FEATURES:
 -Implement castling
+  -Implement executing a castling move
 -Implement pawn promotion
 -Implement draw conditions such as too many turns without captures, repetition, insufficient material, etc.
 -Over the Internet:
