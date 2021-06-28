@@ -5,5 +5,6 @@ public enum AttackType {
     ONLY_MOVE,
     ONLY_CAPTURE,
     HOP_MOVE_OR_CAPTURE,
-    HOP_ONLY_CAPTURE
+    HOP_ONLY_CAPTURE,
+    DEFENSIVE
 }

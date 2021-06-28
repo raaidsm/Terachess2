@@ -22,6 +22,10 @@ public class Rook extends Piece {
         canCastle = false;
     }
 
+    public boolean isCanCastle() {
+        return canCastle;
+    }
+
     @Override
     protected List<MoveCalcResultStruct> calculateSquarePreviewResults() {
         List<MoveCalcResultStruct> results = new ArrayList<>();

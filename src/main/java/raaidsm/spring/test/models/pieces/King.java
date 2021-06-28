@@ -42,6 +42,8 @@ public class King extends Piece {
         tempResults.add(checkAdjacentSquare(Direction.DOWN_LEFT, AttackDir.DIAGONAL_ASCENDING));
         tempResults.add(checkAdjacentSquare(Direction.LEFT, AttackDir.HORIZONTAL));
         tempResults.add(checkAdjacentSquare(Direction.UP_LEFT, AttackDir.DIAGONAL_DESCENDING));
+        tempResults.add(checkForCastling(Direction.LEFT));
+        tempResults.add(checkForCastling(Direction.RIGHT));
 
         for (MoveCalcResultStruct tempResult : tempResults) {
             if (tempResult != null) results.add(tempResult);
@@ -70,5 +72,40 @@ public class King extends Piece {
         }
         //If code reaches this point, it means the square is either empty or has an opposite coloured piece
         return new MoveCalcResultStruct(null, squareName, attackType, attackDir);
+    }
+    private MoveCalcResultStruct checkForCastling(Direction dir) {
+        //If no castling rights, just immediately return null
+        if (!canCastle) return null;
+
+        //AttackType and AttackDir for this collection of attacks (yes, collection even though there's only one)
+        AttackType attackType = AttackType.DEFENSIVE;
+        AttackDir attackDir = AttackDir.HORIZONTAL;
+
+        //Variable for distance from King and recording square to move to when castling
+        int magnitude = 0;
+        String squareNameToCastleTo = null;
+
+        while (true) {
+            dir.setMagnitude(++magnitude);
+            SquarePreviewStruct preview = previewRelativeSquare(dir.x, dir.y);
+            SqrStat status = preview.squareStatus;
+            Piece pieceOnSquare = preview.piece;
+            Square squarePreviewed = boardManager.getSquare(preview.squareName);
+            if (magnitude == 2) squareNameToCastleTo = preview.squareName;
+
+            //Guard clause for relative square going off the board
+            if (status == SqrStat.NO_SQUARE) return null;
+            //Guard clause for relative square being attacked (thus King can't move to it)
+            if (magnitude <= 2 && squarePreviewed.isAttacked(colour)) return null;
+            //Guard clause for square being empty
+            if (status == SqrStat.EMPTY) continue;
+
+            if (pieceOnSquare.getType() == PieceType.ROOK) {
+                Rook rook = (Rook)pieceOnSquare;
+                if (rook.isCanCastle()) {
+                    return new MoveCalcResultStruct(null, squareNameToCastleTo, attackType, attackDir);
+                }
+            }
+        }
     }
 }
