@@ -106,6 +106,7 @@ public class King extends Piece {
                     return new MoveCalcResultStruct(null, squareNameToCastleTo, attackType, attackDir);
                 }
             }
+            else return null;
         }
     }
 }
