@@ -38,43 +38,45 @@ const onLeftClickBoardSquare = (event) => {
     resetAllSquareRedHighlighting();
     let $target = $(event.target);
     let targetColour = rgbToHex($target.css("background-color")).toUpperCase();
-    if (isFirstSquareClicked === false) {
-        //Guard clause for first square clicked not having a piece on it to move
-        if ($target.css("background-image") === "none") return;
+    if (isFirstSquareClicked === false) onPieceSelect($target, targetColour);
+    else if (isFirstSquareClicked === true) onMoveSelect($target);
+};
+const onPieceSelect = ($target, targetColour) => {
+    //Guard clause for first square clicked not having a piece on it to move
+    if ($target.css("background-image") === "none") return;
 
-        //Guard clause for first square clicked having a piece not allowed to move this turn
-        if ($target.data("piece-colour") !== turnManager.getColour().description) return;
+    //Guard clause for first square clicked having a piece not allowed to move this turn
+    if ($target.data("piece-colour") !== turnManager.getColour().description) return;
 
-        //Save selected square data to game-tracking variables
-        $clickedSquare = $target;
-        clickedSquareColour = targetColour;
+    //Save selected square data to game-tracking variables
+    $clickedSquare = $target;
+    clickedSquareColour = targetColour;
 
-        //Apply selected colour
-        if (clickedSquareColour === lightSquareColour) $target.css("background-color", lightSquareSelectedColour);
-        if (clickedSquareColour === darkSquareColour) $target.css("background-color", darkSquareSelectedColour);
+    //Apply selected colour
+    if (clickedSquareColour === lightSquareColour) $target.css("background-color", lightSquareSelectedColour);
+    if (clickedSquareColour === darkSquareColour) $target.css("background-color", darkSquareSelectedColour);
 
-        //Send first selected square to Java code
-        $.ajax({
-            url: "/ReadFirstPieceSelection",
-            contentType: "application/x-www-form-urlencoded",
-            dataType: "json",
-            type: "POST",
-            data: { firstSquare: $target.prop("id"), secondSquare: null },
-            success: executeFirstPieceSelection
-        });
+    //Send first selected square to Java code
+    $.ajax({
+        url: "/ReadFirstPieceSelection",
+        contentType: "application/x-www-form-urlencoded",
+        dataType: "json",
+        type: "POST",
+        data: { firstSquare: $target.prop("id"), secondSquare: null },
+        success: executeFirstPieceSelection
+    });
 
-        //First square has been successfully clicked
-        isFirstSquareClicked = true;
+    //First square has been successfully clicked
+    isFirstSquareClicked = true;
+};
+const onMoveSelect = ($target) => {
+    //Execute move only if both squares have opposite colours of pieces and the move is legal
+    if ($clickedSquare.data("piece-colour") !== $target.data("piece-colour") &&
+        selectedSquares.includes($target.prop("id")))
+    {
+        executePieceMove($clickedSquare, $target);
     }
-    else if (isFirstSquareClicked === true) {
-        //Execute move only if both squares have opposite colours of pieces and the move is legal
-        if ($clickedSquare.data("piece-colour") !== $target.data("piece-colour") &&
-            selectedSquares.includes($target.prop("id")))
-        {
-            executePieceMove($clickedSquare, $target);
-        }
-        resetFirstSquareSelection();
-    }
+    resetFirstSquareSelection();
 };
 const onRightClickBoardSquare = (event) => {
     let $target = $(event.target);
