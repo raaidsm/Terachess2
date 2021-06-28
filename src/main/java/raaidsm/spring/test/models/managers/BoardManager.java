@@ -29,44 +29,44 @@ public class BoardManager {
                 //Add all the initial pieces starting from the top left
 
                 //region Black first rank
-                entry("A8", new Square(new Rook(PieceType.ROOK, Colour.BLACK, "A8"))),
-                entry("B8", new Square(new Knight(PieceType.KNIGHT, Colour.BLACK, "B8"))),
-                entry("C8", new Square(new Bishop(PieceType.BISHOP, Colour.BLACK, "C8"))),
-                entry("D8", new Square(new Queen(PieceType.QUEEN, Colour.BLACK, "D8"))),
-                entry("E8", new Square(new King(PieceType.KING, Colour.BLACK, "E8"))),
-                entry("F8", new Square(new Bishop(PieceType.BISHOP, Colour.BLACK, "F8"))),
-                entry("G8", new Square(new Knight(PieceType.KNIGHT, Colour.BLACK, "G8"))),
-                entry("H8", new Square(new Rook(PieceType.ROOK, Colour.BLACK, "H8"))),
+                entry("A8", new Square("A8", new Rook(PieceType.ROOK, Colour.BLACK, "A8"))),
+                entry("B8", new Square("B8", new Knight(PieceType.KNIGHT, Colour.BLACK, "B8"))),
+                entry("C8", new Square("C8", new Bishop(PieceType.BISHOP, Colour.BLACK, "C8"))),
+                entry("D8", new Square("D8", new Queen(PieceType.QUEEN, Colour.BLACK, "D8"))),
+                entry("E8", new Square("E8", new King(PieceType.KING, Colour.BLACK, "E8"))),
+                entry("F8", new Square("F8", new Bishop(PieceType.BISHOP, Colour.BLACK, "F8"))),
+                entry("G8", new Square("G8", new Knight(PieceType.KNIGHT, Colour.BLACK, "G8"))),
+                entry("H8", new Square("H8", new Rook(PieceType.ROOK, Colour.BLACK, "H8"))),
                 //endregion
                 //region Black second rank
-                entry("A7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "A7"))),
-                entry("B7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "B7"))),
-                entry("C7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "C7"))),
-                entry("D7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "D7"))),
-                entry("E7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "E7"))),
-                entry("F7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "F7"))),
-                entry("G7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "G7"))),
-                entry("H7", new Square(new Pawn(PieceType.PAWN, Colour.BLACK, "H7"))),
+                entry("A7", new Square("A7", new Pawn(PieceType.PAWN, Colour.BLACK, "A7"))),
+                entry("B7", new Square("B7", new Pawn(PieceType.PAWN, Colour.BLACK, "B7"))),
+                entry("C7", new Square("C7", new Pawn(PieceType.PAWN, Colour.BLACK, "C7"))),
+                entry("D7", new Square("D7", new Pawn(PieceType.PAWN, Colour.BLACK, "D7"))),
+                entry("E7", new Square("E7", new Pawn(PieceType.PAWN, Colour.BLACK, "E7"))),
+                entry("F7", new Square("F7", new Pawn(PieceType.PAWN, Colour.BLACK, "F7"))),
+                entry("G7", new Square("G7", new Pawn(PieceType.PAWN, Colour.BLACK, "G7"))),
+                entry("H7", new Square("H7", new Pawn(PieceType.PAWN, Colour.BLACK, "H7"))),
                 //endregion
                 //region White second rank
-                entry("A2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "A2"))),
-                entry("B2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "B2"))),
-                entry("C2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "C2"))),
-                entry("D2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "D2"))),
-                entry("E2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "E2"))),
-                entry("F2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "F2"))),
-                entry("G2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "G2"))),
-                entry("H2", new Square(new Pawn(PieceType.PAWN, Colour.WHITE, "H2"))),
+                entry("A2", new Square("A2", new Pawn(PieceType.PAWN, Colour.WHITE, "A2"))),
+                entry("B2", new Square("B2", new Pawn(PieceType.PAWN, Colour.WHITE, "B2"))),
+                entry("C2", new Square("C2", new Pawn(PieceType.PAWN, Colour.WHITE, "C2"))),
+                entry("D2", new Square("D2", new Pawn(PieceType.PAWN, Colour.WHITE, "D2"))),
+                entry("E2", new Square("E2", new Pawn(PieceType.PAWN, Colour.WHITE, "E2"))),
+                entry("F2", new Square("F2", new Pawn(PieceType.PAWN, Colour.WHITE, "F2"))),
+                entry("G2", new Square("G2", new Pawn(PieceType.PAWN, Colour.WHITE, "G2"))),
+                entry("H2", new Square("H2", new Pawn(PieceType.PAWN, Colour.WHITE, "H2"))),
                 //endregion
                 //region White first rank
-                entry("A1", new Square(new Rook(PieceType.ROOK, Colour.WHITE, "A1"))),
-                entry("B1", new Square(new Knight(PieceType.KNIGHT, Colour.WHITE, "B1"))),
-                entry("C1", new Square(new Bishop(PieceType.BISHOP, Colour.WHITE, "C1"))),
-                entry("D1", new Square(new Queen(PieceType.QUEEN, Colour.WHITE, "D1"))),
-                entry("E1", new Square(new King(PieceType.KING, Colour.WHITE, "E1"))),
-                entry("F1", new Square(new Bishop(PieceType.BISHOP, Colour.WHITE, "F1"))),
-                entry("G1", new Square(new Knight(PieceType.KNIGHT, Colour.WHITE, "G1"))),
-                entry("H1", new Square(new Rook(PieceType.ROOK, Colour.WHITE, "H1")))
+                entry("A1", new Square("A1", new Rook(PieceType.ROOK, Colour.WHITE, "A1"))),
+                entry("B1", new Square("B1", new Knight(PieceType.KNIGHT, Colour.WHITE, "B1"))),
+                entry("C1", new Square("C1", new Bishop(PieceType.BISHOP, Colour.WHITE, "C1"))),
+                entry("D1", new Square("D1", new Queen(PieceType.QUEEN, Colour.WHITE, "D1"))),
+                entry("E1", new Square("E1", new King(PieceType.KING, Colour.WHITE, "E1"))),
+                entry("F1", new Square("F1", new Bishop(PieceType.BISHOP, Colour.WHITE, "F1"))),
+                entry("G1", new Square("G1", new Knight(PieceType.KNIGHT, Colour.WHITE, "G1"))),
+                entry("H1", new Square("H1", new Rook(PieceType.ROOK, Colour.WHITE, "H1")))
                 //endregion
                 //endregion
         ));
@@ -123,9 +123,11 @@ public class BoardManager {
         });
     }
     private void addEmptySquares() {
+        String squareName;
         for (int y = boardLength - 2; 2 < y; y--) {
             for (int x = 0; x < boardLength; x++) {
-                board.put(letters[x] + String.valueOf(y), new Square(null));
+                squareName = letters[x] + String.valueOf(y);
+                board.put(squareName, new Square(squareName, null));
             }
         }
     }

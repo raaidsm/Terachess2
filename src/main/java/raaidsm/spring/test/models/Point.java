@@ -1,6 +1,7 @@
 package raaidsm.spring.test.models;
 
 import raaidsm.spring.test.exceptions.PieceNotOnBoardException;
+import raaidsm.spring.test.models.utils.Direction;
 
 import java.io.Serializable;
 
@@ -10,9 +11,40 @@ public class Point implements Serializable {
     private int x;
     private int y;
 
+    public static Direction getTwoPointDistAndDir(String squareName1, String squareName2) {
+        //OVERVIEW: The two squares must be on the same horizontal or vertical plane, otherwise return -1
+        Point point1 = new Point(squareName1);
+        Point point2 = new Point(squareName2);
+
+        if (point1.x == point2.x) {
+            int dist = point2.y - point1.y;
+            int magnitude = Math.abs(dist);
+            Direction dir;
+
+            if (dist == magnitude) dir = Direction.UP;
+            else dir = Direction.DOWN;
+
+            dir.setMagnitude(magnitude);
+            return dir;
+        }
+        else if (point1.y == point2.y) {
+            int dist = point2.x - point1.x;
+            int magnitude = Math.abs(dist);
+            Direction dir;
+
+            if (dist == magnitude) dir = Direction.RIGHT;
+            else dir = Direction.LEFT;
+
+            dir.setMagnitude(magnitude);
+            return dir;
+        }
+        else return null;
+    }
+
     public Point(String squareName) {
         setPoint(squareName);
     }
+
     public String getPoint() {
         if (x == 0 && y == 0) return "00";
         char letterRep = letters[x - 1];

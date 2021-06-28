@@ -3,6 +3,7 @@ package raaidsm.spring.test.models;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import raaidsm.spring.test.exceptions.InvalidGameException;
+import raaidsm.spring.test.exceptions.InvalidLegalMoveException;
 import raaidsm.spring.test.models.managers.BoardManager;
 import raaidsm.spring.test.models.managers.CheckManager;
 import raaidsm.spring.test.models.moves_and_attacks.AttackOnSquareStruct;
@@ -45,8 +46,11 @@ public class GameEngine {
         //Clear all previous attacks
         clearSquareAttacksAndPins();
 
-        //Take piece-to-move off of first square
+        //Change piece properties according to which piece it is
         Piece pieceToMove = boardManager.getSquare(firstSquare).getContainedPiece();
+        changePiecePropertiesUponMove(pieceToMove, secondSquare);
+
+        //Take piece-to-move off of first square
         boardManager.getSquare(firstSquare).setContainedPiece(null);
 
         //Record and remove piece-to-move-to, if exists
@@ -59,9 +63,6 @@ public class GameEngine {
         //Move piece-to-move to second square
         pieceToMove.setLocation(secondSquare);
         boardManager.getSquare(secondSquare).setContainedPiece(pieceToMove);
-
-        //Change piece properties according to which piece it is
-        changePiecePropertiesUponMove(pieceToMove);
 
         //Move has been made, now calculate all legal moves
         return calculateAllLegalMoves();
@@ -77,25 +78,77 @@ public class GameEngine {
             }
         }
     }
-    private void changePiecePropertiesUponMove(Piece piece) {
+    private void changePiecePropertiesUponMove(Piece pieceMoving, String squareNameToMoveTo) {
         logger.trace("changePiecePropertiesUponMove() runs");
         //If piece that just made a move is a pawn, take away its initial move
-        if (piece.getType() == PieceType.PAWN) {
-            assert piece instanceof Pawn;
-            Pawn pawn = (Pawn)piece;
+        if (pieceMoving.getType() == PieceType.PAWN) {
+            assert pieceMoving instanceof Pawn;
+            Pawn pawn = (Pawn)pieceMoving;
             pawn.removeInitialPawnMove();
         }
         //If piece that just made a move is a king, remove its castling rights
-        if (piece.getType() == PieceType.KING) {
-            assert piece instanceof King;
-            King king = (King)piece;
+        if (pieceMoving.getType() == PieceType.KING) {
+            assert pieceMoving instanceof King;
+            King king = (King)pieceMoving;
             king.removeCastlingRights();
+
+            Direction dirOfMovement = Square.getTwoSquareDistAndDir(king.getLocation(), squareNameToMoveTo);
+            //If movement is 2 squares horizontally (thus meaning a castling move was made)
+            if (dirOfMovement.getMagnitude() == 2
+                    && (dirOfMovement == Direction.LEFT || dirOfMovement == Direction.RIGHT)) {
+                performCastling(king, dirOfMovement);
+            }
         }
         //If piece that just made a move is a rook, remove its castling rights
-        if (piece.getType() == PieceType.ROOK) {
-            assert piece instanceof Rook;
-            Rook rook = (Rook)piece;
+        if (pieceMoving.getType() == PieceType.ROOK) {
+            assert pieceMoving instanceof Rook;
+            Rook rook = (Rook)pieceMoving;
             rook.removeCastlingRights();
+        }
+    }
+    private void performCastling(King king, Direction dirOfMovement) {
+        //OVERVIEW: Castle (meaning move the Rook to the other side of the King)
+
+        //For iterating through squares until Rook is found
+        Point kingLocation = new Point(king.getLocation());
+        int magnitude = 0;
+        dirOfMovement.setMagnitude(++magnitude);
+        String squareNameToMoveRook = kingLocation.findRelativeByXAndY(dirOfMovement.x, dirOfMovement.y);
+
+        //Find Rook to castle with and move it
+        boolean rookMoved = false;
+        while (!rookMoved) {
+            dirOfMovement.setMagnitude(++magnitude);
+            String currentSquareName = kingLocation.findRelativeByXAndY(dirOfMovement.x, dirOfMovement.y);
+            //The end of the board cannot be hit before a Rook is found, as this was determined to be a legal move
+            if (currentSquareName == null) {
+                throw new InvalidLegalMoveException("End of the board cannot be hit before a Rook is found");
+            }
+
+            Square currentSquare = boardManager.getSquare(currentSquareName);
+            Piece currentPiece = currentSquare.getContainedPiece();
+            //Guard clause for square being empty
+            if (currentPiece == null) continue;
+
+            if (currentPiece.getType() == PieceType.ROOK) {
+                Rook rook = (Rook)currentPiece;
+                //Rook must be able to castle, as this was determined to be a legal move
+                if (!rook.isCanCastle()) {
+                    throw new InvalidLegalMoveException("Found Rook cannot be unable to castle");
+                }
+
+                Square squareToMoveRook = boardManager.getSquare(squareNameToMoveRook);
+                //Rook must not be blocked by a piece from moving to where it has to to castle
+                if (squareToMoveRook.getContainedPiece() != null) {
+                    throw new InvalidLegalMoveException("Location to move Rook cannot be occupied");
+                }
+                //Move Rook
+                squareToMoveRook.setContainedPiece(rook);
+                currentSquare.setContainedPiece(null);
+
+                rookMoved = true;
+            }
+            else throw new InvalidLegalMoveException("Can't have a piece between the King and Rook");
         }
     }
 

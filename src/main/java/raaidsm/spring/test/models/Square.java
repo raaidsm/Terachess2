@@ -1,6 +1,7 @@
 package raaidsm.spring.test.models;
 
 import raaidsm.spring.test.models.piece_properties.Colour;
+import raaidsm.spring.test.models.utils.Direction;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,11 +12,22 @@ import java.util.Map;
 import static java.util.Map.entry;
 
 public class Square implements Serializable {
+    private String squareName;
     private Piece containedPiece;
     private final List<Piece> piecesAttacking;
     private final HashMap<String, Boolean> attackingColours;
 
-    public Square(Piece containedPiece) {
+    public static Direction getTwoSquareDistAndDir(Square square1, Square square2) {
+        //OVERVIEW: The two squares must be on the same horizontal or vertical plane
+        return Point.getTwoPointDistAndDir(square1.squareName, square2.squareName);
+    }
+    public static Direction getTwoSquareDistAndDir(String squareName1, String squareName2) {
+        //OVERVIEW: The two squares must be on the same horizontal or vertical plane
+        return Point.getTwoPointDistAndDir(squareName1, squareName2);
+    }
+
+    public Square(String squareName, Piece containedPiece) {
+        this.squareName = squareName;
         this.containedPiece = containedPiece;
         this.piecesAttacking = new ArrayList<>();
         this.attackingColours = new HashMap<>(Map.ofEntries(
