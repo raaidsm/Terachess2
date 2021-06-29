@@ -143,6 +143,7 @@ public class GameEngine {
                     throw new InvalidLegalMoveException("Location to move Rook cannot be occupied");
                 }
                 //Move Rook
+                rook.setLocation(squareNameToMoveRook);
                 squareToMoveRook.setContainedPiece(rook);
                 currentSquare.setContainedPiece(null);
 
