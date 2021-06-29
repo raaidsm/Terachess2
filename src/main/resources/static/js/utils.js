@@ -65,6 +65,18 @@ class Point {
         return letters[tempX - 1] + numberRep;
     }
 }
+class Square {
+    constructor(squareName) {
+        this.squareName = squareName;
+    }
+
+    getSquareNameLetter() {
+        return this.squareName.substring(0, 1);
+    }
+    getSquareNameNumber() {
+        return parseInt(this.squareName.substring(1));
+    }
+}
 //endregion
 
 //region Functions
@@ -101,4 +113,4 @@ const rgbToHex = (col) => {
 };
 //endregion
 
-export { boardLength, letters, Colour, TurnManager, Point, fillGridItem, rgbToHex };
+export { boardLength, letters, Colour, TurnManager, Point, Square, fillGridItem, rgbToHex };

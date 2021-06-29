@@ -1,10 +1,13 @@
 package raaidsm.spring.test.models.managers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import raaidsm.spring.test.models.Piece;
 import raaidsm.spring.test.models.Square;
 import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.piece_properties.PieceType;
 import raaidsm.spring.test.models.pieces.*;
+import raaidsm.spring.test.models.utils.PieceAndPieceTypeStruct;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +17,7 @@ import java.util.Map;
 import static java.util.Map.entry;
 
 public class BoardManager {
+    private final Logger logger = LoggerFactory.getLogger(BoardManager.class);
     private final HashMap<String, Square> board;
     private final int boardLength = 8;
     private final char[] letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
@@ -111,6 +115,28 @@ public class BoardManager {
         //Remove from piece list
         pieceListsByColour.get(pieceToRemove.getColour()).remove(pieceToRemove);
     }
+    public boolean isFirstOrLastRow(String squareName) {
+        //TODO: Default value
+        return false;
+    }
+    public PieceAndPieceTypeStruct promote(Piece pieceToPromote, PieceType toPromoteTo) {
+        //OVERVIEW: Take a Piece and promote it to its selected promotion piece
+        logger.trace("promote() runs");
+
+        //Create new Piece
+        PieceAndPieceTypeStruct promotedPieceAndType = createPieceFromPiece(pieceToPromote, toPromoteTo);
+        Piece promotedPiece = promotedPieceAndType.piece;
+        PieceType promotedPieceType = promotedPieceAndType.pieceType;
+
+        //Remove old Piece
+        removePieceFromBoard(pieceToPromote);
+
+        //Add new Piece (to board and piece list)
+        board.get(promotedPiece.getLocation()).setContainedPiece(promotedPiece);
+        pieceListsByColour.get(promotedPiece.getColour()).add(promotedPiece);
+
+        return new PieceAndPieceTypeStruct(promotedPiece, promotedPieceType);
+    }
 
     private void addBoardToPieces() {
         board.forEach((coordinate, square) -> {
@@ -130,5 +156,18 @@ public class BoardManager {
                 board.put(squareName, new Square(squareName, null));
             }
         }
+    }
+    private PieceAndPieceTypeStruct createPieceFromPiece(Piece templatePiece, PieceType pieceType) {
+        //Take a Piece and create a new Piece based on that Piece
+        Colour colour = templatePiece.getColour();
+        String location = templatePiece.getLocation();
+        Piece piece = switch (pieceType) {
+            case ROOK -> new Rook(pieceType, colour, location);
+            case BISHOP -> new Bishop(pieceType, colour, location);
+            case KNIGHT -> new Knight(pieceType, colour, location);
+            default -> new Queen(pieceType, colour, location);
+        };
+
+        return new PieceAndPieceTypeStruct(piece, pieceType);
     }
 }

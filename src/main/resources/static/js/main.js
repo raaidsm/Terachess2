@@ -1,5 +1,5 @@
 //region Imports
-import { boardLength, letters, Colour, TurnManager, Point, rgbToHex, fillGridItem } from "./utils.js";
+import { boardLength, letters, Colour, TurnManager, Point, Square, rgbToHex, fillGridItem } from "./utils.js";
 //endregion
 
 //region Global Constants
@@ -69,11 +69,21 @@ const onMoveSelect = ($target) => {
     //Execute move only if both squares have opposite colours of pieces and the move is legal
     if ($clickedSquare.data("piece-colour") !== $target.data("piece-colour") &&
         selectedSquares.includes($target.prop("id"))) {
+        let clickedSquareName = $clickedSquare.prop("id");
+        let clickedSquarePieceType = $clickedSquare.data("piece-type");
+        let targetSquareName = $target.prop("id");
+
         //Check if this is a castling move
-        let distBetweenClickedSquares = Point.getHorizontalDist($clickedSquare.prop("id"), $target.prop("id"));
+        let distBetweenClickedSquares = Point.getHorizontalDist(clickedSquareName, targetSquareName);
         if ($clickedSquare.data("piece-type") === "king" && Math.abs(distBetweenClickedSquares) === 2) {
-            performCastling($clickedSquare.prop("id"),
-                distBetweenClickedSquares / Math.abs(distBetweenClickedSquares));
+            performCastling(clickedSquareName, distBetweenClickedSquares / Math.abs(distBetweenClickedSquares));
+        }
+
+        //Check if this is a promotion move
+        //TODO: For now, only promoting to queen
+        let targetSquareRowNum = new Square(targetSquareName).getSquareNameNumber();
+        if (clickedSquarePieceType === "pawn" && (targetSquareRowNum === 1 || targetSquareRowNum === boardLength)) {
+            performPromotion($clickedSquare, "queen");
         }
 
         //Execute move
@@ -123,32 +133,6 @@ const executeFirstPieceSelection = (listOfLegalMovesForPiece) => {
         }
     }
 };
-const performCastling = (squareNameOfKing, dir) => {
-    //OVERVIEW: direction is positive if king is castling to the right, and negative if castling to the left
-    //DEBUGGING
-    console.log("performCastling() runs");
-
-    //For iterating through squares until rook is found
-    let kingLocation = new Point(squareNameOfKing);
-    let magnitude = 0;
-    let squareNameToMoveRook = kingLocation.getRelativePoint(++magnitude * dir, 0);
-    let $squareToMoveRook = $(`#${squareNameToMoveRook}`);
-
-    //Find rook to castle with and move it
-    let rookMoved = false;
-    while (!rookMoved) {
-        //Get current square details
-        let currentSquareName = kingLocation.getRelativePoint(++magnitude * dir, 0);
-        let $currentSquare = $(`#${currentSquareName}`);
-        let currentPieceType = $currentSquare.data("piece-type");
-
-        //Check if current square has rook to castle with
-        if (currentPieceType === "rook") {
-            executePieceMove($currentSquare, $squareToMoveRook, false);
-            rookMoved = true;
-        }
-    }
-};
 const executePieceMove = ($firstSquare, $secondSquare, moveDirectlyMade = true) => {
     //Transfer piece image
     $secondSquare.css("background-image", $firstSquare.css("background-image"));
@@ -177,6 +161,42 @@ const executePieceMove = ($firstSquare, $secondSquare, moveDirectlyMade = true) 
             success: displayGameStatusMessage
         });
     }
+};
+//endregion
+//region Side Effect Functions
+const performCastling = (squareNameOfKing, dir) => {
+    //OVERVIEW: direction is positive if king is castling to the right, and negative if castling to the left
+
+    //For iterating through squares until rook is found
+    let kingLocation = new Point(squareNameOfKing);
+    let magnitude = 0;
+    let squareNameToMoveRook = kingLocation.getRelativePoint(++magnitude * dir, 0);
+    let $squareToMoveRook = $(`#${squareNameToMoveRook}`);
+
+    //Find rook to castle with and move it
+    let rookMoved = false;
+    while (!rookMoved) {
+        //Get current square details
+        let currentSquareName = kingLocation.getRelativePoint(++magnitude * dir, 0);
+        let $currentSquare = $(`#${currentSquareName}`);
+        let currentPieceType = $currentSquare.data("piece-type");
+
+        //Check if current square has rook to castle with
+        if (currentPieceType === "rook") {
+            executePieceMove($currentSquare, $squareToMoveRook, false);
+            rookMoved = true;
+        }
+    }
+};
+const performPromotion = ($pawnSquare, toPromoteTo) => {
+    //Declare details
+    let colour = $pawnSquare.data("piece-colour");
+    let pieceDetails = `${colour}_${toPromoteTo}`;
+
+    //Change square data and background image to reflect the new piece in it
+    $pawnSquare.data("piece-colour", colour);
+    $pawnSquare.data("piece-type", toPromoteTo);
+    $pawnSquare.css("background-image", `url(../images/${pieceDetails}.png)`);
 };
 //endregion
 //region Helper Functions

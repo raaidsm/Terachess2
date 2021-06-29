@@ -48,7 +48,7 @@ public class GameEngine {
 
         //Change piece properties according to which piece it is
         Piece pieceToMove = boardManager.getSquare(firstSquare).getContainedPiece();
-        changePiecePropertiesUponMove(pieceToMove, secondSquare);
+        pieceToMove = applyMoveSideEffects(pieceToMove, secondSquare);
 
         //Take piece-to-move off of first square
         boardManager.getSquare(firstSquare).setContainedPiece(null);
@@ -78,16 +78,26 @@ public class GameEngine {
             }
         }
     }
-    private void changePiecePropertiesUponMove(Piece pieceMoving, String squareNameToMoveTo) {
+    private Piece applyMoveSideEffects(Piece pieceMoving, String squareNameToMoveTo) {
+        //OVERVIEW: Applies side effects that certain moves have, and return the promoted piece if one is created
         logger.trace("changePiecePropertiesUponMove() runs");
         //If piece that just made a move is a pawn, take away its initial move
         if (pieceMoving.getType() == PieceType.PAWN) {
             assert pieceMoving instanceof Pawn;
             Pawn pawn = (Pawn)pieceMoving;
             pawn.removeInitialPawnMove();
+
+            //Promotion
+            if (boardManager.isFirstOrLastRow(pawn.getLocation())) {
+                //Then promote the Pawn
+                //TODO: For now Pawns only promote to Queens
+                return boardManager.promote(pawn, PieceType.QUEEN).piece;
+            }
+
+            return pawn;
         }
         //If piece that just made a move is a king, remove its castling rights
-        if (pieceMoving.getType() == PieceType.KING) {
+        else if (pieceMoving.getType() == PieceType.KING) {
             assert pieceMoving instanceof King;
             King king = (King)pieceMoving;
             king.removeCastlingRights();
@@ -98,13 +108,18 @@ public class GameEngine {
                     && (dirOfMovement == Direction.LEFT || dirOfMovement == Direction.RIGHT)) {
                 performCastling(king, dirOfMovement);
             }
+
+            return king;
         }
         //If piece that just made a move is a rook, remove its castling rights
-        if (pieceMoving.getType() == PieceType.ROOK) {
+        else if (pieceMoving.getType() == PieceType.ROOK) {
             assert pieceMoving instanceof Rook;
             Rook rook = (Rook)pieceMoving;
             rook.removeCastlingRights();
+
+            return rook;
         }
+        else return pieceMoving;
     }
     private void performCastling(King king, Direction dirOfMovement) {
         //OVERVIEW: Castle (meaning move the Rook to the other side of the King)
