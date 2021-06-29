@@ -54,10 +54,6 @@ class Point {
         else return null
     }
 
-    getPoint() {
-        if (this.x === 0 && this.y === 0) return "00";
-        return letters[this.x - 1] + this.y;
-    }
     getRelativePoint(shiftX, shiftY) {
         if (this.x === 0 && this.y === 0) return null;
         let tempX = this.x + shiftX;

@@ -71,8 +71,6 @@ const onMoveSelect = ($target) => {
         selectedSquares.includes($target.prop("id"))) {
         //Check if this is a castling move
         let distBetweenClickedSquares = Point.getHorizontalDist($clickedSquare.prop("id"), $target.prop("id"));
-        //DEBUGGING
-        console.log(distBetweenClickedSquares);
         if ($clickedSquare.data("piece-type") === "king" && Math.abs(distBetweenClickedSquares) === 2) {
             performCastling($clickedSquare.prop("id"),
                 distBetweenClickedSquares / Math.abs(distBetweenClickedSquares));
