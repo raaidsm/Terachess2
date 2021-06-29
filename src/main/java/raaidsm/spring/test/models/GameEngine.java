@@ -88,7 +88,7 @@ public class GameEngine {
             pawn.removeInitialPawnMove();
 
             //Promotion
-            if (boardManager.isFirstOrLastRow(pawn.getLocation())) {
+            if (boardManager.isFirstOrLastRow(squareNameToMoveTo)) {
                 //Then promote the Pawn
                 //TODO: For now Pawns only promote to Queens
                 return boardManager.promote(pawn, PieceType.QUEEN).piece;

@@ -116,8 +116,8 @@ public class BoardManager {
         pieceListsByColour.get(pieceToRemove.getColour()).remove(pieceToRemove);
     }
     public boolean isFirstOrLastRow(String squareName) {
-        //TODO: Default value
-        return false;
+        int numberRep = Integer.parseInt(squareName.substring(1));
+        return numberRep == 1 || numberRep == boardLength;
     }
     public PieceAndPieceTypeStruct promote(Piece pieceToPromote, PieceType toPromoteTo) {
         //OVERVIEW: Take a Piece and promote it to its selected promotion piece
@@ -168,6 +168,7 @@ public class BoardManager {
             default -> new Queen(pieceType, colour, location);
         };
 
+        piece.setBoardManager(this);
         return new PieceAndPieceTypeStruct(piece, pieceType);
     }
 }
