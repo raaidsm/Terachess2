@@ -1,5 +1,6 @@
 //region Constants
 const boardLength = 8;
+const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];   //Please make this array automatic this is horrendous
 const blackFirstRank = ["black_rook", "black_knight", "black_bishop", "black_queen", "black_king",
     "black_bishop", "black_knight", "black_rook"];
 const blackSecondRank = ["black_pawn", "black_pawn", "black_pawn", "black_pawn", "black_pawn",
@@ -29,6 +30,43 @@ class TurnManager {
     switchColour() {
         if (this.colour === Colour.WHITE) this.colour = Colour.BLACK;
         else if (this.colour === Colour.BLACK) this.colour = Colour.WHITE;
+    }
+}
+class Point {
+    constructor(squareName) {
+        this.x = 0;
+        this.y = 0;
+        if (squareName == null) return;
+
+        let letterRep = squareName.substring(0, 1);
+        let numberRep = parseInt(squareName.substring(1));
+        this.x = letters.indexOf(letterRep) + 1;
+        this.y = numberRep;
+    }
+
+    static getHorizontalDist(squareName1, squareName2) {
+        let point1 = new Point(squareName1);
+        let point2 = new Point(squareName2);
+
+        if (point1.y === point2.y) {
+            return point2.x - point1.x;
+        }
+        else return null
+    }
+
+    getPoint() {
+        if (this.x === 0 && this.y === 0) return "00";
+        return letters[this.x - 1] + this.y;
+    }
+    getRelativePoint(shiftX, shiftY) {
+        if (this.x === 0 && this.y === 0) return null;
+        let tempX = this.x + shiftX;
+        let numberRep = this.y + shiftY;
+
+        if (boardLength < tempX || boardLength < numberRep) return null;
+        if (tempX < 1 || numberRep < 1) return null;
+
+        return letters[tempX - 1] + numberRep;
     }
 }
 //endregion
@@ -67,4 +105,4 @@ const rgbToHex = (col) => {
 };
 //endregion
 
-export { boardLength, Colour, TurnManager, fillGridItem, rgbToHex };
+export { boardLength, letters, Colour, TurnManager, Point, fillGridItem, rgbToHex };

@@ -1,12 +1,8 @@
 //region Imports
-import { boardLength, Colour, TurnManager, rgbToHex, fillGridItem } from "./utils.js";
+import { boardLength, letters, Colour, TurnManager, Point, rgbToHex, fillGridItem } from "./utils.js";
 //endregion
 
 //region Global Constants
-//region Board Details
-const gridItemTemplate = "<div class='gridItem'></div>";
-const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];   //Please make this array automatic this is horrendous
-//endregion
 //region Board-Square Colours
 const lightSquareColour = "#EEEED2";
 const darkSquareColour = "#769656";
@@ -72,8 +68,17 @@ const onPieceSelect = ($target, targetColour) => {
 const onMoveSelect = ($target) => {
     //Execute move only if both squares have opposite colours of pieces and the move is legal
     if ($clickedSquare.data("piece-colour") !== $target.data("piece-colour") &&
-        selectedSquares.includes($target.prop("id")))
-    {
+        selectedSquares.includes($target.prop("id"))) {
+        //Check if this is a castling move
+        let distBetweenClickedSquares = Point.getHorizontalDist($clickedSquare.prop("id"), $target.prop("id"));
+        //DEBUGGING
+        console.log(distBetweenClickedSquares);
+        if ($clickedSquare.data("piece-type") === "king" && Math.abs(distBetweenClickedSquares) === 2) {
+            performCastling($clickedSquare.prop("id"),
+                distBetweenClickedSquares / Math.abs(distBetweenClickedSquares));
+        }
+
+        //Execute move
         executePieceMove($clickedSquare, $target);
     }
     resetFirstSquareSelection();
@@ -120,7 +125,33 @@ const executeFirstPieceSelection = (listOfLegalMovesForPiece) => {
         }
     }
 };
-const executePieceMove = ($firstSquare, $secondSquare) => {
+const performCastling = (squareNameOfKing, dir) => {
+    //OVERVIEW: direction is positive if king is castling to the right, and negative if castling to the left
+    //DEBUGGING
+    console.log("performCastling() runs");
+
+    //For iterating through squares until rook is found
+    let kingLocation = new Point(squareNameOfKing);
+    let magnitude = 0;
+    let squareNameToMoveRook = kingLocation.getRelativePoint(++magnitude * dir, 0);
+    let $squareToMoveRook = $(`#${squareNameToMoveRook}`);
+
+    //Find rook to castle with and move it
+    let rookMoved = false;
+    while (!rookMoved) {
+        //Get current square details
+        let currentSquareName = kingLocation.getRelativePoint(++magnitude * dir, 0);
+        let $currentSquare = $(`#${currentSquareName}`);
+        let currentPieceType = $currentSquare.data("piece-type");
+
+        //Check if current square has rook to castle with
+        if (currentPieceType === "rook") {
+            executePieceMove($currentSquare, $squareToMoveRook, false);
+            rookMoved = true;
+        }
+    }
+};
+const executePieceMove = ($firstSquare, $secondSquare, moveDirectlyMade = true) => {
     //Transfer piece image
     $secondSquare.css("background-image", $firstSquare.css("background-image"));
     $firstSquare.css("background-image", "none");
@@ -131,21 +162,23 @@ const executePieceMove = ($firstSquare, $secondSquare) => {
     $firstSquare.removeData("piece-colour");
     $firstSquare.removeData("piece-type");
 
-    //Display the square moved from and the square moved to
-    $("#squareNameDisplay").val(`${$firstSquare.prop("id")} - ${$secondSquare.prop("id")}`);
+    if (moveDirectlyMade) {
+        //Display the square moved from and the square moved to
+        $("#squareNameDisplay").val(`${$firstSquare.prop("id")} - ${$secondSquare.prop("id")}`);
 
-    //Switch turn colour
-    turnManager.switchColour();
+        //Switch turn colour
+        turnManager.switchColour();
 
-    //Communicate the two selected squares to rest controller
-    $.ajax({
-        url: "/ReadMove",
-        contentType: "application/x-www-form-urlencoded",
-        dataType: "text",
-        type: "POST",
-        data: { firstSquare: $firstSquare.prop("id"), secondSquare: $secondSquare.prop("id") },
-        success: displayGameStatusMessage
-    });
+        //Communicate the two selected squares to rest controller
+        $.ajax({
+            url: "/ReadMove",
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "text",
+            type: "POST",
+            data: { firstSquare: $firstSquare.prop("id"), secondSquare: $secondSquare.prop("id") },
+            success: displayGameStatusMessage
+        });
+    }
 };
 //endregion
 //region Helper Functions
@@ -238,6 +271,7 @@ $(function() {
     for (let y = boardLength; 0 < y; y--) {
         for (let x = 0; x < boardLength; x++) {
             //Initialize square
+            const gridItemTemplate = "<div class='gridItem'></div>";
             let $gridItem = $(gridItemTemplate);
 
             //Set square name and colour
