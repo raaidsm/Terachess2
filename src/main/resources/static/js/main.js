@@ -1,5 +1,5 @@
 //region Imports
-import { boardLength, letters, Colour, TurnManager, Point, Square, rgbToHex, fillGridItem } from "./utils.js";
+import { boardLength, letters, TurnManager, Point, Square, rgbToHex, fillGridItem } from "./utils.js";
 //endregion
 
 //region Global Constants
@@ -42,7 +42,7 @@ const onPieceSelect = ($target, targetColour) => {
     if ($target.css("background-image") === "none") return;
 
     //Guard clause for first square clicked having a piece not allowed to move this turn
-    if ($target.data("piece-colour") !== turnManager.getColour().description) return;
+    if ($target.data("piece-colour") !== turnManager.getCurrentTurnColour().description) return;
 
     //Save selected square data to game-tracking variables
     $clickedSquare = $target;
@@ -149,7 +149,7 @@ const executePieceMove = ($firstSquare, $secondSquare, moveDirectlyMade = true) 
         $("#squareNameDisplay").val(`${$firstSquare.prop("id")} - ${$secondSquare.prop("id")}`);
 
         //Switch turn colour
-        turnManager.switchColour();
+        turnManager.switchCurrentTurnColour();
 
         //Communicate the two selected squares to rest controller
         $.ajax({

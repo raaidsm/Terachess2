@@ -21,16 +21,21 @@ const Colour = Object.freeze({
 //region Classes
 class TurnManager {
     constructor() {
-        this.colour = Colour.WHITE;
+        this.currentTurnColour = Colour.WHITE;
+        this.
     }
 
-    getColour() {
-        return this.colour;
+    getCurrentTurnColour() {
+        return this.currentTurnColour;
     }
-    switchColour() {
-        if (this.colour === Colour.WHITE) this.colour = Colour.BLACK;
-        else if (this.colour === Colour.BLACK) this.colour = Colour.WHITE;
+    switchCurrentTurnColour() {
+        if (this.currentTurnColour === Colour.WHITE) this.currentTurnColour = Colour.BLACK;
+        else if (this.currentTurnColour === Colour.BLACK) this.currentTurnColour = Colour.WHITE;
     }
+    setEnPassant() {
+
+    }
+    isTurnToRemoveEnPassant() {}
 }
 class Point {
     constructor(squareName) {
