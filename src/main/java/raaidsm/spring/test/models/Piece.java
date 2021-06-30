@@ -6,6 +6,7 @@ import raaidsm.spring.test.models.managers.BoardManager;
 import raaidsm.spring.test.models.moves_and_attacks.*;
 import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.pieces.King;
+import raaidsm.spring.test.models.pieces.Pawn;
 import raaidsm.spring.test.models.square_properties.SqrStat;
 import raaidsm.spring.test.models.square_properties.SquarePreviewStruct;
 import raaidsm.spring.test.models.utils.*;
@@ -240,9 +241,15 @@ public class Piece implements Serializable {
         if (squareName == null) {
             return new SquarePreviewStruct(SqrStat.NO_SQUARE, null, null, null);
         }
-        Piece pieceAtSquare = boardManager.getSquare(squareName).getContainedPiece();
+        Square square = boardManager.getSquare(squareName);
+        Piece pieceAtSquare = square.getContainedPiece();
         if (pieceAtSquare == null) {
-            return new SquarePreviewStruct(SqrStat.EMPTY, squareName, null, null);
+            if (square.getShadowedPawn() != null) {
+                return new SquarePreviewStruct(SqrStat.EMPTY, squareName, null, null, square.getShadowedPawn());
+            }
+            else {
+                return new SquarePreviewStruct(SqrStat.EMPTY, squareName, null, null);
+            }
         }
         if (pieceAtSquare.getType() == PieceType.KING) {
             return new SquarePreviewStruct(SqrStat.KING, squareName, pieceAtSquare, pieceAtSquare.getColour());

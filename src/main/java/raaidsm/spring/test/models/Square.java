@@ -1,6 +1,7 @@
 package raaidsm.spring.test.models;
 
 import raaidsm.spring.test.models.piece_properties.Colour;
+import raaidsm.spring.test.models.pieces.Pawn;
 import raaidsm.spring.test.models.utils.Direction;
 
 import java.io.Serializable;
@@ -16,6 +17,7 @@ public class Square implements Serializable {
     private Piece containedPiece;
     private final List<Piece> piecesAttacking;
     private final HashMap<String, Boolean> attackingColours;
+    private Pawn shadowedPawn;
 
     public static Direction getTwoSquareDistAndDir(Square square1, Square square2) {
         //OVERVIEW: The two squares must be on the same horizontal or vertical plane
@@ -29,11 +31,12 @@ public class Square implements Serializable {
     public Square(String squareName, Piece containedPiece) {
         this.squareName = squareName;
         this.containedPiece = containedPiece;
-        this.piecesAttacking = new ArrayList<>();
-        this.attackingColours = new HashMap<>(Map.ofEntries(
+        piecesAttacking = new ArrayList<>();
+        attackingColours = new HashMap<>(Map.ofEntries(
                 entry(Colour.WHITE.toString(), Boolean.valueOf("false")),
                 entry(Colour.BLACK.toString(), Boolean.valueOf("false"))
         ));
+        shadowedPawn = null;
     }
 
     public Piece getContainedPiece() {
@@ -41,6 +44,15 @@ public class Square implements Serializable {
     }
     public void setContainedPiece(Piece containedPiece) {
         this.containedPiece = containedPiece;
+    }
+    public void setShadowedPawn(Pawn shadowedPawn) {
+        this.shadowedPawn = shadowedPawn;
+    }
+    public void removeShadowedPawn() {
+        shadowedPawn = null;
+    }
+    public Pawn getShadowedPawn() {
+        return shadowedPawn;
     }
 
     public boolean isAttacked(Colour clrOfPieceAsking) {

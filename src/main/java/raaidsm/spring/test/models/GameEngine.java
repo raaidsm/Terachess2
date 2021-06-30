@@ -48,16 +48,21 @@ public class GameEngine {
 
         //Change piece properties according to which piece it is
         Piece pieceToMove = boardManager.getSquare(firstSquare).getContainedPiece();
+        Square squareToMoveTo = boardManager.getSquare(secondSquare);
+        Pawn shadowedPawn = squareToMoveTo.getShadowedPawn();
         pieceToMove = applyMoveSideEffects(pieceToMove, secondSquare);
 
         //Take piece-to-move off of first square
         boardManager.getSquare(firstSquare).setContainedPiece(null);
 
         //Record and remove piece-to-move-to, if exists
-        Piece pieceToMoveTo = boardManager.getSquare(secondSquare).getContainedPiece();
+        Piece pieceToMoveTo = squareToMoveTo.getContainedPiece();
         if (pieceToMoveTo != null) {
             boardManager.removePieceFromBoard(pieceToMoveTo);
             //TODO: Record the captured piece
+        }
+        else if (shadowedPawn != null) {
+            boardManager.removePieceFromBoard(shadowedPawn);
         }
 
         //Move piece-to-move to second square
@@ -81,14 +86,25 @@ public class GameEngine {
     private Piece applyMoveSideEffects(Piece pieceMoving, String squareNameToMoveTo) {
         //OVERVIEW: Applies side effects that certain moves have, and return the promoted piece if one is created
         logger.trace("changePiecePropertiesUponMove() runs");
+
+        //Global
+        if (turnManager.isTurnToRemoveEnPassant()) boardManager.removeShadowPawn(turnManager.getCurrentTurnColour());
+
+        //Based on piece
         //If piece that just made a move is a pawn, take away its initial move
         if (pieceMoving.getType() == PieceType.PAWN) {
             assert pieceMoving instanceof Pawn;
             Pawn pawn = (Pawn)pieceMoving;
             pawn.removeInitialPawnMove();
 
-            //Promotion
-            if (boardManager.isFirstOrLastRow(squareNameToMoveTo)) {
+            Direction dirOfMovement = Square.getTwoSquareDistAndDir(pawn.getLocation(), squareNameToMoveTo);
+            //Checking for Initial Pawn Move and Promotion
+            if (dirOfMovement != null && dirOfMovement.getMagnitude() == 2
+                    && (dirOfMovement == Direction.UP || dirOfMovement == Direction.DOWN)) {
+                boardManager.setShadowPawn(pawn, dirOfMovement);
+                turnManager.setEnPassant();
+            }
+            else if (boardManager.isFirstOrLastRow(squareNameToMoveTo)) {
                 //Then promote the Pawn
                 //TODO: For now Pawns only promote to Queens
                 return boardManager.promote(pawn, PieceType.QUEEN).piece;

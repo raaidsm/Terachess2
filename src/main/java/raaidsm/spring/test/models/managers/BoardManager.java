@@ -3,10 +3,12 @@ package raaidsm.spring.test.models.managers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import raaidsm.spring.test.models.Piece;
+import raaidsm.spring.test.models.Point;
 import raaidsm.spring.test.models.Square;
 import raaidsm.spring.test.models.piece_properties.Colour;
 import raaidsm.spring.test.models.piece_properties.PieceType;
 import raaidsm.spring.test.models.pieces.*;
+import raaidsm.spring.test.models.utils.Direction;
 import raaidsm.spring.test.models.utils.PieceAndPieceTypeStruct;
 
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ public class BoardManager {
     private final int boardLength = 8;
     private final char[] letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
     private final HashMap<Colour, List<Piece>> pieceListsByColour;
+    private final HashMap<Colour, Square> shadowPawnSquaresByColour;
 
     public BoardManager() {
         pieceListsByColour = new HashMap<>(Map.ofEntries(
@@ -73,6 +76,10 @@ public class BoardManager {
                 entry("H1", new Square("H1", new Rook(PieceType.ROOK, Colour.WHITE, "H1")))
                 //endregion
                 //endregion
+        ));
+        shadowPawnSquaresByColour = new HashMap<>(Map.ofEntries(
+                entry(Colour.WHITE, new Square(null, null)),
+                entry(Colour.BLACK, new Square(null, null))
         ));
 
         addBoardToPieces();
@@ -136,6 +143,27 @@ public class BoardManager {
         pieceListsByColour.get(promotedPiece.getColour()).add(promotedPiece);
 
         return new PieceAndPieceTypeStruct(promotedPiece, promotedPieceType);
+    }
+    public void setShadowPawn(Pawn originalPawn, Direction dirOfMovement) {
+        if (dirOfMovement != Direction.UP && dirOfMovement != Direction.DOWN) {
+            throw new RuntimeException("Must set shadow pawn vertically");
+        }
+
+        int y = dirOfMovement == Direction.UP ? 1 : -1;
+        Point originalPawnPoint = new Point(originalPawn.getLocation());
+        String shadowPawnSquareName = originalPawnPoint.findRelativeByXAndY(0, y);
+        if (shadowPawnSquareName == null) {
+            throw new RuntimeException("Cannot set a shadow pawn on a non-existent square");
+        }
+        Square shadowPawnSquare = board.get(shadowPawnSquareName);
+
+        //Square has been found. Set the pawn it shadows and add it to the hashmap to track
+        shadowPawnSquare.setShadowedPawn(originalPawn);
+        shadowPawnSquaresByColour.put(originalPawn.getColour(), shadowPawnSquare);
+    }
+    public void removeShadowPawn(Colour currentTurnColour) {
+        shadowPawnSquaresByColour.get(currentTurnColour).removeShadowedPawn();
+        shadowPawnSquaresByColour.put(currentTurnColour, new Square(null, null));
     }
 
     private void addBoardToPieces() {

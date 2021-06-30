@@ -93,6 +93,10 @@ public class Pawn extends Piece {
         Piece piece = preview.piece;
         //Guard clause for relative point going off the board
         if (status == SqrStat.NO_SQUARE) return null;
+        //Square has a shadow pawn that can be captured
+        if (preview.shadowPawn != null) {
+            return new MoveCalcResultStruct(null, squareName, attackType, attackDir);
+        }
         //Guard clause for there being no piece to capture
         if (status == SqrStat.EMPTY) {
             return new MoveCalcResultStruct(null, squareName, attackType, attackDir, false);
