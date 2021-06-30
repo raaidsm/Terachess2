@@ -22,7 +22,6 @@ const Colour = Object.freeze({
 class TurnManager {
     constructor() {
         this.currentTurnColour = Colour.WHITE;
-        this.
     }
 
     getCurrentTurnColour() {
@@ -32,10 +31,6 @@ class TurnManager {
         if (this.currentTurnColour === Colour.WHITE) this.currentTurnColour = Colour.BLACK;
         else if (this.currentTurnColour === Colour.BLACK) this.currentTurnColour = Colour.WHITE;
     }
-    setEnPassant() {
-
-    }
-    isTurnToRemoveEnPassant() {}
 }
 class Point {
     constructor(squareName) {
@@ -49,7 +44,7 @@ class Point {
         this.y = numberRep;
     }
 
-    static getHorizontalDist(squareName1, squareName2) {
+    static getHorizontalDistOnSamePlane(squareName1, squareName2) {
         let point1 = new Point(squareName1);
         let point2 = new Point(squareName2);
 
@@ -58,8 +53,20 @@ class Point {
         }
         else return null
     }
+    static getVerticalDist(squareName1, squareName2) {
+        let point1 = new Point(squareName1);
+        let point2 = new Point(squareName2);
 
-    getRelativePoint(shiftX, shiftY) {
+        return point2.y - point1.y;
+    }
+    static getHorizontalDist(squareName1, squareName2) {
+        let point1 = new Point(squareName1);
+        let point2 = new Point(squareName2);
+
+        return point2.x - point1.x;
+    }
+
+    getRelativeSquareName(shiftX, shiftY) {
         if (this.x === 0 && this.y === 0) return null;
         let tempX = this.x + shiftX;
         let numberRep = this.y + shiftY;

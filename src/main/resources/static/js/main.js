@@ -74,9 +74,20 @@ const onMoveSelect = ($target) => {
         let targetSquareName = $target.prop("id");
 
         //Check if this is a castling move
-        let distBetweenClickedSquares = Point.getHorizontalDist(clickedSquareName, targetSquareName);
-        if ($clickedSquare.data("piece-type") === "king" && Math.abs(distBetweenClickedSquares) === 2) {
-            performCastling(clickedSquareName, distBetweenClickedSquares / Math.abs(distBetweenClickedSquares));
+        let kingMoveHorizontalDist = Point.getHorizontalDistOnSamePlane(clickedSquareName, targetSquareName);
+        if ($clickedSquare.data("piece-type") === "king" && Math.abs(kingMoveHorizontalDist) === 2) {
+            performCastling(clickedSquareName, kingMoveHorizontalDist / Math.abs(kingMoveHorizontalDist));
+        }
+
+        //Check if this is an en passant move
+        let pawnMoveVerticalDist = Point.getVerticalDist(clickedSquareName, targetSquareName);
+        let pawnMoveHorizontalDist = Point.getHorizontalDist(clickedSquareName, targetSquareName);
+        if (Math.abs(pawnMoveVerticalDist) === 1 && Math.abs(pawnMoveHorizontalDist) === 1) {
+            //Then this pawn move is a diagonal capture
+            if ($target.data("piece-type") === undefined && $target.data("piece-colour") === undefined) {
+                //Then there is no actual piece to capture at this square, meaning en passant was performed
+                performEnPassant($clickedSquare, pawnMoveHorizontalDist);
+            }
         }
 
         //Check if this is a promotion move
@@ -170,14 +181,14 @@ const performCastling = (squareNameOfKing, dir) => {
     //For iterating through squares until rook is found
     let kingLocation = new Point(squareNameOfKing);
     let magnitude = 0;
-    let squareNameToMoveRook = kingLocation.getRelativePoint(++magnitude * dir, 0);
+    let squareNameToMoveRook = kingLocation.getRelativeSquareName(++magnitude * dir, 0);
     let $squareToMoveRook = $(`#${squareNameToMoveRook}`);
 
     //Find rook to castle with and move it
     let rookMoved = false;
     while (!rookMoved) {
         //Get current square details
-        let currentSquareName = kingLocation.getRelativePoint(++magnitude * dir, 0);
+        let currentSquareName = kingLocation.getRelativeSquareName(++magnitude * dir, 0);
         let $currentSquare = $(`#${currentSquareName}`);
         let currentPieceType = $currentSquare.data("piece-type");
 
@@ -187,6 +198,14 @@ const performCastling = (squareNameOfKing, dir) => {
             rookMoved = true;
         }
     }
+};
+const performEnPassant = ($pawnSquare, pawnMoveHorizontalDist) => {
+    //Remove piece image
+    $pawnSquare.css("background-image", "none");
+
+    //Remove piece data properties
+    $pawnSquare.removeData("piece-colour");
+    $pawnSquare.removeData("piece-type");
 };
 const performPromotion = ($pawnSquare, toPromoteTo) => {
     //Declare details

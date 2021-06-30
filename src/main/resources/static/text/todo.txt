@@ -25,6 +25,7 @@ USER CONVENIENCE:
 -Display something with the side text when King is captured
 
 REFACTORING:
+-Move classes out from utils.js into their own modules
 -Generate front-end board with back-end results
 -Just...refactor MoveCalcResultsStruct
   -Consider merging attackedSquareName and checkedSquareName into one variable
