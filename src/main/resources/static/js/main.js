@@ -82,7 +82,8 @@ const onMoveSelect = ($target) => {
         //Check if this is an en passant move
         let pawnMoveVerticalDist = Point.getVerticalDist(clickedSquareName, targetSquareName);
         let pawnMoveHorizontalDist = Point.getHorizontalDist(clickedSquareName, targetSquareName);
-        if (Math.abs(pawnMoveVerticalDist) === 1 && Math.abs(pawnMoveHorizontalDist) === 1) {
+        if ($clickedSquare.data("piece-type") === "pawn" &&
+            Math.abs(pawnMoveVerticalDist) === 1 && Math.abs(pawnMoveHorizontalDist) === 1) {
             //Then this pawn move is a diagonal capture
             if ($target.data("piece-type") === undefined && $target.data("piece-colour") === undefined) {
                 //Then there is no actual piece to capture at this square, meaning en passant was performed
