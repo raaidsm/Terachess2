@@ -199,13 +199,19 @@ const performCastling = (squareNameOfKing, dir) => {
         }
     }
 };
-const performEnPassant = ($pawnSquare, pawnMoveHorizontalDist) => {
+const performEnPassant = ($capturingPawnSquare, pawnMoveHorizontalDist) => {
+    //Find adjacent square with pawn that was captured
+    let capturingPawnSquareName = $capturingPawnSquare.prop("id");
+    let capturingPawnPoint = new Point(capturingPawnSquareName);
+    let capturedPawnSquareName = capturingPawnPoint.getRelativeSquareName(pawnMoveHorizontalDist, 0);
+    let $capturedPawnSquare = $(`#${capturedPawnSquareName}`);
+
     //Remove piece image
-    $pawnSquare.css("background-image", "none");
+    $capturedPawnSquare.css("background-image", "none");
 
     //Remove piece data properties
-    $pawnSquare.removeData("piece-colour");
-    $pawnSquare.removeData("piece-type");
+    $capturedPawnSquare.removeData("piece-colour");
+    $capturedPawnSquare.removeData("piece-type");
 };
 const performPromotion = ($pawnSquare, toPromoteTo) => {
     //Declare details
