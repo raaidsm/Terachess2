@@ -5,7 +5,7 @@ CURRENT COMMIT:
 -Implement executing a castling move
 
 BUGS:
--Placeholder
+-Fix being able to castle while under check
 
 FEATURES:
 -Implement castling
