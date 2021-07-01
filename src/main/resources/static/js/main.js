@@ -1,5 +1,8 @@
 //region Imports
-import { boardLength, letters, TurnManager, Point, Square, rgbToHex, fillGridItem } from "./utils.js";
+import {boardLength, letters, rgbToHex, fillGridItem} from "./utils.js";
+import TurnManager from "./turn_manager.js";
+import Point from "./point.js";
+import Square from "./square.js";
 //endregion
 
 //region Global Constants

@@ -11,86 +11,6 @@ const whiteFirstRank = ["white_rook", "white_knight", "white_bishop", "white_que
     "white_bishop", "white_knight", "white_rook"];
 //endregion
 
-//region Enums
-const Colour = Object.freeze({
-    WHITE: Symbol("white"),
-    BLACK: Symbol("black")
-});
-//endregion
-
-//region Classes
-class TurnManager {
-    constructor() {
-        this.currentTurnColour = Colour.WHITE;
-    }
-
-    getCurrentTurnColour() {
-        return this.currentTurnColour;
-    }
-    switchCurrentTurnColour() {
-        if (this.currentTurnColour === Colour.WHITE) this.currentTurnColour = Colour.BLACK;
-        else if (this.currentTurnColour === Colour.BLACK) this.currentTurnColour = Colour.WHITE;
-    }
-}
-class Point {
-    constructor(squareName) {
-        this.x = 0;
-        this.y = 0;
-        if (squareName == null) return;
-
-        let letterRep = squareName.substring(0, 1);
-        let numberRep = parseInt(squareName.substring(1));
-        this.x = letters.indexOf(letterRep) + 1;
-        this.y = numberRep;
-    }
-
-    static getHorizontalDistOnSamePlane(squareName1, squareName2) {
-        let point1 = new Point(squareName1);
-        let point2 = new Point(squareName2);
-
-        if (point1.y === point2.y) {
-            return point2.x - point1.x;
-        }
-        else return null
-    }
-    static getVerticalDist(squareName1, squareName2) {
-        let point1 = new Point(squareName1);
-        let point2 = new Point(squareName2);
-
-        return point2.y - point1.y;
-    }
-    static getHorizontalDist(squareName1, squareName2) {
-        let point1 = new Point(squareName1);
-        let point2 = new Point(squareName2);
-
-        return point2.x - point1.x;
-    }
-
-    getRelativeSquareName(shiftX, shiftY) {
-        if (this.x === 0 && this.y === 0) return null;
-        let tempX = this.x + shiftX;
-        let numberRep = this.y + shiftY;
-
-        if (boardLength < tempX || boardLength < numberRep) return null;
-        if (tempX < 1 || numberRep < 1) return null;
-
-        return letters[tempX - 1] + numberRep;
-    }
-}
-class Square {
-    constructor(squareName) {
-        this.squareName = squareName;
-    }
-
-    getSquareNameLetter() {
-        return this.squareName.substring(0, 1);
-    }
-    getSquareNameNumber() {
-        return parseInt(this.squareName.substring(1));
-    }
-}
-//endregion
-
 //region Functions
 const fillGridItem = ($gridItem, iRow, iColumn) => {
     //Set grid item's background properties
@@ -125,4 +45,4 @@ const rgbToHex = (col) => {
 };
 //endregion
 
-export { boardLength, letters, Colour, TurnManager, Point, Square, fillGridItem, rgbToHex };
+export { boardLength, letters, fillGridItem, rgbToHex };
