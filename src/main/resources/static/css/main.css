@@ -5,6 +5,10 @@ body {
   font-weight: bolder;
 }
 
+main {
+  margin: 2vh 11vw;
+}
+
 h1 {
   margin: 20px 0;
   border-bottom: 2px solid lightgrey;
@@ -16,36 +20,41 @@ h1 {
   text-align: center;
 }
 
-#mainInputOutput {
-  margin-bottom: 20px;
-}
-
-.textInput {
+.text-output {
+  margin-bottom: 1rem;
   background-color: #272522;
   color: #DBD9D7;
 }
 
-#mainGrid {
-  margin-bottom: 20px;
-  display: grid;
-  width: 50%;
-  grid-template-columns: repeat(8, 1fr);
+.flex-item {
+  display: inline-block;
+  width: 49%;
 }
 
-#mainGrid > div::before {
+#mainGrid {
+  display: inline-grid;
+  vertical-align: top;
+  grid-template-columns: repeat(8, 1fr);
+}
+#mainGrid div::before {
   content: "";
   padding-bottom: 100%;
   display: block;
 }
 
-.flexContainer {
+#gameData {
+  padding-top: 2rem;
+  padding-left: 2rem;
+}
+
+.flex-container {
   /*display: flex;
   flex-direction: column;
   justify-content: flex-start;
   justify-content: space-around;*/
 }
 
-.gridContainer {
+.grid-container {
   /*grid-template-columns: 25% 75%;
   grid-template-columns: 1fr 1fr;
   grid-template-columns: repeat(8, 1fr);

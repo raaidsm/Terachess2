@@ -265,7 +265,7 @@ const displayGameStatusMessage = (gameStatus) => {
             message = "Game Continues";
             break;
     }
-    $("#gameResult").text(message);
+    $("#gameResult").val(message);
 };
 const addToHighlightedSquares = ($target) => {
     //Append to list of red-highlighted squares

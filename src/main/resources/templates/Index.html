@@ -18,16 +18,18 @@
     <title>Index</title>
 </head>
 <body>
-<main class="container">
+<main>
     <h1>Welcome to the testing grounds for the future implementation of Terachess!</h1>
-    <section id="mainInputOutput">
-        <label for="squareNameDisplay">Last square you've just clicked on:</label><br>
-        <input id="squareNameDisplay" class="textInput" type="text" name="squareNameDisplay">
-    </section>
-    <section id="mainGrid" class="gridContainer"></section>
-    <section id="game-status">
-        <p id="gameResult">Bottom Text</p>
-    </section>
+    <div class="flex-container" display="flex">
+        <section id="mainGrid" class="flex-item grid-container"></section>
+        <section id="gameData" class="flex-item">
+            <label for="squareNameDisplay">Last action on squares:</label><br>
+            <input id="squareNameDisplay" class="text-output" type="text">
+            <br>
+            <label for="gameResult">Game Status:</label><br>
+            <input id="gameResult" class="text-output" type="text">
+        </section>
+    </div>
 </main>
 </body>
 </html>
