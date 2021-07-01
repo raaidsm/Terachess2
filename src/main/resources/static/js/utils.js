@@ -1,4 +1,3 @@
-//region Constants
 const boardLength = 8;
 const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];   //Please make this array automatic this is horrendous
 const blackFirstRank = ["black_rook", "black_knight", "black_bishop", "black_queen", "black_king",
@@ -9,9 +8,7 @@ const whiteSecondRank = ["white_pawn", "white_pawn", "white_pawn", "white_pawn",
     "white_pawn", "white_pawn", "white_pawn"];
 const whiteFirstRank = ["white_rook", "white_knight", "white_bishop", "white_queen", "white_king",
     "white_bishop", "white_knight", "white_rook"];
-//endregion
 
-//region Functions
 const fillGridItem = ($gridItem, iRow, iColumn) => {
     //Set grid item's background properties
     $gridItem.css("background-size", "cover");
@@ -43,6 +40,5 @@ const rgbToHex = (col) => {
         return '#' + r + g + b;
     }
 };
-//endregion
 
 export { boardLength, letters, fillGridItem, rgbToHex };
