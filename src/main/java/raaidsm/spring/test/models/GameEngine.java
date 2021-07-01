@@ -120,7 +120,7 @@ public class GameEngine {
 
             Direction dirOfMovement = Square.getTwoSquareDistAndDir(king.getLocation(), squareNameToMoveTo);
             //If movement is 2 squares horizontally (thus meaning a castling move was made)
-            if (dirOfMovement.getMagnitude() == 2
+            if (dirOfMovement != null && dirOfMovement.getMagnitude() == 2
                     && (dirOfMovement == Direction.LEFT || dirOfMovement == Direction.RIGHT)) {
                 performCastling(king, dirOfMovement);
             }
