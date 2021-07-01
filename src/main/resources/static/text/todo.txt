@@ -2,15 +2,13 @@ CURRENTLY DOING:
 -Placeholder
 
 CURRENT COMMIT:
--Implement executing a castling move
+-Placeholder
 
 BUGS:
 -Fix being able to castle while under check
 
 FEATURES:
--Implement castling
-  -Implement executing a castling move
--Implement pawn promotion
+-Implement choosing pawn promotion piece
 -Implement draw conditions such as too many turns without captures, repetition, insufficient material, etc.
 -Over the Internet:
   -Host game on server somehow
@@ -22,10 +20,8 @@ FEATURES:
 
 USER CONVENIENCE:
 -Implement restarting the game through the front-end
--Display something with the side text when King is captured
 
 REFACTORING:
--Move classes out from utils.js into their own modules
 -Generate front-end board with back-end results
 -Just...refactor MoveCalcResultsStruct
   -Consider merging attackedSquareName and checkedSquareName into one variable
