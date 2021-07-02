@@ -10,6 +10,7 @@ BUGS:
 FEATURES:
 -Implement two people making the moves on the same board
 -Implement game only taking messages from one side at a time
+-Implement flipping the board for player playing black
 -Implement front-end waiting for back-end before continuing
 -Implement choosing pawn promotion piece
 -Implement draw conditions such as too many turns without captures, repetition, insufficient material, etc.
