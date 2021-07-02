@@ -214,6 +214,14 @@ const executePieceMove = ($firstSquare, $secondSquare, moveDirectlyMade = true) 
         //Switch turn colour
         turnManager.switchCurrentTurnColour();
 
+        //Communicate the two selected squares to the other player
+        const moveMade = {
+            type: "CHAT",
+            sender: username,
+            content: `${$firstSquare.prop("id")}-${$secondSquare.prop("id")}`
+        }
+        stompClient.send("/app/chat.send", {}, JSON.stringify(moveMade));
+
         //Communicate the two selected squares to rest controller
         $.ajax({
             url: "/ReadMove",
