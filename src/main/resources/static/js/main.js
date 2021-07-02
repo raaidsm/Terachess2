@@ -30,7 +30,49 @@ let highlightedSquaresNames = [];
 //endregion
 //endregion
 
-//region Event Handlers
+//region SockJS and StompJS Communication Functions
+const connect = (event) => {
+    username = $("#username").val().trim();
+
+    if (username) {
+        const socket = new SockJS("/chat-example");
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, onConnected, onError);
+    }
+    event.preventDefault();
+}
+const onConnected = () => {
+    stompClient.subscribe('/topic/public', onMessageReceived)
+    stompClient.send("/app/chat.newUser",
+        {},
+        JSON.stringify({sender: username, type: "CONNECT"})
+    );
+}
+const onError = (error) => {
+    alert("Something went wrong with the websockets..." + error);
+}
+const sendMessage = (event) => {
+    const messageInput = $("#sendMessage");
+    const messageContent = messageInput.val().trim();
+
+    if (messageContent && stompClient) {
+        const chatMessage = {
+            type: "CHAT",
+            sender: username,
+            content: messageContent
+        }
+        stompClient.send("/app/chat.send", {}, JSON.stringify(chatMessage));
+    }
+    event.preventDefault();
+}
+const onMessageReceived = (payload) => {
+    const receivedMessage = JSON.parse(payload.body);
+    const messageContent = receivedMessage.content;
+
+    if (receivedMessage.type === "CHAT") $("#receiveMessage").val(messageContent);
+}
+//endregion
+//region Board Event Handlers
 const onClickBoardSquare = (event) => {
     if (event.button === 0) {
         onLeftClickBoardSquare(event);
@@ -346,5 +388,10 @@ $(function() {
         //Flip the colour for the next square
         doLightSquare = doLightSquare === false;
     }
+    //endregion
+
+    //region Set event handlers for WebSocket communication
+    $("#usernameForm").on("submit", connect);
+    $("#messageForm").on("submit", sendMessage);
     //endregion
 });
