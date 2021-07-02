@@ -5,7 +5,6 @@ import {boardLength, letters, rgbToHex, fillGridItem} from "./utils.js";
 import TurnManager from "./turn_manager.js";
 import Point from "./point.js";
 import Square from "./square.js";
-import StompResources from "./stomp.js";
 //endregion
 
 //region Global Constants
@@ -18,7 +17,6 @@ const lightSquareSelectedColour = "#0073FF";
 const darkSquareSelectedColour = "#005FD4";
 //endregion
 //region SockJS and Stomp Variables
-const Stomp = StompResources.Stomp;
 let stompClient = null;
 let username = null;
 //endregion
