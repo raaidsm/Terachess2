@@ -26,6 +26,7 @@ USER CONVENIENCE:
 -Implement restarting the game through the front-end
 
 REFACTORING:
+-Implement efficient way of executing a move on the front-end using just the move details
 -Generate front-end board with back-end results
 -Just...refactor MoveCalcResultsStruct
   -Consider merging attackedSquareName and checkedSquareName into one variable

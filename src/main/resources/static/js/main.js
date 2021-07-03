@@ -69,8 +69,22 @@ const onMessageReceived = (payload) => {
     const receivedMessage = JSON.parse(payload.body);
     const messageContent = receivedMessage.content;
 
-    if (receivedMessage.type === "CHAT") $("#receiveMessage").val(messageContent);
+    //Execute the communicated move only if the message is sent by another user
+    if (receivedMessage.type === "MOVE" && receivedMessage.sender !== username) {
+        let moves = messageContent.split("-");
+        makeMove(...moves);
+    }
+
+    //Display on input box for received messages
+    if (receivedMessage.type === "CHAT" || receivedMessage.type === "MOVE") $("#receiveMessage").val(messageContent);
 }
+const makeMove = (move1, move2) => {
+    //This function should ideally be made to integrate with the existing ways to execute a move at some point
+    let $move1Square = $("#" + move1);
+    let $move2Square = $("#" + move2);
+    $move1Square.mousedown();
+    $move2Square.mousedown();
+};
 //endregion
 //region Board Event Handlers
 const onClickBoardSquare = (event) => {
@@ -215,12 +229,14 @@ const executePieceMove = ($firstSquare, $secondSquare, moveDirectlyMade = true) 
         turnManager.switchCurrentTurnColour();
 
         //Communicate the two selected squares to the other player
-        const moveMade = {
-            type: "CHAT",
-            sender: username,
-            content: `${$firstSquare.prop("id")}-${$secondSquare.prop("id")}`
+        if (stompClient) {
+            const moveMade = {
+                type: "MOVE",
+                sender: username,
+                content: `${$firstSquare.prop("id")}-${$secondSquare.prop("id")}`
+            }
+            stompClient.send("/app/chat.send", {}, JSON.stringify(moveMade));
         }
-        stompClient.send("/app/chat.send", {}, JSON.stringify(moveMade));
 
         //Communicate the two selected squares to rest controller
         $.ajax({
