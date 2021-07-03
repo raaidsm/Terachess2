@@ -82,8 +82,7 @@ const makeMove = (move1, move2) => {
     //This function should ideally be made to integrate with the existing ways to execute a move at some point
     let $move1Square = $("#" + move1);
     let $move2Square = $("#" + move2);
-    $move1Square.mousedown();
-    $move2Square.mousedown();
+    executePieceMove($move1Square, $move2Square, false);
 };
 //endregion
 //region Board Event Handlers
@@ -134,35 +133,6 @@ const onMoveSelect = ($target) => {
     //Execute move only if both squares have opposite colours of pieces and the move is legal
     if ($clickedSquare.data("piece-colour") !== $target.data("piece-colour") &&
         selectedSquares.includes($target.prop("id"))) {
-        let clickedSquareName = $clickedSquare.prop("id");
-        let clickedSquarePieceType = $clickedSquare.data("piece-type");
-        let targetSquareName = $target.prop("id");
-
-        //Check if this is a castling move
-        let kingMoveHorizontalDist = Point.getHorizontalDistOnSamePlane(clickedSquareName, targetSquareName);
-        if ($clickedSquare.data("piece-type") === "king" && Math.abs(kingMoveHorizontalDist) === 2) {
-            performCastling(clickedSquareName, kingMoveHorizontalDist / Math.abs(kingMoveHorizontalDist));
-        }
-
-        //Check if this is an en passant move
-        let pawnMoveVerticalDist = Point.getVerticalDist(clickedSquareName, targetSquareName);
-        let pawnMoveHorizontalDist = Point.getHorizontalDist(clickedSquareName, targetSquareName);
-        if ($clickedSquare.data("piece-type") === "pawn" &&
-            Math.abs(pawnMoveVerticalDist) === 1 && Math.abs(pawnMoveHorizontalDist) === 1) {
-            //Then this pawn move is a diagonal capture
-            if ($target.data("piece-type") === undefined && $target.data("piece-colour") === undefined) {
-                //Then there is no actual piece to capture at this square, meaning en passant was performed
-                performEnPassant($clickedSquare, pawnMoveHorizontalDist);
-            }
-        }
-
-        //Check if this is a promotion move
-        //TODO: For now, only promoting to queen
-        let targetSquareRowNum = new Square(targetSquareName).getSquareNameNumber();
-        if (clickedSquarePieceType === "pawn" && (targetSquareRowNum === 1 || targetSquareRowNum === boardLength)) {
-            performPromotion($clickedSquare, "queen");
-        }
-
         //Execute move
         executePieceMove($clickedSquare, $target);
     }
@@ -210,7 +180,42 @@ const executeFirstPieceSelection = (listOfLegalMovesForPiece) => {
         }
     }
 };
-const executePieceMove = ($firstSquare, $secondSquare, moveDirectlyMade = true) => {
+const executePieceMove = ($firstSquare, $secondSquare,
+                          isDirectlyMadeMove = true, isMainEffect = true) => {
+    if (isMainEffect) {
+        let clickedSquareName = $firstSquare.prop("id");
+        let clickedSquarePieceType = $firstSquare.data("piece-type");
+        let targetSquareName = $secondSquare.prop("id");
+
+        //Check if this is a castling move
+        let kingMoveHorizontalDist = Point.getHorizontalDistOnSamePlane(clickedSquareName, targetSquareName);
+        if ($firstSquare.data("piece-type") === "king" && Math.abs(kingMoveHorizontalDist) === 2) {
+            performCastling(clickedSquareName, kingMoveHorizontalDist / Math.abs(kingMoveHorizontalDist));
+        }
+
+        //Check if this is an en passant move
+        let pawnMoveVerticalDist = Point.getVerticalDist(clickedSquareName, targetSquareName);
+        let pawnMoveHorizontalDist = Point.getHorizontalDist(clickedSquareName, targetSquareName);
+        if ($firstSquare.data("piece-type") === "pawn" &&
+            Math.abs(pawnMoveVerticalDist) === 1 && Math.abs(pawnMoveHorizontalDist) === 1) {
+            //Then this pawn move is a diagonal capture
+            if ($secondSquare.data("piece-type") === undefined && $secondSquare.data("piece-colour") === undefined) {
+                //Then there is no actual piece to capture at this square, meaning en passant was performed
+                performEnPassant($firstSquare, pawnMoveHorizontalDist);
+            }
+        }
+
+        //Check if this is a promotion move
+        //TODO: For now, only promoting to queen
+        let targetSquareRowNum = new Square(targetSquareName).getSquareNameNumber();
+        if (clickedSquarePieceType === "pawn" && (targetSquareRowNum === 1 || targetSquareRowNum === boardLength)) {
+            performPromotion($firstSquare, "queen");
+        }
+
+        //Switch turn colour
+        turnManager.switchCurrentTurnColour();
+    }
+
     //Transfer piece image
     $secondSquare.css("background-image", $firstSquare.css("background-image"));
     $firstSquare.css("background-image", "none");
@@ -221,12 +226,9 @@ const executePieceMove = ($firstSquare, $secondSquare, moveDirectlyMade = true) 
     $firstSquare.removeData("piece-colour");
     $firstSquare.removeData("piece-type");
 
-    if (moveDirectlyMade) {
+    if (isDirectlyMadeMove) {
         //Display the square moved from and the square moved to
         $("#squareNameDisplay").val(`${$firstSquare.prop("id")} - ${$secondSquare.prop("id")}`);
-
-        //Switch turn colour
-        turnManager.switchCurrentTurnColour();
 
         //Communicate the two selected squares to the other player
         if (stompClient) {
@@ -270,7 +272,7 @@ const performCastling = (squareNameOfKing, dir) => {
 
         //Check if current square has rook to castle with
         if (currentPieceType === "rook") {
-            executePieceMove($currentSquare, $squareToMoveRook, false);
+            executePieceMove($currentSquare, $squareToMoveRook, false, false);
             rookMoved = true;
         }
     }
