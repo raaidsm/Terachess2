@@ -5,7 +5,7 @@ CURRENT COMMIT:
 -Placeholder
 
 BUGS:
--Fix being able to castle while under check
+-Fix checkmate and last-made-move not displaying properly
 
 FEATURES:
 -Implement two people making the moves on the same board

@@ -74,8 +74,12 @@ public class King extends Piece {
         return new MoveCalcResultStruct(null, squareName, attackType, attackDir);
     }
     private MoveCalcResultStruct checkForCastling(Direction dir) {
-        //If no castling rights, just immediately return null
+        //Guard clause for not having castling rights
         if (!canCastle) return null;
+
+        //Guard clause for being under check
+        Square kingSquare = boardManager.getSquare(getLocation());
+        if (kingSquare.isAttacked(colour)) return null;
 
         //AttackType and AttackDir for this collection of attacks (yes, collection even though there's only one)
         AttackType attackType = AttackType.DEFENSIVE;
