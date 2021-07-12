@@ -35,7 +35,7 @@ const connect = (event) => {
     username = $("#username").val().trim();
 
     if (username) {
-        const socket = new SockJS("/chat-example");
+        const socket = new SockJS("/generic-endpoint");
         stompClient = Stomp.over(socket);
         stompClient.connect({}, onConnected, onError);
     }
@@ -43,7 +43,7 @@ const connect = (event) => {
 }
 const onConnected = () => {
     stompClient.subscribe('/topic/public', onMessageReceived)
-    stompClient.send("/app/chat.newUser",
+    stompClient.send("/app/new-user",
         {},
         JSON.stringify({sender: username, type: "CONNECT"})
     );
@@ -61,7 +61,7 @@ const sendMessage = (event) => {
             sender: username,
             content: messageContent
         }
-        stompClient.send("/app/chat.send", {}, JSON.stringify(chatMessage));
+        stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
     }
     event.preventDefault();
 }
@@ -237,7 +237,7 @@ const executePieceMove = ($firstSquare, $secondSquare,
                 sender: username,
                 content: `${$firstSquare.prop("id")}-${$secondSquare.prop("id")}`
             }
-            stompClient.send("/app/chat.send", {}, JSON.stringify(moveMade));
+            stompClient.send("/app/move", {}, JSON.stringify(moveMade));
         }
 
         //Communicate the two selected squares to rest controller

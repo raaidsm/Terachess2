@@ -11,16 +11,22 @@ import java.util.Objects;
 
 @Controller
 public class ChatController {
-    @MessageMapping("/chat.send")
+    @MessageMapping("/new-user")
+    @SendTo("/topic/public")
+    public ChatMessage newUser(@Payload final ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
+        Objects.requireNonNull(headerAccessor.getSessionAttributes()).put("username", chatMessage.getSender());
+        return chatMessage;
+    }
+
+    @MessageMapping("/message")
     @SendTo("/topic/public")
     public ChatMessage sendMessage(@Payload final ChatMessage chatMessage) {
         return chatMessage;
     }
 
-    @MessageMapping("/chat.newUser")
+    @MessageMapping("/move")
     @SendTo("/topic/public")
-    public ChatMessage newUser(@Payload final ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
-        Objects.requireNonNull(headerAccessor.getSessionAttributes()).put("username", chatMessage.getSender());
+    public ChatMessage makeMove(@Payload final ChatMessage chatMessage) {
         return chatMessage;
     }
 }
