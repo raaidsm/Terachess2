@@ -1,0 +1,10 @@
+CREATE TABLE colours (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    colour_name VARCHAR(10)
+);
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(20),
+    colour VARCHAR(10)
+);
