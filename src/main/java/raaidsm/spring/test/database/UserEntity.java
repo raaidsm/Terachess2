@@ -5,13 +5,13 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
+public class UserEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String colourName;
+    private String name;
 
-    public User() {}
+    public UserEntity() {}
 
     public Integer getId() {
         return id;
@@ -19,10 +19,10 @@ public class User implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    public String getColourName() {
-        return colourName;
+    public String getName() {
+        return name;
     }
-    public void setColourName(String colourName) {
-        this.colourName = colourName;
+    public void setName(String name) {
+        this.name = name;
     }
 }
