@@ -12,19 +12,19 @@ public class UserDataServiceImpl {
         this.colourDataService = colourDataService;
     }
 
-    public boolean addUser(String username) {
-        //OVERVIEW: Returns true if new user for the current game can be created, false otherwise
+    public String addUser(String username) {
+        //OVERVIEW: Returns colour of the newly created user, null if both colours are taken up
         //Initialize user to be created
         UserEntity userToBeCreated = new UserEntity();
         userToBeCreated.setName(username);
 
         //Check available colour
         String availableColour = colourDataService.getNextAvailableColour();
-        if (availableColour == null) return false;
+        if (availableColour == null) return null;
         userToBeCreated.setColour(availableColour);
 
         //Add user to database and return true
         userRepo.save(userToBeCreated);
-        return true;
+        return availableColour;
     }
 }
