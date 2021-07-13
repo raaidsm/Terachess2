@@ -8,15 +8,10 @@ BUGS:
 -Fix checkmate and last-made-move not displaying properly
 
 FEATURES:
--Implement two people making the moves on the same board
--Implement game only taking messages from one side at a time
 -Implement flipping the board for player playing black
 -Implement front-end waiting for back-end before continuing
 -Implement choosing pawn promotion piece
 -Implement draw conditions such as too many turns without captures, repetition, insufficient material, etc.
--Over the Internet:
-  -Host game on server somehow
-  -Implement WebSockets to host communication with another person
 -Move Recording:
   -Record captured pieces
   -Implement saving of moves in client-side storage (IndexedDB)
@@ -24,6 +19,7 @@ FEATURES:
 
 USER CONVENIENCE:
 -Implement more secure way of sending user confirmation to specific users
+-Implement verifying user identity in the database whenever they make a move
 -Implement restarting the game through the front-end
 
 REFACTORING:
