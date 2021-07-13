@@ -106,6 +106,8 @@ const makeMove = (move1, move2) => {
 //region Board Event Handlers
 const onClickBoardSquare = (event) => {
     if (event.button === 0) {
+        //Guard clause for users not being able to move pieces this turn
+        if (turnManager.currentTurnColour.description !== userColour) return;
         onLeftClickBoardSquare(event);
     }
     else if (event.button === 2) {
