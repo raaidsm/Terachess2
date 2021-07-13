@@ -30,11 +30,15 @@ public class WebSocketEventListeners {
     public void handleWebSocketDisconnectedListener(final SessionDisconnectEvent event) {
         final StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
         final String username = (String) Objects.requireNonNull(headerAccessor.getSessionAttributes()).get("username");
+
+        //If the user never actually registered then say nothing
+        if (username == null) return;
+
         final ChatMessage chatMessage = ChatMessage.builder()
                 .type(MessageType.DISCONNECT)
                 .sender(username)
+                .content(username + " disconnected!")
                 .build();
-
         sendingOperations.convertAndSend("/topic/public", chatMessage);
     }
 }

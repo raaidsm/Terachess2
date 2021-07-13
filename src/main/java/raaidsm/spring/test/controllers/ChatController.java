@@ -26,15 +26,20 @@ public class ChatController {
     @SendTo("/topic/public")
     public ChatMessage newUser(@Payload final ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
         String currentUserColourName = userDataService.addUser(chatMessage.getSender());
-        ChatMessage newChatMessage = chatMessage;
+        ChatMessage newChatMessage = null;
         if (currentUserColourName != null) {
             Objects.requireNonNull(headerAccessor.getSessionAttributes()).put("username", chatMessage.getSender());
+            newChatMessage = ChatMessage.builder()
+                    .type(chatMessage.getType())
+                    .sender(chatMessage.getSender())
+                    .content(chatMessage.getSender() + " connected!")
+                    .build();
         }
         else {
             newChatMessage = ChatMessage.builder()
-                    .type(MessageType.REJECTED)
+                    .type(MessageType.REJECT)
                     .sender(chatMessage.getSender())
-                    .content("User has been rejected. Game is full!")
+                    .content("User rejected. Game is full!")
                     .build();
         }
         return newChatMessage;

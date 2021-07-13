@@ -69,14 +69,26 @@ const onMessageReceived = (payload) => {
     const receivedMessage = JSON.parse(payload.body);
     const messageContent = receivedMessage.content;
 
-    //Execute the communicated move only if the message is sent by another user
-    if (receivedMessage.type === "MOVE" && receivedMessage.sender !== username) {
+    //Execute the communicated move only if sent by another user
+    if (receivedMessage.sender !== username && receivedMessage.type === "MOVE") {
         let moves = messageContent.split("-");
         makeMove(...moves);
     }
 
-    //Display on input box for received messages
-    if (receivedMessage.type === "CHAT" || receivedMessage.type === "MOVE") $("#receiveMessage").val(messageContent);
+    //Display messages from opponents
+    if (receivedMessage.sender !== username && (
+        receivedMessage.type === "CHAT" ||
+        receivedMessage.type === "MOVE")) {
+        $("#receiveMessage").val(messageContent);
+    }
+
+    //Display connection messages
+    if (
+        receivedMessage.type === "CONNECT" ||
+        receivedMessage.type === "REJECT" ||
+        receivedMessage.type === "DISCONNECT") {
+        $("#receiveMessage").val(messageContent);
+    }
 }
 const makeMove = (move1, move2) => {
     //This function should ideally be made to integrate with the existing ways to execute a move at some point
