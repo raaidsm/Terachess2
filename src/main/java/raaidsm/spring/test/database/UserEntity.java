@@ -10,6 +10,7 @@ public class UserEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    private String colour;
 
     public UserEntity() {}
 
@@ -24,5 +25,11 @@ public class UserEntity implements Serializable {
     }
     public void setName(String name) {
         this.name = name;
+    }
+    public String getColour() {
+        return colour;
+    }
+    public void setColour(String colour) {
+        this.colour = colour;
     }
 }
