@@ -26,13 +26,14 @@ public class ChatController {
     @SendTo("/topic/public")
     public ChatMessage newUser(@Payload final ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
         String currentUserColourName = userDataService.addUser(chatMessage.getSender());
-        ChatMessage newChatMessage = null;
+        ChatMessage newChatMessage;
         if (currentUserColourName != null) {
             Objects.requireNonNull(headerAccessor.getSessionAttributes()).put("username", chatMessage.getSender());
             newChatMessage = ChatMessage.builder()
                     .type(chatMessage.getType())
                     .sender(chatMessage.getSender())
                     .content(chatMessage.getSender() + " connected!")
+                    .userColour(currentUserColourName)
                     .build();
         }
         else {

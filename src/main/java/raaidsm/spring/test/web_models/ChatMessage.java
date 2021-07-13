@@ -11,4 +11,6 @@ public class ChatMessage {
     private String content;
     @Getter
     private String sender;
+    @Getter
+    private String userColour;
 }

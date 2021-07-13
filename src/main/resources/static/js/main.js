@@ -19,6 +19,7 @@ const darkSquareSelectedColour = "#005FD4";
 //region SockJS and Stomp Variables
 let stompClient = null;
 let username = null;
+let userColour = null;
 //endregion
 //region Game-Tracking Variables
 const turnManager = new TurnManager();
@@ -88,6 +89,11 @@ const onMessageReceived = (payload) => {
         receivedMessage.type === "REJECT" ||
         receivedMessage.type === "DISCONNECT") {
         $("#receiveMessage").val(messageContent);
+    }
+
+    //If the current user was just connected, save their assigned colour
+    if (receivedMessage.sender === username && receivedMessage.type === "CONNECT") {
+        userColour = receivedMessage.userColour;
     }
 }
 const makeMove = (move1, move2) => {
