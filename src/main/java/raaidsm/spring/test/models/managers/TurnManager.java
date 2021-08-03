@@ -11,16 +11,21 @@ import static java.util.Map.entry;
 
 public class TurnManager {
     private final Logger logger = LoggerFactory.getLogger(TurnManager.class);
+    private int currentTurnNumber;
     private Colour currentTurnColour;
     private final HashMap<Colour, Integer> enPassantTimersByColour;
 
     public TurnManager() {
-        this.currentTurnColour = Colour.WHITE;
+        currentTurnNumber = 0;
+        currentTurnColour = Colour.WHITE;
         enPassantTimersByColour = new HashMap<>(Map.ofEntries(
                 entry(Colour.WHITE, 0), entry(Colour.BLACK, 0)
         ));
     }
 
+    public int incrementTurnNumber() {
+        return ++currentTurnNumber;
+    }
     public Colour getCurrentTurnColour() {
         return currentTurnColour;
     }

@@ -85,12 +85,8 @@ public class GameEngine {
     }
     private Piece applyMoveSideEffects(Piece pieceMoving, String squareNameToMoveTo) {
         //OVERVIEW: Applies side effects that certain moves have, and return the promoted piece if one is created
-        logger.trace("changePiecePropertiesUponMove() runs");
+        logger.trace("applyMoveSideEffects() runs");
 
-        //Global
-        if (turnManager.isTurnToRemoveEnPassant()) boardManager.removeShadowPawn(turnManager.getCurrentTurnColour());
-
-        //Based on piece
         //If piece that just made a move is a pawn, take away its initial move
         if (pieceMoving.getType() == PieceType.PAWN) {
             assert pieceMoving instanceof Pawn;
@@ -240,6 +236,10 @@ public class GameEngine {
 
         //Set tracking variables for next turn
         checkManager.clearChecks();
+        if (turnManager.isTurnToRemoveEnPassant()) {
+            boardManager.removeShadowPawn(turnManager.getCurrentTurnColour());
+        }
+        logger.trace("Turn " + turnManager.incrementTurnNumber() + " begins");
         turnManager.switchCurrentTurnColour();
         checkManager.setCurrentTurnColour(turnManager.getCurrentTurnColour());
 
