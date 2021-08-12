@@ -6,6 +6,7 @@ CURRENT COMMIT:
 
 BUGS:
 -Fix checkmate and last-made-move not displaying properly
+-Fix multi check case not accounting for being able to block double check from a piece that attacks through another
 
 FEATURES:
 -Implement flipping the board for player playing black
