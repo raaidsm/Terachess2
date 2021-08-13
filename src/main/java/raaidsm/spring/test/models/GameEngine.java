@@ -204,6 +204,8 @@ public class GameEngine {
         */
         logger.trace("calculateAllLegalMoves() runs");
 
+        startOfMoveCalculation();
+
         //Declare pieces to calculate all legal moves for
         List<Piece> currentPlayerPieces = boardManager.getPieceListByColour(turnManager.getCurrentTurnColour());
         King currentPlayerKing = boardManager.popKingFromPieceListByColour(currentPlayerPieces);
@@ -300,15 +302,15 @@ public class GameEngine {
         }
         return legalMovesFound;
     }
-    private void endOfMoveCalculation() {
-        checkManager.clearChecks();
+    private void startOfMoveCalculation() {
         if (turnManager.isTurnToRemoveEnPassant()) {
             //DEBUGGING
             logger.trace("Removing en passant for colour: " + turnManager.getCurrentTurnColour());
             boardManager.removeShadowPawn(turnManager.getCurrentTurnColour());
         }
+    }
+    private void endOfMoveCalculation() {
+        checkManager.clearChecks();
         logger.trace("Turn " + turnManager.incrementTurnNumber() + " begins");
-        //DEBUGGING
-        logger.trace("Current turn colour: " + turnManager.getCurrentTurnColour());
     }
 }
