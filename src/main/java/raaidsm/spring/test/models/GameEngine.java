@@ -97,7 +97,11 @@ public class GameEngine {
             //Checking for Initial Pawn Move and Promotion
             if (dirOfMovement != null && dirOfMovement.getMagnitude() == 2
                     && (dirOfMovement == Direction.UP || dirOfMovement == Direction.DOWN)) {
+                //DEBUGGING
+                logger.trace("Setting shadow pawn for pawn: " + pawn);
                 boardManager.setShadowPawn(pawn, dirOfMovement);
+                //DEBUGGING
+                logger.trace("Setting en passant timer for colour: " + turnManager.getCurrentTurnColour());
                 turnManager.setEnPassant();
             }
             else if (boardManager.isFirstOrLastRow(squareNameToMoveTo)) {
@@ -205,9 +209,8 @@ public class GameEngine {
         //Special Multi-Check Case
         if (1 < checkManager.numOfChecks()) {
             piecesHaveLegalMoves = caseMultiCheck(currentPlayerPieces);
-            checkManager.clearChecks();
-            turnManager.switchCurrentTurnColour();
-            checkManager.setCurrentTurnColour(turnManager.getCurrentTurnColour());
+            endOfMoveCalculation();
+
             if (piecesHaveLegalMoves) return GameStatus.LIVE;
             else return GameStatus.CHECKMATE;
         }
@@ -234,16 +237,9 @@ public class GameEngine {
         //Reduce Moves Due to Check
         if (checkManager.isCheck()) piecesHaveLegalMoves = reduceMovesDueToCheck(currentPlayerPieces);
 
-        //Set tracking variables for next turn
-        checkManager.clearChecks();
-        if (turnManager.isTurnToRemoveEnPassant()) {
-            boardManager.removeShadowPawn(turnManager.getCurrentTurnColour());
-        }
-        logger.trace("Turn " + turnManager.incrementTurnNumber() + " begins");
-        turnManager.switchCurrentTurnColour();
-        checkManager.setCurrentTurnColour(turnManager.getCurrentTurnColour());
+        endOfMoveCalculation();
 
-        //Return game status at the end of the turn
+        //Return game status at the end of move calculation
         if (piecesHaveLegalMoves || kingHasLegalMoves) return GameStatus.LIVE;
         else return GameStatus.CHECKMATE;
     }
@@ -296,5 +292,17 @@ public class GameEngine {
             if (hasMoves) legalMovesFound = true;
         }
         return legalMovesFound;
+    }
+    private void endOfMoveCalculation() {
+        checkManager.clearChecks();
+        if (turnManager.isTurnToRemoveEnPassant()) {
+            //DEBUGGING
+            logger.trace("Removing en passant for colour: " + turnManager.getCurrentTurnColour());
+            boardManager.removeShadowPawn(turnManager.getCurrentTurnColour());
+        }
+        logger.trace("Turn " + turnManager.incrementTurnNumber() + " begins");
+        //DEBUGGING
+        logger.trace("Current turn colour: " + turnManager.getCurrentTurnColour());
+        checkManager.setCurrentTurnColour(turnManager.switchCurrentTurnColour());
     }
 }

@@ -29,9 +29,10 @@ public class TurnManager {
     public Colour getCurrentTurnColour() {
         return currentTurnColour;
     }
-    public void switchCurrentTurnColour() {
+    public Colour switchCurrentTurnColour() {
         if (currentTurnColour == Colour.WHITE) currentTurnColour = Colour.BLACK;
         else if (currentTurnColour == Colour.BLACK) currentTurnColour = Colour.WHITE;
+        return currentTurnColour;
     }
     public void setEnPassant() {
         enPassantTimersByColour.put(currentTurnColour, 1);
