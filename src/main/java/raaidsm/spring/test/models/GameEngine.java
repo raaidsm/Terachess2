@@ -69,7 +69,10 @@ public class GameEngine {
         pieceToMove.setLocation(secondSquare);
         boardManager.getSquare(secondSquare).setContainedPiece(pieceToMove);
 
-        //Move has been made, now calculate all legal moves
+        //END OF TURN
+        checkManager.setCurrentTurnColour(turnManager.switchCurrentTurnColour());
+
+        //Move has been made and turn is over, now calculate all legal moves for the next turn
         return calculateAllLegalMoves();
     }
 
@@ -303,6 +306,5 @@ public class GameEngine {
         logger.trace("Turn " + turnManager.incrementTurnNumber() + " begins");
         //DEBUGGING
         logger.trace("Current turn colour: " + turnManager.getCurrentTurnColour());
-        checkManager.setCurrentTurnColour(turnManager.switchCurrentTurnColour());
     }
 }
