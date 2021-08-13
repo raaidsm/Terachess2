@@ -95,8 +95,6 @@ public class Pawn extends Piece {
         if (status == SqrStat.NO_SQUARE) return null;
         //Square has a shadow pawn that can be captured
         if (preview.shadowPawn != null) {
-            //DEBUGGING
-            logger.trace("SHADOW PAWN FOUND AT: " + squareName + ", FROM: " + getLocation());
             return new MoveCalcResultStruct(null, squareName, attackType, attackDir);
         }
         //Guard clause for there being no piece to capture

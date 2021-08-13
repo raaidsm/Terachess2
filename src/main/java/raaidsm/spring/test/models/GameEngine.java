@@ -104,11 +104,7 @@ public class GameEngine {
             //Checking for Initial Pawn Move and Promotion
             if (dirOfMovement != null && dirOfMovement.getMagnitude() == 2
                     && (dirOfMovement == Direction.UP || dirOfMovement == Direction.DOWN)) {
-                //DEBUGGING
-                logger.trace("Setting shadow pawn for pawn: " + pawn);
                 boardManager.setShadowPawn(pawn, dirOfMovement);
-                //DEBUGGING
-                logger.trace("Setting en passant timer for colour: " + turnManager.getCurrentTurnColour());
                 turnManager.setEnPassant();
             }
             else if (boardManager.isFirstOrLastRow(squareNameToMoveTo)) {
@@ -303,11 +299,7 @@ public class GameEngine {
         return legalMovesFound;
     }
     private void startOfMoveCalculation() {
-        if (turnManager.isTurnToRemoveEnPassant()) {
-            //DEBUGGING
-            logger.trace("Removing en passant for colour: " + turnManager.getCurrentTurnColour());
-            boardManager.removeShadowPawn(turnManager.getCurrentTurnColour());
-        }
+        if (turnManager.isTurnToRemoveEnPassant()) boardManager.removeShadowPawn(turnManager.getCurrentTurnColour());
     }
     private void endOfMoveCalculation() {
         checkManager.clearChecks();
