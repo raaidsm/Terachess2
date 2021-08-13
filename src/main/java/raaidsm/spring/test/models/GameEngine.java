@@ -62,14 +62,21 @@ public class GameEngine {
             //TODO: Record the captured piece
         }
         else if (shadowedPawn != null) {
+            //Remove the shadowed pawn from the board
             boardManager.removePieceFromBoard(shadowedPawn);
+
+            //Remove the shadow pawn for this colour
+            boardManager.removeShadowPawn(turnManager.getCurrentTurnColour());
         }
 
         //Move piece-to-move to second square
         pieceToMove.setLocation(secondSquare);
         boardManager.getSquare(secondSquare).setContainedPiece(pieceToMove);
 
-        //Move has been made, now calculate all legal moves
+        //END OF TURN
+        checkManager.setCurrentTurnColour(turnManager.switchCurrentTurnColour());
+
+        //Move has been made and turn is over, now calculate all legal moves for the next turn
         return calculateAllLegalMoves();
     }
 
@@ -85,12 +92,8 @@ public class GameEngine {
     }
     private Piece applyMoveSideEffects(Piece pieceMoving, String squareNameToMoveTo) {
         //OVERVIEW: Applies side effects that certain moves have, and return the promoted piece if one is created
-        logger.trace("changePiecePropertiesUponMove() runs");
+        logger.trace("applyMoveSideEffects() runs");
 
-        //Global
-        if (turnManager.isTurnToRemoveEnPassant()) boardManager.removeShadowPawn(turnManager.getCurrentTurnColour());
-
-        //Based on piece
         //If piece that just made a move is a pawn, take away its initial move
         if (pieceMoving.getType() == PieceType.PAWN) {
             assert pieceMoving instanceof Pawn;
@@ -197,6 +200,8 @@ public class GameEngine {
         */
         logger.trace("calculateAllLegalMoves() runs");
 
+        startOfMoveCalculation();
+
         //Declare pieces to calculate all legal moves for
         List<Piece> currentPlayerPieces = boardManager.getPieceListByColour(turnManager.getCurrentTurnColour());
         King currentPlayerKing = boardManager.popKingFromPieceListByColour(currentPlayerPieces);
@@ -209,9 +214,8 @@ public class GameEngine {
         //Special Multi-Check Case
         if (1 < checkManager.numOfChecks()) {
             piecesHaveLegalMoves = caseMultiCheck(currentPlayerPieces);
-            checkManager.clearChecks();
-            turnManager.switchCurrentTurnColour();
-            checkManager.setCurrentTurnColour(turnManager.getCurrentTurnColour());
+            endOfMoveCalculation();
+
             if (piecesHaveLegalMoves) return GameStatus.LIVE;
             else return GameStatus.CHECKMATE;
         }
@@ -238,12 +242,9 @@ public class GameEngine {
         //Reduce Moves Due to Check
         if (checkManager.isCheck()) piecesHaveLegalMoves = reduceMovesDueToCheck(currentPlayerPieces);
 
-        //Set tracking variables for next turn
-        checkManager.clearChecks();
-        turnManager.switchCurrentTurnColour();
-        checkManager.setCurrentTurnColour(turnManager.getCurrentTurnColour());
+        endOfMoveCalculation();
 
-        //Return game status at the end of the turn
+        //Return game status at the end of move calculation
         if (piecesHaveLegalMoves || kingHasLegalMoves) return GameStatus.LIVE;
         else return GameStatus.CHECKMATE;
     }
@@ -296,5 +297,12 @@ public class GameEngine {
             if (hasMoves) legalMovesFound = true;
         }
         return legalMovesFound;
+    }
+    private void startOfMoveCalculation() {
+        if (turnManager.isTurnToRemoveEnPassant()) boardManager.removeShadowPawn(turnManager.getCurrentTurnColour());
+    }
+    private void endOfMoveCalculation() {
+        checkManager.clearChecks();
+        logger.trace("Turn " + turnManager.incrementTurnNumber() + " begins");
     }
 }

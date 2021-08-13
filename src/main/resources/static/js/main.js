@@ -107,7 +107,8 @@ const makeMove = (move1, move2) => {
 const onClickBoardSquare = (event) => {
     if (event.button === 0) {
         //Guard clause for users not being able to move pieces this turn
-        if (turnManager.currentTurnColour.description !== userColour) return;
+        //DEBUGGING: Commented out
+        //if (turnManager.currentTurnColour.description !== userColour) return;
         onLeftClickBoardSquare(event);
     }
     else if (event.button === 2) {
