@@ -62,7 +62,11 @@ public class GameEngine {
             //TODO: Record the captured piece
         }
         else if (shadowedPawn != null) {
+            //Remove the shadowed pawn from the board
             boardManager.removePieceFromBoard(shadowedPawn);
+
+            //Remove the shadow pawn for this colour
+            boardManager.removeShadowPawn(turnManager.getCurrentTurnColour());
         }
 
         //Move piece-to-move to second square
