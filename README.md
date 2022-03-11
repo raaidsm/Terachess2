@@ -5,4 +5,4 @@ Though it is a game with a defined ruleset, it is very difficult to actually be 
 As such. I have taken on this project as a way to provide that to people over the web!
 I have currently implemented a stable build of the original game of Chess.
 
-![Here is a brief look at the game](https://imgur.com/a/OqOyGvl)
+![Here is a brief look at the game](https://imgur.com/RszHN51)
